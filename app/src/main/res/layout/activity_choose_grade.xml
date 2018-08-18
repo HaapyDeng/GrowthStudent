@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.ChooseGradeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/tv_info"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/back_button_select" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="选择学龄"
+            android:textColor="#333333"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="下一步"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_youeryuan"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:src="@mipmap/userkind01" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="幼儿园"
+                    android:textColor="#333333"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/ll_xiaoxue"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:src="@mipmap/userkind02" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小学"
+                    android:textColor="#333333"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_chuzhong"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:src="@mipmap/userkind03" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="初中"
+                    android:textColor="#333333"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/ll_gaozhong"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:src="@mipmap/userkind04" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="高中"
+                    android:textColor="#333333"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

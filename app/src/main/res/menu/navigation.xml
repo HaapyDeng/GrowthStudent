@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/tabbar_achieve_default"
+        android:title="成就" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@mipmap/tabbar_friends_default"
+        android:title="伙伴" />
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@mipmap/tabbar_found_default"
+        android:title="发现" />
+    <item
+        android:id="@+id/navigation_person"
+        android:icon="@mipmap/tabbar_my_default"
+        android:title="个人" />
+</menu>
