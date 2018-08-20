@@ -177,4 +177,66 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#277DC6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.mpl.GrowthStud.Tools.CircleImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/dot_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="数据详情"
+            android:textColor="#999999"
+            android:textSize="9dp" />
+
+        <com.mpl.GrowthStud.Tools.CircleImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/dot_blue" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/get_star_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="#3699ed"
+            android:gravity="center"
+            android:text="获星详情"
+            android:textColor="#ffffff"
+            android:textSize="9dp" />
+
+        <TextView
+            android:id="@+id/get_score_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/textview_border"
+            android:gravity="center"
+            android:text="获分详情"
+            android:textColor="#007aff"
+            android:textSize="9dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
 </LinearLayout>
