@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.mpl.GrowthStud.R;
 
@@ -18,6 +19,7 @@ public class GetStarInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListView listView;
 
 
     public GetStarInfoFragment() {
@@ -56,6 +58,7 @@ public class GetStarInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_get_star_info, container, false);
+        listView = root.findViewById(R.id.lv);
         return root;
     }
 
