@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
@@ -17,6 +18,7 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
     private GetScoreInfoFragment fragment2;// 第二个操作界面
 
     private android.app.FragmentManager fm;//管理器
+    private ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
     }
 
     private void initviews() {
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
         get_star_info = findViewById(R.id.get_star_info);
         get_star_info.setOnClickListener(this);
         get_score_info = findViewById(R.id.get_score_info);
@@ -36,6 +40,10 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.back:
+                finish();
+                break;
+
             case R.id.get_star_info:
 
                 selectFragment(0);

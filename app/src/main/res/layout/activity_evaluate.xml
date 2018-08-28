@@ -16,6 +16,7 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/back"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginLeft="15dp"
@@ -184,7 +185,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.mpl.GrowthStud.Tools.CircleImageView
+        <com.mpl.GrowthStud.View.CircleImageView
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:background="@drawable/dot_blue" />
@@ -198,7 +199,7 @@
             android:textColor="#999999"
             android:textSize="9dp" />
 
-        <com.mpl.GrowthStud.Tools.CircleImageView
+        <com.mpl.GrowthStud.View.CircleImageView
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:background="@drawable/dot_blue" />

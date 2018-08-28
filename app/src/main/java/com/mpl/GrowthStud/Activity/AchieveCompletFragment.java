@@ -8,23 +8,20 @@ import android.view.ViewGroup;
 
 import com.mpl.GrowthStud.R;
 
-public class MyFragment extends Fragment {
+public class AchieveCompletFragment extends Fragment {
 
-    public static MyFragment newInstance(String param1) {
-        MyFragment fragment = new MyFragment();
-        Bundle args = new Bundle();
-        args.putString("name", param1);
-        fragment.setArguments(args);
-        return fragment;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_my, container, false);
         // Inflate the layout for this fragment
-        return root;
+        return inflater.inflate(R.layout.fragment_achieve_complet, container, false);
     }
+
 
 }
