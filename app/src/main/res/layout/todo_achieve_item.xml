@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="9dp"
+        android:src="@mipmap/achieve_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="我的基本信息"
+            android:textColor="#353535"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@mipmap/little_tuwen_img"
+                android:drawablePadding="5dp"
+                android:text="图文"
+                android:textColor="#60.e66666666668000000"
+                android:textSize="10dp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@mipmap/little_duocai_img"
+                android:drawablePadding="5dp"
+                android:text="多彩生活"
+                android:textColor="#60.e66666666668000000"
+                android:textSize="10dp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_ping_star"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:drawablePadding="5dp"
+                android:text="评星："
+                android:textColor="#60.e66666666668000000"
+                android:textSize="10dp" />
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/star_grey" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

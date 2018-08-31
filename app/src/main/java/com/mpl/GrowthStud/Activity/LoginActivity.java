@@ -2,6 +2,7 @@ package com.mpl.GrowthStud.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.NetworkUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
@@ -55,18 +57,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
-                Intent intent = new Intent(this, ChooseGradeActivity.class);
-                startActivity(intent);
-//                doLogin(userName, password);
+//                Intent intent = new Intent(this, ChooseGradeActivity.class);
+//                startActivity(intent);
+                doLogin(userName, password);
                 break;
         }
 
     }
 
-    private void doLogin(String userName, String password) {
-        String url = "/login";
+    private void doLogin(final String userName, String password) {
+        String url = getResources().getString(R.string.local_url) + "/login";
+        Log.d("url==>>", url + "+" + userName + password);
         RequestParams params = new RequestParams();
-        params.put("mobile", new BigInteger(userName));
+        params.put("username", userName);
         params.put("password", password);
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new JsonHttpResponseHandler() {
@@ -74,6 +77,51 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
+                        String token = data.getString("access_token");
+                        int schoolId = data.getInt("school_id");
+                        String schoolName = data.getString("school_name");
+                        String role = data.getString("role");
+                        int isActive = data.getInt("is_active");
+                        String userId = data.getString("user_id");
+                        SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("token", token);
+                        editor.putString("username", userName);
+                        editor.putString("userid", userId);
+                        editor.putInt("schoolid", schoolId);
+                        editor.putString("schoolname", schoolName);
+                        editor.commit();
+                        switch (isActive) {
+                            case 0:
+                                if (role.equals("student")) {
+                                    //跳转到学生激活页面
+                                    Intent intent = new Intent(LoginActivity.this, ChooseGradeActivity.class);
+                                    startActivity(intent);
+                                } else if (role.equals("parent")) {
+                                    //跳转到家长激活界面
+                                }
+                                break;
+                            case 1:
+                                if (role.equals("student")) {
+                                    Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent3);
+                                    //跳转到学生主页面
+                                } else if (role.equals("parent")) {
+                                    //跳转到家长主界面
+                                }
+                                break;
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 

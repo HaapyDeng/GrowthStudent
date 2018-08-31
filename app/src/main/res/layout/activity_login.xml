@@ -41,7 +41,6 @@
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
                 android:hint="输入您的账号"
-                android:inputType="phone"
                 android:lines="1"
                 android:maxLength="20" />
 

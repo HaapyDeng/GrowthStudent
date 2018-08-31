@@ -2,15 +2,25 @@ package com.mpl.GrowthStud.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.LineEditText;
 import com.mpl.GrowthStud.Tools.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ActivateKinderStdActivity extends Activity implements View.OnClickListener {
     private ImageButton btn_back;
@@ -47,13 +57,62 @@ public class ActivateKinderStdActivity extends Activity implements View.OnClickL
                     Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
-                doActive(cardId);
+                Intent intent = new Intent(ActivateKinderStdActivity.this, MainActivity.class);
+                startActivity(intent);
+//                doActive(cardId);
         }
 
     }
 
-    private void doActive(String cardId) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    private void doActive(final String cardId) {
+        String url = getResources().getString(R.string.local_url) + "/user/validate-number/" + cardId;
+        Log.d("url==>", url);
+        SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        Log.d("token==>>", token);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        Toast.makeText(ActivateKinderStdActivity.this, R.string.activate_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ActivateKinderStdActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(ActivateKinderStdActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(ActivateKinderStdActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(ActivateKinderStdActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(ActivateKinderStdActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
