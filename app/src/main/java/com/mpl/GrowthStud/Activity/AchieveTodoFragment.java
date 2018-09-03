@@ -70,6 +70,12 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTodoAchieve();
+    }
+
     private void getTodoAchieve() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -149,6 +155,10 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("2")) {
             Intent intent = new Intent(getActivity(), TuWenActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("3")) {
             Intent intent = new Intent(getActivity(), VideoActivity.class);

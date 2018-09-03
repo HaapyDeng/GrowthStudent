@@ -2,12 +2,21 @@ package com.mpl.GrowthStud.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -16,21 +25,46 @@ import com.mpl.GrowthStud.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.PictureSelectorConfig;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TuWenActivity extends AppCompatActivity {
+import cz.msebera.android.httpclient.Header;
+
+public class TuWenActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
     private GridView gridView;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
+    private TextView tv_title, tv_commit;
+    private ImageButton back;
+    private EditText et_wenzi;
+    private String wenzi;
+    private String achieveId;
+    private String headTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tu_wen);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        achieveId = extras.getString("achieveid");
+        headTitle = extras.getString("headtitle");
         mContext = this;
         gridView = (GridView) findViewById(R.id.gridView);
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
+
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(headTitle);
+        tv_commit = findViewById(R.id.tv_commit);
+        tv_commit.setOnClickListener(this);
+
+        et_wenzi = findViewById(R.id.et_wenzi);
         initGridView();
     }
 
@@ -67,7 +101,7 @@ public class TuWenActivity extends AppCompatActivity {
     }
 
     /**
-     * 打开相册或者照相机选择凭证图片，最多5张
+     * 打开相册或者照相机选择凭证图片，最多9张
      *
      * @param maxTotal 最多选择的图片的数量
      */
@@ -110,5 +144,84 @@ public class TuWenActivity extends AppCompatActivity {
             mPicList.addAll(toDeletePicList);
             mGridViewAddImgAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.tv_commit:
+                et_wenzi = findViewById(R.id.et_wenzi);
+                wenzi = et_wenzi.getText().toString().trim();
+                if (wenzi.length() < 100) {
+                    Toast.makeText(this, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+                    break;
+                }
+                if (mPicList.size() == 0) {
+                    Toast.makeText(this, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+                    break;
+                }
+                doUploadTuWen(wenzi, mPicList);
+                break;
+        }
+    }
+
+    private void doUploadTuWen(String wenzi, ArrayList<String> mPicList) {
+        String imge = "";
+        for (int i = 0; i < mPicList.size(); i++) {
+            imge = imge + mPicList.get(i) + "|";
+        }
+        Log.d("imge==>>>", imge);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/image/update/" + achieveId;
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("content", wenzi);
+        params.put("image", imge);
+        client.addHeader("X-Api-Token", token);
+        client.put(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        Toast.makeText(TuWenActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
