@@ -5,21 +5,15 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mpl.GrowthStud.R;
 
 import java.util.List;
 
-import uk.co.senab.photoview.PhotoView;
+//import uk.co.senab.photoview.PhotoView;
 
-/**
- * 图片浏览的适配器
- * <p>
- * 作者： 周旭 on 2017年7月30日 0030.
- * 邮箱：374952705@qq.com
- * 博客：http://www.jianshu.com/u/56db5d78044d
- */
 
 public class ChoosePicViewPagerAdapter extends PagerAdapter {
 
@@ -51,7 +45,7 @@ public class ChoosePicViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = getItemView(R.layout.view_pager_img);
-        PhotoView imageView = (PhotoView) itemView.findViewById(R.id.img_iv);
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.img_iv);
         Glide.with(context).load(imgList.get(position)).into(imageView);
         container.addView(itemView);
         return itemView;
