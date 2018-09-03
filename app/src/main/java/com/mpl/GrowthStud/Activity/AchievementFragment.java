@@ -3,6 +3,7 @@ package com.mpl.GrowthStud.Activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -40,6 +41,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         return root;
     }
+
 
     public static Fragment newInstance(String name) {
 

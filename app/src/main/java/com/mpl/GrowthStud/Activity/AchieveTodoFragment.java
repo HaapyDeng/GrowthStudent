@@ -59,6 +59,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -162,6 +163,10 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("3")) {
             Intent intent = new Intent(getActivity(), VideoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("4")) {
 //            Intent intent = new Intent(getActivity(), VideoActivity.class);
