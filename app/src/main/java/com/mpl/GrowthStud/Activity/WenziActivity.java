@@ -90,6 +90,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                         finish();
                     } else {
                         Toast.makeText(WenziActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
