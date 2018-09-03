@@ -7,6 +7,7 @@
         android:name="com.max_plus.homedooropenplate.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- Required -->
     <uses-permission android:name="com.max_plus.homedooropenplate.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -33,6 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -52,6 +54,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.mpl.GrowthStud.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait" />
@@ -64,9 +77,21 @@
         <activity
             android:name=".Activity.ActivateOtherStdActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.EvaluateActivity" />
-        <activity android:name=".Activity.EchievementActivity" />
-        <activity android:name=".Activity.RoadActivity"></activity>
+        <activity
+            android:name=".Activity.EvaluateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.EchievementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.RoadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.WenziActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.TuWenActivity" />
+        <activity android:name=".Activity.PlusImageActivity" />
+        <activity android:name=".Activity.VideoActivity"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,10 @@ public class AchieveToDoItem {
     private String role;
     private String star;
 
+    public AchieveToDoItem() {
+
+    }
+
     public AchieveToDoItem(String id, String name, String type, String image, String category_name, String label_name, String task_star, String status, String role, String star) {
         this.id = id;
         this.name = name;
