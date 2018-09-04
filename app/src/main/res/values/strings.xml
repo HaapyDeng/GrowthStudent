@@ -5,6 +5,7 @@
     <string name="cardid_not_null">身份证号码不能为空</string>
     <string name="schoolid_not_null">学籍号不能为空</string>
     <string name="local_url">http://192.168.1.119:112</string>
+    <string name="uploadFile">http://192.168.1.131:83/index.php/upload/index</string>
     <string name="activate_success">账号激活成功</string>
     <string name="wenzi_lenth_low">请输入100-300字的内容</string>
     <string name="pic_lenth_low">请选择图片上传</string>

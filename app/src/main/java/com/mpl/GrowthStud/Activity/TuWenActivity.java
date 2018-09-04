@@ -1,5 +1,6 @@
 package com.mpl.GrowthStud.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,24 +16,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.BaseJsonHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.mpl.GrowthStud.Adapter.GridViewAdapter;
 import com.mpl.GrowthStud.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.ImageToBase64;
 import com.mpl.GrowthStud.Tools.PictureSelectorConfig;
+import com.mpl.GrowthStud.Tools.UploadFile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
 
 public class TuWenActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
@@ -45,6 +55,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private String wenzi;
     private String achieveId;
     private String headTitle;
+    private ProgressDialog progress;
+    private String backUrl = "";
+    private int tag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,16 +176,92 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
                     break;
                 }
-                doUploadTuWen(wenzi, mPicList);
+                doUploadImge(mPicList);
+//                doUploadTuWen(wenzi, mPicList);
+
+//                Log.d("backUrl==>>>", backUrl);
+//                doUploadTuWen(wenzi, backUrl);
                 break;
         }
     }
 
-    private void doUploadTuWen(String wenzi, ArrayList<String> mPicList) {
-        String imge = "";
+    //上传图片到图片服务器
+    private void doUploadImge(final ArrayList<String> mPicList) {
+        Log.d("imge==>>>", mPicList.toString());
         for (int i = 0; i < mPicList.size(); i++) {
-            imge = imge + mPicList.get(i) + "|";
+
+            File file = new File(mPicList.get(i));
+            String imgUrl = getResources().getString(R.string.uploadFile);
+            AsyncHttpClient client = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            try {
+                params.put("image", file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            client.post(imgUrl, params, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d("response==>>>", response.toString());
+                    try {
+                        int code = response.getInt("code");
+                        if (code == 0) {
+                            tag = tag + 1;
+                            JSONArray array = response.getJSONArray("data");
+                            JSONObject object = array.getJSONObject(0);
+                            String singUrl;
+                            singUrl = object.getString("resource");
+                            if (backUrl.equals("")) {
+                                backUrl = singUrl;
+                            } else {
+                                backUrl = backUrl + "|" + singUrl;
+                            }
+                            Log.d("backUrl[][][]==>>>", backUrl.toString());
+                            if (tag == mPicList.size()) {
+                                Log.d("backUrlend==>>>", backUrl.toString());
+                                doUploadTuWen(wenzi, backUrl);
+                            }
+                        } else {
+                            Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("responseString==>>", responseString);
+                    Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
+            });
+
         }
+
+    }
+
+    private void doUploadTuWen(String wenzi, String imge) {
+
         Log.d("imge==>>>", imge);
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
