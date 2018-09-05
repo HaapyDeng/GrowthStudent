@@ -67,7 +67,7 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
         mHeight = a.getInteger(R.styleable.MovieRecorderView_video_height, 240);// 默认240
 
         isOpenCamera = a.getBoolean(R.styleable.MovieRecorderView_is_open_camera, true);// 默认打开
-        mRecordMaxTime = a.getInteger(R.styleable.MovieRecorderView_record_max_time, 15);// 默认为15
+        mRecordMaxTime = a.getInteger(R.styleable.MovieRecorderView_record_max_time, 10);// 默认为15
 
         LayoutInflater.from(context).inflate(R.layout.movie_recorder_view, this);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceview);

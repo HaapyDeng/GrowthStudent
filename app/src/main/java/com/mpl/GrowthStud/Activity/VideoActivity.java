@@ -3,6 +3,7 @@ package com.mpl.GrowthStud.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,7 +19,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -29,9 +34,20 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Tools.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+
+import static com.mpl.GrowthStud.Tools.Utils.saveBitmap;
 
 public class VideoActivity extends Activity implements View.OnClickListener {
     private Context mContext;
@@ -43,6 +59,9 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     private String headTitle;
     private ImageView iv_button, iv_video;
     private ImageButton btn_delete;
+    String singUrl;
+    String bitmapPath;
+    String backBitmap;
 
     // 文件路径
     private String path = "";
@@ -112,7 +131,18 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(this, R.string.video_not_null, Toast.LENGTH_LONG).show();
                     break;
                 }
-                doUploadVideo(wenzi);
+                File dF = new File(path);
+                FileInputStream fis;
+                try {
+                    fis = new FileInputStream(dF);
+                    int fileLen = fis.available(); //这就是文件大小
+                    Log.d("daxiaoshi:::", "" + fileLen);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                doUploadPic(bitmapPath);
                 break;
             case R.id.iv_button:
                 // 启动拍摄的Activity
@@ -132,11 +162,74 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                     bundle.putString("path", path);
                     intent1.putExtras(bundle);
                     startActivity(intent1);
-
                 }
                 break;
         }
     }
+
+    private void doUploadPic(final String bitmapPath) {
+        File file = new File(bitmapPath);
+        String imgUrl = getResources().getString(R.string.uploadFile);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        try {
+            params.put("image", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        client.post(imgUrl, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONArray array = response.getJSONArray("data");
+                        JSONObject object = array.getJSONObject(0);
+                        String sing;
+                        sing = object.getString("resource");
+                        backBitmap = sing;
+                        if (bitmapPath.length() != 0) {
+                            doUploadVideo(path);
+                        }
+
+                    } else {
+                        Toast.makeText(VideoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("responseString==>>", responseString);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -151,6 +244,8 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                     Log.d("视频路径path==>>>", path);
                     // 通过路径获取第一帧的缩略图并显示
                     Bitmap bitmap = Utils.createVideoThumbnail(path);
+                    bitmapPath = saveBitmap(VideoActivity.this, bitmap);
+                    Log.d("bitmap==>>>", bitmapPath);
                     BitmapDrawable drawable = new BitmapDrawable(bitmap);
 //                    drawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
                     drawable.setDither(true);
@@ -167,6 +262,115 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void doUploadVideo(String wenzi) {
+    //上传视频到视频服务器
+    private void doUploadVideo(String path) {
+        File file = new File(path);
+        String videoUrl = getResources().getString(R.string.uploadFile);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        try {
+            params.put("video", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        client.post(videoUrl, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONArray array = response.getJSONArray("data");
+                        JSONObject object = array.getJSONObject(0);
+
+                        singUrl = object.getString("resource");
+                        Log.d("singUrl==>>>", singUrl);
+                        doUploadAll(wenzi, singUrl, backBitmap);
+                    } else {
+                        Toast.makeText(VideoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("responseString==>>", responseString);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+    private void doUploadAll(String wenzi, String singUrl, String backBitmap) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/video/update/" + achieveId;
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("content", wenzi);
+        params.put("video", singUrl);
+        params.put("video_image", backBitmap);
+        client.addHeader("X-Api-Token", token);
+        client.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        Toast.makeText(VideoActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(VideoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
