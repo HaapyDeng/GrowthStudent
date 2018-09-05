@@ -8,6 +8,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -81,11 +82,12 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                 path = filePathFile.listFiles()[0].getPath();
                 Bitmap bitmap = Utils.createVideoThumbnail(path);
                 BitmapDrawable drawable = new BitmapDrawable(bitmap);
-                drawable.setTileModeXY(Shader.TileMode.REPEAT,
-                        Shader.TileMode.REPEAT);
+//                drawable.setTileModeXY(Shader.TileMode.REPEAT,
+//                        Shader.TileMode.REPEAT);
                 drawable.setDither(true);
 //                btnPlay.setBackgroundDrawable(drawable);
                 iv_button.setVisibility(View.GONE);
+                iv_video.setVisibility(View.VISIBLE);
                 iv_video.setBackgroundDrawable(drawable);
                 btn_delete.setVisibility(View.VISIBLE);
             }
@@ -105,12 +107,33 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(this, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
                     break;
                 }
+                Log.d("视频存放路径：", path);
+                if (path.length() == 0) {
+                    Toast.makeText(this, R.string.video_not_null, Toast.LENGTH_LONG).show();
+                    break;
+                }
                 doUploadVideo(wenzi);
                 break;
             case R.id.iv_button:
                 // 启动拍摄的Activity
                 Intent intent = new Intent(VideoActivity.this, VideoRecorderActivity.class);
                 VideoActivity.this.startActivityForResult(intent, 200);
+                break;
+            case R.id.btn_delete:
+                iv_video.setVisibility(View.GONE);
+                iv_button.setVisibility(View.VISIBLE);
+                path = "";
+                btn_delete.setVisibility(View.GONE);
+                break;
+            case R.id.iv_video:
+                if (path != null && !path.equalsIgnoreCase("")) {
+                    Intent intent1 = new Intent(this, VideoPlayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("path", path);
+                    intent1.putExtras(bundle);
+                    startActivity(intent1);
+
+                }
                 break;
         }
     }
@@ -124,14 +147,16 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                 if (resultCode == RESULT_OK) {
                     // 成功
                     path = data.getStringExtra("path");
-                    Toast.makeText(VideoActivity.this, "存储路径为:" + path, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(VideoActivity.this, "存储路径为:" + path, Toast.LENGTH_SHORT).show();
+                    Log.d("视频路径path==>>>", path);
                     // 通过路径获取第一帧的缩略图并显示
                     Bitmap bitmap = Utils.createVideoThumbnail(path);
                     BitmapDrawable drawable = new BitmapDrawable(bitmap);
-                    drawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+//                    drawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
                     drawable.setDither(true);
 //                    btnPlay.setBackgroundDrawable(drawable);
                     iv_button.setVisibility(View.GONE);
+                    iv_video.setVisibility(View.VISIBLE);
                     iv_video.setBackgroundDrawable(drawable);
                     btn_delete.setVisibility(View.VISIBLE);
                 } else {
