@@ -103,11 +103,24 @@
         <activity
             android:name=".Activity.VideoRecorderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.VideoPlayActivity" />
-        <activity android:name=".Activity.QuestionnaireActivity" />
-        <activity android:name=".Activity.SyatemAchieveActivity" />
-        <activity android:name=".Activity.WenZiInfoActivity" />
-        <activity android:name=".Activity.TuWenInfoActivity"></activity>
+        <activity
+            android:name=".Activity.VideoPlayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.QuestionnaireActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SyatemAchieveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.WenZiInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.TuWenInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.VideoInfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

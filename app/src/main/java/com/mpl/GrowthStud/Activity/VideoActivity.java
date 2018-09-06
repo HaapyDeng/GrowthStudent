@@ -332,7 +332,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         params.put("video", singUrl);
         params.put("video_image", backBitmap);
         client.addHeader("X-Api-Token", token);
-        client.post(url, params, new JsonHttpResponseHandler() {
+        client.put(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
