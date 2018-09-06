@@ -105,7 +105,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.VideoPlayActivity" />
         <activity android:name=".Activity.QuestionnaireActivity" />
-        <activity android:name=".Activity.SyatemAchieveActivity"></activity>
+        <activity android:name=".Activity.SyatemAchieveActivity" />
+        <activity android:name=".Activity.WenZiInfoActivity" />
+        <activity android:name=".Activity.TuWenInfoActivity"></activity>
     </application>
 
 </manifest>
