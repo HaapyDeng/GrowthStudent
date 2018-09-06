@@ -103,7 +103,9 @@
         <activity
             android:name=".Activity.VideoRecorderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.VideoPlayActivity"></activity>
+        <activity android:name=".Activity.VideoPlayActivity" />
+        <activity android:name=".Activity.QuestionnaireActivity" />
+        <activity android:name=".Activity.SyatemAchieveActivity"></activity>
     </application>
 
 </manifest>

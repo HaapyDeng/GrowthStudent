@@ -59,7 +59,6 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,12 +68,6 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
         getTodoAchieve();
         // Inflate the layout for this fragment
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getTodoAchieve();
     }
 
     private void getTodoAchieve() {
@@ -169,10 +162,18 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("4")) {
-//            Intent intent = new Intent(getActivity(), VideoActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), QuestionnaireActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
         } else if (mDatas.get(position).getType().equals("5")) {
-//            Intent intent = new Intent(getActivity(), VideoActivity.class);
+//            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("achieveid", mDatas.get(position).getId());
+//            bundle.putString("headtitle", mDatas.get(position).getName());
+//            intent.putExtras(bundle);
 //            startActivity(intent);
         }
     }

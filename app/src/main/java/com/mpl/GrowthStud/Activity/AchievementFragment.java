@@ -67,7 +67,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
     private void selectFragment(int i) {
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
         hideFragment(transaction);
 
