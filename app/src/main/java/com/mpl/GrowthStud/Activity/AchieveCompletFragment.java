@@ -19,6 +19,7 @@ import com.mpl.GrowthStud.Adapter.AchieveToDoListViewAdapter;
 import com.mpl.GrowthStud.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,10 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
     }
 
     private void getCpmpletAchieve() {
+        if (!NetworkUtils.checkNetWork(getActivity())) {
+            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");

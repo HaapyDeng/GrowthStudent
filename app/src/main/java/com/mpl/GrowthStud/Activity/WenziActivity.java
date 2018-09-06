@@ -15,6 +15,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,10 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void doUploadWenzi(String wenzi) {
+        if (!NetworkUtils.checkNetWork(WenziActivity.this)) {
+            Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         Log.d("wenzhi:>>>", wenzi);
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");

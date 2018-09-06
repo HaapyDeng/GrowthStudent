@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,6 +45,10 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     }
 
     private void getAnswers(String achieveId) {
+        if (!NetworkUtils.checkNetWork(QuestionnaireActivity.this)) {
+            Toast.makeText(QuestionnaireActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         String getUrl = getResources().getString(R.string.local_url) + "/v1/achievement/question/show/" + achieveId;
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");

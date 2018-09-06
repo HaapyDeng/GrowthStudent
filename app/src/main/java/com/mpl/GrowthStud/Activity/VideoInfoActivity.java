@@ -21,6 +21,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.Adapter.ImageAdapter;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.DownImage;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,10 @@ public class VideoInfoActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initData() {
+        if (!NetworkUtils.checkNetWork(VideoInfoActivity.this)) {
+            Toast.makeText(VideoInfoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String url = getResources().getString(R.string.local_url) + "/v1/achievement/video/show/" + achieveId;

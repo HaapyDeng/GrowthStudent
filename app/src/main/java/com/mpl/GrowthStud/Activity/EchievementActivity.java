@@ -2,19 +2,32 @@ package com.mpl.GrowthStud.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 import com.mpl.GrowthStud.View.RingView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class EchievementActivity extends FragmentActivity implements View.OnClickListener {
     private AchieveCompletFragment fragment1;
@@ -44,6 +57,59 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         todo = findViewById(R.id.todo);
         todo.setOnClickListener(this);
         selectFragment(0);
+        initData();
+    }
+
+    private void initData() {
+        if (!NetworkUtils.checkNetWork(EchievementActivity.this)) {
+            Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical";
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+
+                    } else {
+                        Toast.makeText(EchievementActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 
     @Override

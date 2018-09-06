@@ -1,24 +1,46 @@
 package com.mpl.GrowthStud.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class EvaluateActivity extends FragmentActivity implements View.OnClickListener {
 
-    private TextView get_star_info, get_score_info;
+    private TextView get_star_info, get_score_info, pingjia_point, star_point, total_point, star_count;
     private GetStarInfoFragment fragment1;// 第一个操作界面
 
     private GetScoreInfoFragment fragment2;// 第二个操作界面
 
     private android.app.FragmentManager fm;//管理器
     private ImageButton back;
+    /*
+    one_star_point (integer, optional): 一颗星等于多少分 ,
+    starCount (integer, optional): 获得星 ,
+    starPoint (integer, optional): 成就星分 ,
+    pingjiaPoint (integer, optional): 问卷分 ,
+    totalPoint (integer, optional): 总分
+     */
+    private String one_star_point, starCount, starPoint, pingjiaPoint, totalPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +56,94 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
         get_star_info.setOnClickListener(this);
         get_score_info = findViewById(R.id.get_score_info);
         get_score_info.setOnClickListener(this);
+        pingjia_point = findViewById(R.id.pingjia_point);
+        star_point = findViewById(R.id.star_point);
+        total_point = findViewById(R.id.total_point);
+        star_count = findViewById(R.id.star_count);
         selectFragment(0);
+        initData();
     }
+
+    private void initData() {
+        if (NetworkUtils.checkNetWork(EvaluateActivity.this) == false) {
+            Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String uid = sharedPreferences.getString("userid", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/" + uid;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
+                        starPoint = data.getString("star_point");
+                        pingjiaPoint = data.getString("point");
+                        totalPoint = data.getString("total_point");
+                        starCount = data.getString("star");
+                        one_star_point = data.getString("one_star_point");
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    } else {
+                        Toast.makeText(EvaluateActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    //保存一颗星为多少分
+                    SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("one_star_point", one_star_point);
+                    editor.commit();
+                    total_point.setText(totalPoint);
+                    star_point.setText(starPoint);
+                    pingjia_point.setText(pingjiaPoint);
+                    star_count.setText(starCount);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {

@@ -29,6 +29,7 @@ import com.mpl.GrowthStud.Adapter.GridViewAdapter;
 import com.mpl.GrowthStud.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Tools.ImageToBase64;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Tools.UploadFile;
 
@@ -187,6 +188,10 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 
     //上传图片到图片服务器
     private void doUploadImge(final ArrayList<String> mPicList) {
+        if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
+            Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         Log.d("imge==>>>", mPicList.toString());
         for (int i = 0; i < mPicList.size(); i++) {
 
@@ -261,7 +266,10 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void doUploadTuWen(String wenzi, String imge) {
-
+        if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
+            Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         Log.d("imge==>>>", imge);
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");

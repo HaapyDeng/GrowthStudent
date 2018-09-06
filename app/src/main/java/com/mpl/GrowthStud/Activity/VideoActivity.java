@@ -31,6 +31,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.mpl.GrowthStud.Adapter.GridViewAdapter;
 import com.mpl.GrowthStud.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Tools.Utils;
 
@@ -168,6 +169,10 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     }
 
     private void doUploadPic(final String bitmapPath) {
+        if (!NetworkUtils.checkNetWork(VideoActivity.this)) {
+            Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         File file = new File(bitmapPath);
         String imgUrl = getResources().getString(R.string.uploadFile);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -264,6 +269,10 @@ public class VideoActivity extends Activity implements View.OnClickListener {
 
     //上传视频到视频服务器
     private void doUploadVideo(String path) {
+        if (!NetworkUtils.checkNetWork(VideoActivity.this)) {
+            Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         File file = new File(path);
         String videoUrl = getResources().getString(R.string.uploadFile);
         AsyncHttpClient client = new AsyncHttpClient();
