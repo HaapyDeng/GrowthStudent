@@ -121,6 +121,8 @@
         <activity
             android:name=".Student.Activity.VideoInfoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.GetStarInfoInfoActivity" />
+        <activity android:name=".Student.Activity.GetScoreInfoInfoActivity"></activity>
     </application>
 
 </manifest>

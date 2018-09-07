@@ -6,16 +6,41 @@
     android:orientation="vertical"
     tools:context=".Student.Activity.GetStarInfoFragment">
 
-    <TextView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_textview"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:text="422分"
-        android:textColor="#ffffff"
-        android:textSize="15dp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="13dp"
+            android:text="一颗"
+            android:textColor="#c4c4c4"
+            android:textSize="9dp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/star_big" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/star_score"
+            android:layout_width="wrap_content"
+            android:layout_height="13dp"
+            android:text="=10分"
+            android:textColor="#c4c4c4"
+            android:textSize="9dp" />
+    </LinearLayout>
+
 
     <ImageView
         android:layout_width="match_parent"

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +38,9 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private android.app.FragmentManager fm;//管理器
     private TextView completed, underway, todo;
     private ImageButton back;
+    private TextView tv_count;
+    private String totalNumber, completeNumber;
+    private RingView ringView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,8 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         setContentView(R.layout.activity_echievement);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
-        RingView ringView = (RingView) findViewById(R.id.ringView);
-        ringView.setProgress(500, 500 - 350);
-        ringView.setReminderColor(Color.parseColor("#3699ED"));
-        ringView.setProgressColor(Color.parseColor("#EEEEEE"));
-        ringView.setCircleWidth(40);
+        ringView = (RingView) findViewById(R.id.ringView);
+
         completed = findViewById(R.id.completed);
         completed.setOnClickListener(this);
 
@@ -56,8 +58,11 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
         todo = findViewById(R.id.todo);
         todo.setOnClickListener(this);
-        selectFragment(0);
+
+        tv_count = findViewById(R.id.tv_count);
         initData();
+        selectFragment(0);
+
     }
 
     private void initData() {
@@ -67,7 +72,8 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical";
+        String uid = sharedPreferences.getString("userid", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -79,7 +85,12 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
-
+                        JSONObject data = response.getJSONObject("data");
+                        totalNumber = data.getString("totalNumber");
+                        completeNumber = data.getString("completeNumber");
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
                     } else {
                         Toast.makeText(EchievementActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -111,6 +122,22 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    tv_count.setText(completeNumber + "/" + totalNumber);
+                    ringView.setProgress(Integer.parseInt(totalNumber), Integer.parseInt(totalNumber) - Integer.parseInt(completeNumber));
+                    ringView.setReminderColor(Color.parseColor("#3699ED"));
+                    ringView.setProgressColor(Color.parseColor("#EEEEEE"));
+                    ringView.setCircleWidth(40);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {

@@ -63,12 +63,14 @@
             android:src="@mipmap/cup" />
 
         <TextView
+            android:id="@+id/tv_count"
             android:layout_width="53dp"
             android:layout_height="16dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
-            android:text="385/500"
+            android:gravity="center_horizontal"
+            android:text="5/50"
             android:textColor="#ff3699ed"
             android:textSize="13dp" />
 
