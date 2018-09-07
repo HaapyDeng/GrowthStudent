@@ -45,10 +45,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Student.Activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SplashActivity"
+            android:name=".Student.Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,58 +68,58 @@
         <!-- </provider> -->
 
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Student.Activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ChooseGradeActivity"
+            android:name=".Student.Activity.ChooseGradeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ActivateKinderStdActivity"
+            android:name=".Student.Activity.ActivateKinderStdActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ActivateOtherStdActivity"
+            android:name=".Student.Activity.ActivateOtherStdActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.EvaluateActivity"
+            android:name=".Student.Activity.EvaluateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.EchievementActivity"
+            android:name=".Student.Activity.EchievementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.RoadActivity"
+            android:name=".Student.Activity.RoadActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.WenziActivity"
+            android:name=".Student.Activity.WenziActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.TuWenActivity"
+            android:name=".Student.Activity.TuWenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PlusImageActivity"
+            android:name=".Student.Activity.PlusImageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.VideoActivity"
+            android:name=".Student.Activity.VideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.VideoRecorderActivity"
+            android:name=".Student.Activity.VideoRecorderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.VideoPlayActivity"
+            android:name=".Student.Activity.VideoPlayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.QuestionnaireActivity"
+            android:name=".Student.Activity.QuestionnaireActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SyatemAchieveActivity"
+            android:name=".Student.Activity.SyatemAchieveActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.WenZiInfoActivity"
+            android:name=".Student.Activity.WenZiInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.TuWenInfoActivity"
+            android:name=".Student.Activity.TuWenInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.VideoInfoActivity"
+            android:name=".Student.Activity.VideoInfoActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.ActivateKinderStdActivity">
+    tools:context=".Student.Activity.ActivateKinderStdActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
         android:textColor="#ff333333"
         android:textSize="18sp" />
 
-    <com.mpl.GrowthStud.Tools.LineEditText
+    <com.mpl.GrowthStud.Student.Tools.LineEditText
         android:id="@+id/et_card_num"
         android:layout_width="match_parent"
         android:layout_height="50dp"

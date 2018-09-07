@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Activity.FriendFragment">
+    tools:context=".Student.Activity.FriendFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

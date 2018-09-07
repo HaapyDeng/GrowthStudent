@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Activity.EvaluateActivity">
+    tools:context=".Student.Activity.EvaluateActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,7 +190,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.mpl.GrowthStud.View.CircleImageView
+        <com.mpl.GrowthStud.Student.View.CircleImageView
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:background="@drawable/dot_blue" />
@@ -204,7 +204,7 @@
             android:textColor="#999999"
             android:textSize="9dp" />
 
-        <com.mpl.GrowthStud.View.CircleImageView
+        <com.mpl.GrowthStud.Student.View.CircleImageView
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:background="@drawable/dot_blue" />
