@@ -32,9 +32,9 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class EchievementActivity extends FragmentActivity implements View.OnClickListener {
-    private AchieveCompletFragment fragment1;
-    private AchieveUnderwayFragment fragment2;
-    private AchieveTodoFragment fragment3;
+    private ChengJiuYiWanChengFragment fragment1;
+    private ChengJiuJinXingZhongFragment fragment2;
+    private ChengJiuDaiWanChengFragment fragment3;
     private android.app.FragmentManager fm;//管理器
     private TextView completed, underway, todo;
     private ImageButton back;
@@ -173,7 +173,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
                 if (fragment1 == null) {
 
-                    fragment1 = new AchieveCompletFragment();
+                    fragment1 = new ChengJiuYiWanChengFragment();
 
                     transaction.add(R.id.fragment, fragment1);
 
@@ -188,7 +188,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
                 if (fragment2 == null) {
 
-                    fragment2 = new AchieveUnderwayFragment();
+                    fragment2 = new ChengJiuJinXingZhongFragment();
 
                     transaction.add(R.id.fragment, fragment2);
 
@@ -201,7 +201,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
                 if (fragment3 == null) {
 
-                    fragment3 = new AchieveTodoFragment();
+                    fragment3 = new ChengJiuDaiWanChengFragment();
 
                     transaction.add(R.id.fragment, fragment3);
 
