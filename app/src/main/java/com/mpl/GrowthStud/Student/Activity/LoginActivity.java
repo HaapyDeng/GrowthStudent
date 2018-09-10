@@ -109,6 +109,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 if (role.equals("student")) {
                                     Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent3);
+                                    finish();
                                     //跳转到学生主页面
                                 } else if (role.equals("parent")) {
                                     //跳转到家长主界面

@@ -113,7 +113,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:background="#999999" />
 
@@ -146,7 +146,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:background="#999999" />
 
@@ -173,14 +173,13 @@
             android:layout_height="match_parent"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="刘能"
             android:textColor="#999999"
             android:textSize="11dp" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:background="#999999" />
 
@@ -213,7 +212,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:background="#999999" />
 
@@ -246,7 +245,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:background="#999999" />
 

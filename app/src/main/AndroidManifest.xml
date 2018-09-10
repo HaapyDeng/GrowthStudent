@@ -46,6 +46,7 @@
         tools:replace="android:theme">
         <activity
             android:name=".Student.Activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.SplashActivity"
@@ -126,7 +127,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.GetScoreInfoInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.SetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.AboutActivity"></activity>
     </application>
 
 </manifest>
