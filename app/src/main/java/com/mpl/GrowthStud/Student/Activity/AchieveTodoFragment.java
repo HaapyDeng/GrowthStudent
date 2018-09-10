@@ -1,14 +1,18 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     private ListView listView;
     private List<AchieveToDoItem> mDatas;
     private AchieveToDoListViewAdapter achieveToDoListViewAdapter;
+    private LinearLayout ll_empty;
 
     public AchieveTodoFragment() {
         // Required empty public constructor
@@ -71,6 +76,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_achieve_todo, container, false);
         listView = root.findViewById(R.id.listview);
+        ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
         getTodoAchieve();
         // Inflate the layout for this fragment
@@ -99,6 +105,11 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
                         mDatas = new ArrayList<AchieveToDoItem>();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
@@ -148,6 +159,19 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @SuppressLint("NewApi")
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    ll_empty.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

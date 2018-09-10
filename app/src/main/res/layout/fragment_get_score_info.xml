@@ -15,5 +15,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/img_work_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂时没有数据"
+            android:textColor="#c4c4c4"
+            android:textSize="12dp" />
+    </LinearLayout>
+
 
 </LinearLayout>

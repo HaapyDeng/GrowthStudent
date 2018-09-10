@@ -1,14 +1,18 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +48,7 @@ public class GetScoreInfoFragment extends Fragment implements AdapterView.OnItem
     private ListView listView;
     private List<GetStarInfoItem> mDatas;
     private GetScoreInfoListViewAdapter getScoreInfoListViewAdapter;
+    private LinearLayout ll_empty;
 
     public GetScoreInfoFragment() {
         // Required empty public constructor
@@ -82,6 +87,7 @@ public class GetScoreInfoFragment extends Fragment implements AdapterView.OnItem
         View root = inflater.inflate(R.layout.fragment_get_score_info, container, false);
         listView = root.findViewById(R.id.lv);
         listView.setOnItemClickListener(this);
+        ll_empty = root.findViewById(R.id.ll_empty);
         // Inflate the layout for this fragment
         getScoreInfoData();
         return root;
@@ -109,6 +115,11 @@ public class GetScoreInfoFragment extends Fragment implements AdapterView.OnItem
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
                         mDatas = new ArrayList<GetStarInfoItem>();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
@@ -156,6 +167,20 @@ public class GetScoreInfoFragment extends Fragment implements AdapterView.OnItem
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @SuppressLint("NewApi")
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    listView.setVisibility(View.GONE);
+                    ll_empty.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

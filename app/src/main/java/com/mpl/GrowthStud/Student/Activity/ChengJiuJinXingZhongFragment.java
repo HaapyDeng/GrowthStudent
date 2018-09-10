@@ -1,12 +1,16 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,6 +36,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ChengJiuJinXingZhongFragment extends Fragment {
     private ListView listView;
+    private LinearLayout ll_empty;
     private List<ChengJiuJinXingZhongItem> mDatas;
     private ChengJiuJinXingZhongListViewAdapter chengJiuJinXingZhongListViewAdapter;
 
@@ -41,6 +46,7 @@ public class ChengJiuJinXingZhongFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cheng_jiu_jin_xing_zhong, container, false);
         listView = root.findViewById(R.id.listview);
+        ll_empty = root.findViewById(R.id.ll_empty);
         getCpmpletAchieve();
         return root;
     }
@@ -67,6 +73,11 @@ public class ChengJiuJinXingZhongFragment extends Fragment {
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
                         mDatas = new ArrayList<ChengJiuJinXingZhongItem>();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
@@ -116,4 +127,17 @@ public class ChengJiuJinXingZhongFragment extends Fragment {
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @SuppressLint("NewApi")
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    ll_empty.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 }

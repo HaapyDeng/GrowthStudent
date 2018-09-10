@@ -177,7 +177,9 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
                     int code = response.getInt("code");
                     if (code == 0) {
                         Toast.makeText(BundleParentActivity.this, "拒绝成功", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(BundleParentActivity.this, MyFragment.class);
+
+                        Intent intent = new Intent(BundleParentActivity.this, MainActivity.class);
+                        intent.putExtra("flag", 2);
                         startActivity(intent);
                         finish();
                     } else {

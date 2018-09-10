@@ -38,8 +38,12 @@ public class ParentApplyListViewAdapter extends ListViewAdapter<ParentApplyListI
             ((ImageView) holder.getView(R.id.iv_right)).setVisibility(View.VISIBLE);
         } else if (bean.getStatus() == 2) {
             ((TextView) holder.getView(R.id.tv_status)).setText("同意");
+            ((ImageView) holder.getView(R.id.iv_dot)).setVisibility(View.GONE);
+            ((ImageView) holder.getView(R.id.iv_right)).setVisibility(View.GONE);
         } else {
             ((TextView) holder.getView(R.id.tv_status)).setText("已拒绝");
+            ((ImageView) holder.getView(R.id.iv_dot)).setVisibility(View.GONE);
+            ((ImageView) holder.getView(R.id.iv_right)).setVisibility(View.GONE);
         }
     }
 }

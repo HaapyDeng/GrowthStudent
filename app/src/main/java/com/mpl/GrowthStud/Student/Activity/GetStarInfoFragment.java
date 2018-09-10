@@ -1,8 +1,10 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +50,7 @@ public class GetStarInfoFragment extends Fragment implements AdapterView.OnItemC
     private List<GetStarInfoItem> mDatas;
     private GetStarInfoListViewAdapter getStarInfoListViewAdapter;
     private TextView star_score;
+    private LinearLayout ll_empty;
 
     public GetStarInfoFragment() {
         // Required empty public constructor
@@ -86,6 +90,7 @@ public class GetStarInfoFragment extends Fragment implements AdapterView.OnItemC
         View root = inflater.inflate(R.layout.fragment_get_star_info, container, false);
         listView = root.findViewById(R.id.lv);
         listView.setOnItemClickListener(this);
+        ll_empty = root.findViewById(R.id.ll_empty);
         getStarInfoData();
         star_score = root.findViewById(R.id.star_score);
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
@@ -122,6 +127,11 @@ public class GetStarInfoFragment extends Fragment implements AdapterView.OnItemC
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
                         mDatas = new ArrayList<GetStarInfoItem>();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
@@ -169,6 +179,20 @@ public class GetStarInfoFragment extends Fragment implements AdapterView.OnItemC
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @SuppressLint("NewApi")
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    listView.setVisibility(View.GONE);
+                    ll_empty.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
