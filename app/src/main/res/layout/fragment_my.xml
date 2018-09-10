@@ -33,10 +33,18 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="41dp"
-            android:drawableRight="@mipmap/small_boy_img"
             android:text="刘天天"
             android:textColor="#ffffff"
             android:textSize="11dp" />
+
+        <ImageView
+            android:id="@+id/iv_gender"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="41dp"
+            android:layout_toRightOf="@+id/tv_student_name"
+            android:background="@mipmap/small_boy_img" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -151,6 +159,7 @@
         android:background="#999999" />
 
     <LinearLayout
+        android:id="@+id/ll_parent_id"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
@@ -166,6 +175,14 @@
             android:text="家长账号"
             android:textColor="#353535"
             android:textSize="11dp" />
+
+        <com.mpl.GrowthStud.Student.View.CircleImageView
+            android:id="@+id/iv_dot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:background="#FF4800"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tv_parent_id"

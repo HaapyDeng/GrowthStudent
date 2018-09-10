@@ -137,7 +137,9 @@
         <activity
             android:name=".Student.Activity.SetPasswordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.AboutActivity"></activity>
+        <activity android:name=".Student.Activity.AboutActivity" />
+        <activity android:name=".Student.Activity.ParentsAccountActivity" />
+        <activity android:name=".Student.Activity.BundleParentActivity"></activity>
     </application>
 
 </manifest>

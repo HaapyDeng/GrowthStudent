@@ -18,11 +18,11 @@ public class StudentInfo {
     private String grade;
     private String teacher_name;
     private String birthday;
-    private String gender;
+    private int gender;
     private String scope;
     private String username;
 
-    public StudentInfo(String school_name, String classroom_name, String grade, String teacher_name, String birthday, String gender, String scope, String username) {
+    public StudentInfo(String school_name, String classroom_name, String grade, String teacher_name, String birthday, int gender, String scope, String username) {
         this.school_name = school_name;
         this.classroom_name = classroom_name;
         this.grade = grade;
@@ -78,11 +78,11 @@ public class StudentInfo {
         this.birthday = birthday;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
