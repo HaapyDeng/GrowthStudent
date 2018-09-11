@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -43,6 +44,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
+        TextView app_version = findViewById(R.id.app_version);
+        try {
+            app_version.setText(NetworkUtils.getVersionName(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         et_user = findViewById(R.id.et_user);
         et_psd = findViewById(R.id.et_psd);
         btn_login = findViewById(R.id.btn_login);

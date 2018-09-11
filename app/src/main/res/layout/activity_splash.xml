@@ -42,9 +42,9 @@
             android:textSize="20dp" />
 
         <TextView
+            android:id="@+id/app_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="v1.0.0家庭端"
             android:textColor="#666666"
             android:textSize="14dp" />
 

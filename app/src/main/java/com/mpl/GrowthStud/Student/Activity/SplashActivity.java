@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -38,6 +39,12 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        TextView app_version = findViewById(R.id.app_version);
+        try {
+            app_version.setText(NetworkUtils.getVersionName(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         init();
     }
 
