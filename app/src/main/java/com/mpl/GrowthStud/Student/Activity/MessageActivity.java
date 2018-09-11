@@ -1,29 +1,30 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
+import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Adapter.MessageListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.MessageItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.CircleImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,12 +35,13 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MessageActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MessageActivity extends AppCompatActivity {
     private LinearLayout ll_empty;
     private ListView listView;
     private List<MessageItem> mDatas;
     private MessageListViewAdapter messageListViewAdapter;
     private ImageButton back;
+    private int refresh = 0;
 
 
     @Override
@@ -48,8 +50,6 @@ public class MessageActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_message);
         ll_empty = findViewById(R.id.ll_empty);
         listView = findViewById(R.id.listview);
-        listView.setOnItemClickListener(this);
-
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +102,53 @@ public class MessageActivity extends AppCompatActivity implements AdapterView.On
                             MessageItem messageItem = new MessageItem(id, title, content, created_at, type, is_read);
                             mDatas.add(messageItem);
                         }
-                        messageListViewAdapter = new MessageListViewAdapter(MessageActivity.this, mDatas);
-                        listView.setAdapter(messageListViewAdapter);
+//                        messageListViewAdapter = new MessageListViewAdapter(MessageActivity.this, mDatas);
+//                        listView.setAdapter(messageListViewAdapter);
+                        listView.setAdapter(new CommonAdapter<MessageItem>(MessageActivity.this, mDatas, R.layout.message_item) {
+
+                            @SuppressLint("NewApi")
+                            @Override
+                            public void convert(final ViewHolder holder, MessageItem messageItem, final int i) {
+                                if (mDatas.get(i).getType() == 1) {
+                                    ((ImageView) holder.getView(R.id.iv_head)).setBackground(MessageActivity.this.getResources().getDrawable(R.mipmap.icon_system_info));
+                                } else {
+                                    ((ImageView) holder.getView(R.id.iv_head)).setBackground(MessageActivity.this.getResources().getDrawable(R.mipmap.icon_evaluation_info));
+                                }
+                                ((TextView) holder.getView(R.id.tv_name)).setText(mDatas.get(i).getTitle());
+                                if (mDatas.get(i).getIs_read() == 0) {
+                                    ((CircleImageView) holder.getView(R.id.iv_dot)).setVisibility(View.VISIBLE);
+                                } else {
+                                    ((CircleImageView) holder.getView(R.id.iv_dot)).setVisibility(View.INVISIBLE);
+                                }
+                                ((TextView) holder.getView(R.id.tv_time)).setText(mDatas.get(i).getCreated_at());
+                                ((TextView) holder.getView(R.id.tv_content)).setText(mDatas.get(i).getContent());
+                                ((LinearLayout) holder.getView(R.id.ll_content)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (mDatas.get(i).getIs_read() == 0) {
+                                            doReadMessage(i, mDatas.get(i).getId());
+                                        } else {
+                                            Intent intent = new Intent(MessageActivity.this, MessageInfoActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("title", mDatas.get(i).getTitle());
+                                            bundle.putString("time", mDatas.get(i).getCreated_at());
+                                            bundle.putString("content", mDatas.get(i).getContent());
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                                (((Button) holder.getView(R.id.btnDelete))).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        ((SwipeMenuLayout) holder.getConvertView()).quickClose();
+                                        doDeleteMessage(i, mDatas.get(i).getId());
+                                        mDatas.remove(i);
+                                        notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -134,21 +179,73 @@ public class MessageActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (mDatas.get(i).getIs_read() == 0) {
-            doReadMessage(i, mDatas.get(i).getId());
-        } else {
-            Intent intent = new Intent(this, MessageInfoActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("title", mDatas.get(i).getTitle());
-            bundle.putString("time", mDatas.get(i).getCreated_at());
-            bundle.putString("content", mDatas.get(i).getContent());
-            intent.putExtras(bundle);
-            startActivity(intent);
+    private void doDeleteMessage(final int i, String id) {
+        ///message/read/{id}
+        if (NetworkUtils.checkNetWork(this) == false) {
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
         }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/message/delete/" + id;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                    } else {
+                        Toast.makeText(MessageActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        getMessage();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(MessageActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(MessageActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(MessageActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
 
     }
+
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        if (mDatas.get(i).getIs_read() == 0) {
+//            doReadMessage(i, mDatas.get(i).getId());
+//        } else {
+//            Intent intent = new Intent(this, MessageInfoActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("title", mDatas.get(i).getTitle());
+//            bundle.putString("time", mDatas.get(i).getCreated_at());
+//            bundle.putString("content", mDatas.get(i).getContent());
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//        }
+
+//    }
 
     private void doReadMessage(final int i, String id) {
         ///message/read/{id}
