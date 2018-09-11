@@ -1,6 +1,7 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -92,6 +93,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             public void onClick(View v) {
                 //如果对话框处于显示状态
                 if (mdialog.isShowing()) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
+                    SharedPreferences.Editor editor2 = sp2.edit();
+                    editor2.putInt("tag", 0);
+                    editor2.commit();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                     intent.putExtra(MainActivity.TAG_EXIT, true);
                     startActivity(intent);

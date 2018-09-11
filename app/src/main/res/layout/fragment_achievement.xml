@@ -22,7 +22,6 @@
             android:layout_height="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
@@ -36,9 +35,17 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/ib_message"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:background="@mipmap/bell" />
+
+            <com.mpl.GrowthStud.Student.View.CircleImageView
+                android:id="@+id/iv_dot"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="#FF4800"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <ImageView

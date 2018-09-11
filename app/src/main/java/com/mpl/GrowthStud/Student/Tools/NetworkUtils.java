@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.telephony.TelephonyManager;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -74,6 +75,18 @@ public class NetworkUtils {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 获取手机IMEI号
+     * <p>
+     * 需要动态权限: android.permission.READ_PHONE_STATE
+     */
+    public static String getIMEI(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        String imei = telephonyManager.getDeviceId();
+
+        return imei;
     }
 
     /**

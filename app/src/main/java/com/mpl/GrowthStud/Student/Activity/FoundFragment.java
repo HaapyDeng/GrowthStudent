@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
@@ -16,6 +17,7 @@ public class FoundFragment extends Fragment implements View.OnClickListener {
 
 
     private TextView tv_evaluate, tv_echievement, tv_road;
+    private ImageButton ib_message;
 
     public static FoundFragment newInstance(String name) {
         FoundFragment fragment = new FoundFragment();
@@ -33,6 +35,9 @@ public class FoundFragment extends Fragment implements View.OnClickListener {
         tv_evaluate = root.findViewById(R.id.tv_evaluate);
         tv_evaluate.setOnClickListener(this);
 
+        ib_message = root.findViewById(R.id.ib_message);
+        ib_message.setOnClickListener(this);
+
         tv_echievement = root.findViewById(R.id.tv_echievement);
         tv_echievement.setOnClickListener(this);
 
@@ -44,6 +49,10 @@ public class FoundFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ib_message:
+                Intent intent4 = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent4);
+                break;
             case R.id.tv_evaluate:
                 Intent intent = new Intent(getActivity(), EvaluateActivity.class);
                 startActivity(intent);

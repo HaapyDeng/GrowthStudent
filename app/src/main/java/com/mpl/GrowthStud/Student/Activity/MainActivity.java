@@ -46,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.vp);
         Intent intent = getIntent();
         int id = intent.getIntExtra("flag", 0);
-        if (id > 0) {
+        if (id == 2) {
             //跳转到指定的那个fragment
             viewPager.setCurrentItem(3);
+        } else if (id == 1) {
+            viewPager.setCurrentItem(0);
         }
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         list.add(FoundFragment.newInstance("发现"));
         list.add(MyFragment.newInstance("个人"));
         viewPagerAdapter.setList(list);
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
@@ -12,6 +14,8 @@ public class MyApplication extends Application {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         // the following line is important
     }
 }

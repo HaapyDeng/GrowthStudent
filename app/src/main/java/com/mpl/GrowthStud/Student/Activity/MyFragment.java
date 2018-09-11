@@ -43,6 +43,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private List<ParentApplyListItem> listItems;
     private ImageView iv_dot, iv_gender, head_img;
     private int tag = 0;
+    private ImageView ib_message;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
@@ -243,6 +244,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     };
 
     private void initView(View root) {
+        ib_message = root.findViewById(R.id.ib_message);
+        ib_message.setOnClickListener(this);
+
         head_img = root.findViewById(R.id.head_img);
 
         tv_student_name = root.findViewById(R.id.tv_student_name);
@@ -274,6 +278,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ib_message:
+                Intent intent3 = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent3);
+                break;
             case R.id.tv_brithday:
                 break;
             case R.id.ll_parent_id:

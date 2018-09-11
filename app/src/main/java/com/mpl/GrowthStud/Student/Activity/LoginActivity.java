@@ -21,19 +21,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
+import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText et_user, et_psd;
     private Button btn_login;
     private String userName, password;
+    private String spuser = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+
+
     }
 
     private void initView() {
@@ -65,7 +71,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     }
 
-    private void doLogin(final String userName, String password) {
+    private void doLogin(final String userName, final String password) {
         String url = getResources().getString(R.string.local_url) + "/login";
         Log.d("url==>>", url + "+" + userName + password);
         RequestParams params = new RequestParams();
@@ -80,6 +86,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+
                         JSONObject data = response.getJSONObject("data");
                         String token = data.getString("access_token");
                         int schoolId = data.getInt("school_id");
@@ -91,31 +98,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("token", token);
                         editor.putString("username", userName);
+                        editor.putString("password", password);
                         editor.putString("userid", userId);
                         editor.putInt("schoolid", schoolId);
                         editor.putString("schoolname", schoolName);
                         editor.commit();
-                        switch (isActive) {
-                            case 0:
-                                if (role.equals("student")) {
-                                    //跳转到学生激活页面
-                                    Intent intent = new Intent(LoginActivity.this, ChooseGradeActivity.class);
-                                    startActivity(intent);
-                                } else if (role.equals("parent")) {
-                                    //跳转到家长激活界面
-                                }
-                                break;
-                            case 1:
-                                if (role.equals("student")) {
-                                    Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent3);
-                                    finish();
-                                    //跳转到学生主页面
-                                } else if (role.equals("parent")) {
-                                    //跳转到家长主界面
-                                }
-                                break;
-                        }
+                        SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = sp2.edit();
+                        editor2.putInt("tag", 1);
+                        editor2.commit();
+                        doSetAlia(token, role, isActive, userId);
                     } else {
                         Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -147,5 +139,91 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 return;
             }
         });
+    }
+
+    private void doSetAlia(final String token, final String role, final int isActive, String userId) {
+        final String[] registrationID = new String[1];
+        JPushInterface.setAlias(this, NetworkUtils.getIMEI(this), new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                if (i == 0) {
+                    registrationID[0] = JPushInterface.getRegistrationID(LoginActivity.this);
+                    if (registrationID[0].equals("")) {
+                        Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    Log.d("IMEI==>>", NetworkUtils.getIMEI(LoginActivity.this));
+                    Log.d("registrationID==>>", registrationID[0]);
+                    String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + registrationID[0];
+                    Log.d("url==>>", url);
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.addHeader("X-Api-Token", token);
+                    client.get(url, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            super.onSuccess(statusCode, headers, response);
+                            Log.d("response==>>>", response.toString());
+                            try {
+                                int code = response.getInt("code");
+                                if (code == 0) {
+                                    switch (isActive) {
+                                        case 0:
+                                            if (role.equals("student")) {
+                                                //跳转到学生激活页面
+                                                Intent intent = new Intent(LoginActivity.this, ChooseGradeActivity.class);
+                                                startActivity(intent);
+                                            } else if (role.equals("parent")) {
+                                                //跳转到家长激活界面
+                                            }
+                                            break;
+                                        case 1:
+                                            if (role.equals("student")) {
+                                                Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
+                                                startActivity(intent3);
+                                                finish();
+                                                //跳转到学生主页面
+                                            } else if (role.equals("parent")) {
+                                                //跳转到家长主界面
+                                            }
+                                            break;
+                                    }
+                                } else {
+                                    Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            super.onFailure(statusCode, headers, responseString, throwable);
+                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    });
+                } else {
+                    Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        });
+
     }
 }

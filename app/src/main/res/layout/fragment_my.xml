@@ -80,7 +80,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iv_bell"
+            android:id="@+id/ib_message"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
