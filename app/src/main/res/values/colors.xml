@@ -8,4 +8,5 @@
     <color name="tab_unchecked">#999999</color>
     <color name="getstarinfo">#3699ed</color>
     <color name="text">#ffffff</color>
+    <color name="dot_not_choose">#EEEEEE</color>
 </resources>

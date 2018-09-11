@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,34 +27,72 @@ import cn.jpush.android.api.TagAliasCallback;
 import cz.msebera.android.httpclient.Header;
 
 public class SplashActivity extends Activity {
+    private static final int GO_HOME = 1000;
+    private static final int GO_GUIDE = 1001;
+    private static final String SHAREDPREFERENCES_NAME = "first_pref";
+    // 延迟3秒
+    private static final long SPLASH_DELAY_MILLIS = 3000;
+    boolean isFirstIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        countDownTimer.start();
+        init();
     }
 
-    private CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
-        @Override
-        public void onTick(long l) {
+    private void init() {
+        // 读取SharedPreferences中需要的数据
+        // 使用SharedPreferences来记录程序的使用次数
+        SharedPreferences preferences = getSharedPreferences(
+                SHAREDPREFERENCES_NAME, MODE_PRIVATE);
+
+        // 取得相应的值，如果没有该值，说明还未写入，用true作为默认值
+        isFirstIn = preferences.getBoolean("isFirstIn", true);
+
+        // 判断程序与第几次运行，如果是第一次运行则跳转到引导界面，否则跳转到主界面
+        if (!isFirstIn) {
+            // 使用Handler的postDelayed方法，3秒后执行跳转到MainActivity
+            mHandler.sendEmptyMessageDelayed(GO_HOME, SPLASH_DELAY_MILLIS);
+        } else {
+            mHandler.sendEmptyMessageDelayed(GO_GUIDE, SPLASH_DELAY_MILLIS);
         }
+    }
+
+    /**
+     * Handler:跳转到不同界面
+     */
+    private Handler mHandler = new Handler() {
 
         @Override
-        public void onFinish() {
-            SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
-            SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
-            int tag = sp2.getInt("tag", 0);
-            Log.d("spuser==?>>", "" + tag);
-            if (tag == 0) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                doLogin(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case GO_HOME:
+                    SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
+                    SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
+                    int tag = sp2.getInt("tag", 0);
+                    Log.d("spuser==?>>", "" + tag);
+                    if (tag == 0) {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        doLogin(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                    }
+                    break;
+                case GO_GUIDE:
+                    goGuide();
+                    break;
             }
+            super.handleMessage(msg);
         }
     };
+
+    private void goGuide() {
+        Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+        SplashActivity.this.startActivity(intent);
+        SplashActivity.this.finish();
+    }
 
     private void doLogin(final String userName, final String password) {
         String url = getResources().getString(R.string.local_url) + "/login";
