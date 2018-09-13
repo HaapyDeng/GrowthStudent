@@ -181,7 +181,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("4")) {
-            Intent intent = new Intent(getActivity(), QuestionnaireActivity.class);
+            Intent intent = new Intent(getActivity(), QuestionInfoActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());

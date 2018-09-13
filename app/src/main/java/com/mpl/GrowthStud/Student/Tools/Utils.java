@@ -9,11 +9,18 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.mpl.GrowthStud.Student.Bean.AnswerBean;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -115,5 +122,22 @@ public class Utils {
         }
 
         return filePic.getAbsolutePath();
+    }
+
+    public static JSONArray ListToArray(List<AnswerBean> answerList) {
+        JSONArray jsonArray = new JSONArray();
+        JSONObject tmpObj = null;
+        int count = answerList.size();
+        for (int i = 0; i < count; i++) {
+            tmpObj = new JSONObject();
+            try {
+                tmpObj.put(answerList.get(i).getItemId(), answerList.get(i).getOptionsId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(tmpObj);
+            tmpObj = null;
+        }
+        return jsonArray;
     }
 }

@@ -238,7 +238,8 @@
         <activity
             android:name=".Student.Activity.MessageInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.GuideActivity"></activity>
+        <activity android:name=".Student.Activity.GuideActivity" />
+        <activity android:name=".Student.Activity.QuestionInfoActivity"></activity>
     </application>
 
 </manifest>

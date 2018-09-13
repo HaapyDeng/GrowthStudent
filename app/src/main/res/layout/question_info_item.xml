@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="#eeeeee"
+            android:gravity="center"
+            android:text=" 单选题 "
+            android:textColor="#333333"
+            android:textSize="9dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="2、尊重他人，不以个人喜好指责、挑剔他人；不乱动他人东西，说话做事不影响他人。"
+            android:textColor="#ff333333"
+            android:textSize="9sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_choose_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/ll_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <CheckBox
+                    android:id="@+id/tv_a"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/checkbox_style"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="#353535"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_a_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="尊重他人为人和善正直，做的非常好很到位收到大家的爱戴"
+                    android:textColor="#666666"
+                    android:textSize="9dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <CheckBox
+                    android:id="@+id/tv_b"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/checkbox_style"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textColor="#353535"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_b_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="尊重他人为人和善正直，做的非常好很到位收到大家的爱戴"
+                    android:textColor="#666666"
+                    android:textSize="9dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <CheckBox
+                    android:id="@+id/tv_c"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/checkbox_style"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="C"
+                    android:textColor="#353535"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_c_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="尊重他人为人和善正直，做的非常好很到位收到大家的爱戴"
+                    android:textColor="#666666"
+                    android:textSize="9dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <CheckBox
+                    android:id="@+id/tv_d"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/checkbox_style"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="D"
+                    android:textColor="#353535"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_d_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="尊重他人为人和善正直，做的非常好很到位收到大家的爱戴"
+                    android:textColor="#666666"
+                    android:textSize="9dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

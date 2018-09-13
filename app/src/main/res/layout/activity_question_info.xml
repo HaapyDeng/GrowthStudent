@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Student.Activity.QuestionnaireActivity">
+    tools:context=".Student.Activity.QuestionInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,10 +52,14 @@
 
     </LinearLayout>
 
-    <com.mpl.GrowthStud.Student.View.NoScrollViewPager
-        android:id="@+id/viewpager"
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"></ListView>
 
-    </com.mpl.GrowthStud.Student.View.NoScrollViewPager>
+    <LinearLayout
+        android:id="@+id/ll_addView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 </LinearLayout>
