@@ -1,5 +1,8 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -71,6 +74,31 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent1);
                 break;
             case R.id.ll_upgrade:
+                //实例化自定义对话框
+                final ConstomDialog mdialog = new ConstomDialog(this);
+                mdialog.setTv("没有新版本升级");
+                //对话框中确认按钮事件
+                mdialog.setOnExitListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //如果对话框处于显示状态
+                        if (mdialog.isShowing()) {
+                            mdialog.dismiss();
+                        }
+
+                    }
+                });
+                //对话框中取消按钮事件
+                mdialog.setOnCancelListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mdialog != null && mdialog.isShowing()) {
+                            //关闭对话框
+                            mdialog.dismiss();
+                        }
+                    }
+                });
+                mdialog.show();
                 break;
             case R.id.ll_clear:
                 showDialog();

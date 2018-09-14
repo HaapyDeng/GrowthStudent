@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     private int task_star, star;
     private JSONArray audit;
     private String[] image = new String[]{};
-    private LinearLayout ll_addView;
+    private ScrollView ll_addView;
     private GridView gridview;
     private List<String> listImage = new ArrayList<>();
 

@@ -22,6 +22,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Bean.ParentApplyListItem;
 import com.mpl.GrowthStud.Student.Bean.StudentInfo;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.CircleImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +42,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private int gender;
     private StudentInfo studentInfo;
     private List<ParentApplyListItem> listItems;
-    private ImageView iv_dot, iv_gender, head_img;
+    private ImageView iv_gender, head_img;
     private int tag = 0;
     private ImageView ib_message;
+    private CircleImageView iv_dot;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();

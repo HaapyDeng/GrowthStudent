@@ -1,5 +1,6 @@
 package com.mpl.GrowthStud.Student.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
+import com.mpl.GrowthStud.Student.View.SquareLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,14 +56,15 @@ public class ImageAdapter extends BaseAdapter {
 //                    120);//传入自己需要的宽高
 //            convertView.setLayoutParams(param);
             convertView = LayoutInflater.from(context).inflate(R.layout.image_grid_view, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_image);
+            holder.iv = (SquareLayout) convertView.findViewById(R.id.iv_image);
             DownImage downImage = null;
             downImage = new DownImage(data.get(position));
             downImage.loadImage(new DownImage.ImageCallBack() {
 
+                @SuppressLint("NewApi")
                 @Override
                 public void getDrawable(Drawable drawable) {
-                    (holder.iv).setImageDrawable(drawable);
+                    (holder.iv).setBackground(drawable);
                 }
             });
         }
@@ -69,6 +72,6 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     class Holder {
-        ImageView iv;
+        SquareLayout iv;
     }
 }

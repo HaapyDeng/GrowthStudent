@@ -14,7 +14,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:divider="@null"
-        android:dividerHeight="10dp" />
+        android:dividerHeight="10dp"
+        android:scrollbars="none" />
 
     <LinearLayout
         android:id="@+id/ll_empty"
