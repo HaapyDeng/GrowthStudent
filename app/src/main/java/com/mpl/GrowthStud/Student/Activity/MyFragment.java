@@ -158,8 +158,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 Log.d("response==>>", response.toString());
                 try {
                     int code = response.getInt("code");
-                    JSONObject data = response.getJSONObject("data");
                     if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
                         schoolName = data.getString("school_name");
                         classroomName = data.getString("classroom_name");
                         grade = data.getString("grade");

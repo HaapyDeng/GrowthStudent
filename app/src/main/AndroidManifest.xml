@@ -238,8 +238,34 @@
         <activity
             android:name=".Student.Activity.MessageInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.GuideActivity" />
-        <activity android:name=".Student.Activity.QuestionInfoActivity"></activity>
+        <activity
+            android:name=".Student.Activity.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.QuestionInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.ActiveParentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.VerifyCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PMainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Parent.Activity.PChangePasswordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Parent.Activity.PSettingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Parent.Activity.ChangePsdVerifyCodeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Parent.Activity.PSetPasswordActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

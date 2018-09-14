@@ -1,10 +1,9 @@
-package com.mpl.GrowthStud.Student.Activity;
+package com.mpl.GrowthStud.Parent.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +13,9 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
-import com.mpl.GrowthStud.Student.Bean.StudentInfo;
+import com.mpl.GrowthStud.Student.Activity.SetPasswordActivity;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 import org.json.JSONArray;
@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class PChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageButton back;
     private TextView tv_text, tv_get_num;
     private EditText et_num;
@@ -36,18 +36,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_change_password);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        scope = bundle.getString("scope");
 
         tv_text = findViewById(R.id.tv_text);
-        if (scope.equals("2")) {
-            tv_text.setText("输入您学籍号码");
-        } else if (scope.equals("1")) {
-            tv_text.setText("输入您身份证号码");
-        } else {
-            tv_text.setText("输入您学籍号码");
-        }
         et_num = findViewById(R.id.et_num);
 
         tv_get_num = findViewById(R.id.tv_get_num);
@@ -68,37 +58,33 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void doVerifyNum(final String num) {
-        if (NetworkUtils.checkNetWork(ChangePasswordActivity.this) == false) {
-            Toast.makeText(ChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+        if (NetworkUtils.checkNetWork(PChangePasswordActivity.this) == false) {
+            Toast.makeText(PChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
-        SharedPreferences sharedPreferences = ChangePasswordActivity.this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PChangePasswordActivity.this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/user/verify-number/" + num;
+        String url = getResources().getString(R.string.local_url) + "/send-code";
         AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("mobile", num);
         client.addHeader("X-Api-Token", token);
-        client.get(url, new JsonHttpResponseHandler() {
+        client.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.d("response==>>", response.toString());
                 try {
                     int code = response.getInt("code");
-                    JSONObject data = response.getJSONObject("data");
                     if (code == 0) {
-                        String isVerify = data.getString("isVerify");
-                        if (isVerify.equals("true")) {
-                            Intent intent = new Intent(ChangePasswordActivity.this, SetPasswordActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("num", num);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(ChangePasswordActivity.this, "学籍号或者身份证错误，请重新输入", Toast.LENGTH_LONG).show();
-                            return;
-                        }
+                        Intent intent = new Intent(PChangePasswordActivity.this, ChangePsdVerifyCodeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phonenum", num);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
                     } else {
-                        Toast.makeText(ChangePasswordActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PChangePasswordActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
                 } catch (JSONException e) {
@@ -109,21 +95,21 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(ChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(ChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(ChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PChangePasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
         });

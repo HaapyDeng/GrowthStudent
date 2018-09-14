@@ -1,20 +1,22 @@
-package com.mpl.GrowthStud.Student.Activity;
+package com.mpl.GrowthStud.Parent.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Activity.AboutActivity;
+import com.mpl.GrowthStud.Student.Activity.ChangePasswordActivity;
+import com.mpl.GrowthStud.Student.Activity.MainActivity;
 import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
-    private String scope;
+public class PSettingActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageButton back;
     private LinearLayout ll_fix_password, ll_upgrade, ll_clear, ll_about;
     private TextView tv_version, tv_cache, log_out;
@@ -23,9 +25,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        scope = bundle.getString("scope", "");
+
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -64,10 +64,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.ll_fix_password:
-                Intent intent1 = new Intent(this, ChangePasswordActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("scope", scope);
-                intent1.putExtras(bundle);
+                Intent intent1 = new Intent(this, PChangePasswordActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.ll_upgrade:
@@ -76,7 +73,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 showDialog();
                 break;
             case R.id.ll_about:
-                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
+                Intent intent = new Intent(PSettingActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
             case R.id.log_out:
@@ -104,7 +101,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     SharedPreferences.Editor editor2 = sp2.edit();
                     editor2.putInt("tag", 0);
                     editor2.commit();
-                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    Intent intent = new Intent(PSettingActivity.this, MainActivity.class);
                     intent.putExtra(MainActivity.TAG_EXIT, true);
                     startActivity(intent);
                     //关闭对话框
@@ -137,7 +134,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             public void onClick(View v) {
                 //如果对话框处于显示状态
                 if (mdialog.isShowing()) {
-                    NetworkUtils.clearAllCache(SettingActivity.this);
+                    NetworkUtils.clearAllCache(PSettingActivity.this);
                     //关闭对话框
                     mdialog.dismiss();
                 }
