@@ -91,11 +91,21 @@
         android:background="@drawable/login_button_shape"
         android:text="登录"
         android:textColor="#ffffff"
-        android:textSize="16dp" />
+        android:textSize="18dp" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tv_forget_psd"
+        android:layout_width="84dp"
+        android:layout_height="19dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="忘记密码了？"
+        android:textColor="#2e97f0"
+        android:textSize="15dp" />
 
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->

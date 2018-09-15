@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageButton;
@@ -28,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -38,9 +42,10 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private android.app.FragmentManager fm;//管理器
     private TextView completed, underway, todo;
     private ImageButton back;
-    private TextView tv_count;
+    private TextView tv_count, tv_choose;
     private String totalNumber, completeNumber;
     private RingView ringView;
+    private DrawerLayout drawerlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +53,15 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         setContentView(R.layout.activity_echievement);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
+
         ringView = (RingView) findViewById(R.id.ringView);
 
         completed = findViewById(R.id.completed);
         completed.setOnClickListener(this);
+        tv_choose = findViewById(R.id.tv_choose);
+        tv_choose.setOnClickListener(this);
+//        View view = LayoutInflater.from(this).inflate(R.layout.choose_side_bar, null);
+//        drawerlayout = view.findViewById(R.id.drawerlayout);
 
         underway = findViewById(R.id.underway);
         underway.setOnClickListener(this);
@@ -73,7 +83,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + 1 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -145,6 +155,9 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             case R.id.back:
                 finish();
                 break;
+//            case R.id.tv_choose:
+//                drawerlayout.openDrawer(Gravity.RIGHT);
+//                break;
             case R.id.completed:
                 selectFragment(0);
                 break;

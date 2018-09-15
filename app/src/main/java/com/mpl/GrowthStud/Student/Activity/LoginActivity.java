@@ -17,6 +17,8 @@ import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.Parent.Activity.ActiveParentActivity;
 import com.mpl.GrowthStud.Parent.Activity.PMainActivity;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Tools.CancelOrOkDialog;
+import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 import org.json.JSONArray;
@@ -33,7 +35,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText et_user, et_psd;
     private Button btn_login;
     private String userName, password;
-    private String spuser = "1";
+    private TextView tv_forget_psd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         et_psd = findViewById(R.id.et_psd);
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
+
+        tv_forget_psd = findViewById(R.id.tv_forget_psd);
+        tv_forget_psd.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +79,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                Intent intent = new Intent(this, ChooseGradeActivity.class);
 //                startActivity(intent);
                 doLogin(userName, password);
+                break;
+            case R.id.tv_forget_psd:
+                final ConstomDialog dialog = new ConstomDialog(LoginActivity.this);
+                dialog.setTv("请联系班主任老师修改重置密码");
+                dialog.setOnCancelListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setOnExitListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
                 break;
         }
 
