@@ -17,7 +17,7 @@ import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
-    private String scope;
+    private int scope;
     private ImageButton back;
     private LinearLayout ll_fix_password, ll_upgrade, ll_clear, ll_about;
     private TextView tv_version, tv_cache, log_out;
@@ -28,7 +28,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_setting);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        scope = bundle.getString("scope", "");
+        scope = bundle.getInt("scope", 0);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -69,7 +69,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ll_fix_password:
                 Intent intent1 = new Intent(this, ChangePasswordActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("scope", scope);
+                bundle.putInt("scope", scope);
                 intent1.putExtras(bundle);
                 startActivity(intent1);
                 break;

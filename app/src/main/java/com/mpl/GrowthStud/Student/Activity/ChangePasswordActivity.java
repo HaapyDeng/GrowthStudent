@@ -28,7 +28,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     private ImageButton back;
     private TextView tv_text, tv_get_num;
     private EditText et_num;
-    private String scope;
+    private int scope;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +38,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         back.setOnClickListener(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        scope = bundle.getString("scope");
+        scope = bundle.getInt("scope");
 
         tv_text = findViewById(R.id.tv_text);
-        if (scope.equals("2")) {
+        if (scope == 2) {
             tv_text.setText("输入您学籍号码");
-        } else if (scope.equals("1")) {
+        } else if (scope == 1) {
             tv_text.setText("输入您身份证号码");
         } else {
             tv_text.setText("输入您学籍号码");
@@ -91,6 +91,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                             Intent intent = new Intent(ChangePasswordActivity.this, SetPasswordActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("num", num);
+                            bundle.putInt("scope", scope);
                             intent.putExtras(bundle);
                             startActivity(intent);
                         } else {

@@ -19,10 +19,10 @@ public class StudentInfo {
     private String teacher_name;
     private String birthday;
     private int gender;
-    private String scope;
+    private int scope;
     private String username;
 
-    public StudentInfo(String school_name, String classroom_name, String grade, String teacher_name, String birthday, int gender, String scope, String username) {
+    public StudentInfo(String school_name, String classroom_name, String grade, String teacher_name, String birthday, int gender, int scope, String username) {
         this.school_name = school_name;
         this.classroom_name = classroom_name;
         this.grade = grade;
@@ -31,10 +31,6 @@ public class StudentInfo {
         this.gender = gender;
         this.scope = scope;
         this.username = username;
-    }
-
-    public StudentInfo() {
-
     }
 
 
@@ -86,11 +82,11 @@ public class StudentInfo {
         this.gender = gender;
     }
 
-    public String getScope() {
+    public int getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
+    public void setScope(int scope) {
         this.scope = scope;
     }
 

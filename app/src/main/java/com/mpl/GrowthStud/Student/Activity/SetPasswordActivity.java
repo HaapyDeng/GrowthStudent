@@ -31,6 +31,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
     private TextView tv_save;
     private String num;
     private String newPassword;
+    private int scope;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         num = bundle.getString("num");
+        scope = bundle.getInt("scope");
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -61,7 +63,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void doUpdatePassword(String newPassword) {
+    private void doUpdatePassword(final String newPassword) {
         if (NetworkUtils.checkNetWork(SetPasswordActivity.this) == false) {
             Toast.makeText(SetPasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -81,9 +83,18 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
                 Log.d("response==>>", response.toString());
                 try {
                     int code = response.getInt("code");
-                    String message = response.getString("message");
-                    if (message.equals("Success")) {
+                    if (code == 0) {
+                        SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("password", newPassword);
+                        editor.commit();
                         Toast.makeText(SetPasswordActivity.this, "保存成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(SetPasswordActivity.this, SettingActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("scope", scope);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
                         return;
                     } else {
                         Toast.makeText(SetPasswordActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();

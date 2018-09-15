@@ -1,16 +1,20 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -37,15 +42,17 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyFragment extends Fragment implements View.OnClickListener {
     private TextView tv_student_name, tv_school, tv_grade, tv_brithday, tv_school_grade, tv_parent_id, tv_teacher, tv_in_school;
-    private LinearLayout ll_set, ll_parent_id;
-    private String userName, classroomName, grade, teacherName, birthday, scope, schoolName;
-    private int gender;
+    private LinearLayout ll_set, ll_parent_id, ll_brithday;
+    private String userName, classroomName, grade, teacherName, birthday, schoolName;
+    private int gender, scope;
     private StudentInfo studentInfo;
     private List<ParentApplyListItem> listItems;
     private ImageView iv_gender, head_img;
     private int tag = 0;
     private ImageView ib_message;
     private CircleImageView iv_dot;
+    int mYear, mMonth, mDay;
+    Calendar c;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
@@ -60,6 +67,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my, container, false);
+        Calendar ca = Calendar.getInstance();
+        mYear = ca.get(Calendar.YEAR);
+        mMonth = ca.get(Calendar.MONTH);
+        mDay = ca.get(Calendar.DAY_OF_MONTH);
         initView(root);
         getParentList();
         initData();
@@ -168,7 +179,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         teacherName = data.getString("teacher_name");
                         birthday = data.getString("birthday");
                         gender = data.getInt("gender");
-                        scope = data.getString("scope");
+                        scope = data.getInt("scope");
                         userName = data.getString("username");
                         Message message = new Message();
                         message.what = 1;
@@ -217,9 +228,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                     tv_brithday.setText(birthday);
                     tv_school.setText(schoolName);
                     tv_grade.setText(grade);
-                    if (scope.equals("2")) {
+                    if (scope == 2) {
                         tv_school_grade.setText("小学");
-                    } else if (scope.equals("1")) {
+                    } else if (scope == 1) {
                         tv_school_grade.setText("幼儿园");
                     }
                     for (int i = 0; i < listItems.size(); i++) {
@@ -241,6 +252,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_girl_img));
                     }
                     break;
+                case 2:
+                    tv_brithday.setText(DateFormat.format("yyy-MM-dd", c));
+                    break;
             }
         }
     };
@@ -260,7 +274,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         tv_grade = root.findViewById(R.id.tv_grade);
 
         tv_brithday = root.findViewById(R.id.tv_brithday);
-        tv_brithday.setOnClickListener(this);
+
+        ll_brithday = root.findViewById(R.id.ll_brithday);
+        ll_brithday.setOnClickListener(this);
 
         tv_school_grade = root.findViewById(R.id.tv_school_grade);
 
@@ -284,7 +300,17 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 Intent intent3 = new Intent(getActivity(), MessageActivity.class);
                 startActivity(intent3);
                 break;
-            case R.id.tv_brithday:
+            case R.id.ll_brithday:
+                c = Calendar.getInstance();
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year, monthOfYear, dayOfMonth);
+                        Log.d("data>>>", "" + DateFormat.format("yyy-MM-dd", c));
+                        doUpDateBirthday(DateFormat.format("yyy-MM-dd", c));
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
                 break;
             case R.id.ll_parent_id:
                 Intent intent2 = new Intent(getActivity(), ParentsAccountActivity.class);
@@ -293,10 +319,65 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_set:
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("scope", scope);
+                bundle.putInt("scope", scope);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
         }
+
     }
+
+    private void doUpDateBirthday(CharSequence format) {
+        if (NetworkUtils.checkNetWork(getActivity()) == false) {
+            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/user/update-day/" + format;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("respomse==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        Message message = new Message();
+                        message.what = 2;
+                        handler.sendMessage(message);
+                    } else {
+                        Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
 }
