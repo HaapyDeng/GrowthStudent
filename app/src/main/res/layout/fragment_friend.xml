@@ -9,51 +9,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
+
+
         android:background="@drawable/gradual_change"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:background="@mipmap/icon_white_userbook" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/ib_message"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:background="@mipmap/bell" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="15dp"
-            android:gravity="center_vertical"
+
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="伙伴动态"
             android:textColor="#ffffff"
-            android:textSize="23dp" />
+            android:textSize="29dp" />
+
+        <ImageButton
+            android:id="@+id/ib_message"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/bell"
+            android:gravity="center_vertical" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -77,6 +61,6 @@
             android:layout_height="wrap_content"
             android:text="正在建设中，尽请期待"
             android:textColor="#333333"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 </LinearLayout>

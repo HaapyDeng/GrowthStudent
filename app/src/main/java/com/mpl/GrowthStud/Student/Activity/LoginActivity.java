@@ -124,9 +124,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         String role = data.getString("role");
                         int isActive = data.getInt("is_active");
                         String userId = data.getString("user_id");
+                        int scope = data.getInt("scope");
                         SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("token", token);
+                        editor.putInt("scope", scope);
                         editor.putString("username", userName);
                         editor.putString("password", password);
                         editor.putString("userid", userId);
@@ -137,7 +139,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         SharedPreferences.Editor editor2 = sp2.edit();
                         editor2.putInt("tag", 1);
                         editor2.commit();
-                        doSetAlia(token, role, isActive, userId);
+                        doSetAlia(token, role, isActive, userId, scope);
                     } else {
                         Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -171,7 +173,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    private void doSetAlia(final String token, final String role, final int isActive, String userId) {
+    private void doSetAlia(final String token, final String role, final int isActive, String userId, final int scope) {
         final String[] registrationID = new String[1];
         JPushInterface.setAlias(this, NetworkUtils.getIMEI(this), new TagAliasCallback() {
             @Override
@@ -199,13 +201,22 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     switch (isActive) {
                                         case 0:
                                             if (role.equals("student")) {
-                                                //跳转到学生激活页面
-                                                Intent intent = new Intent(LoginActivity.this, ChooseGradeActivity.class);
-                                                startActivity(intent);
+                                                if (scope == 1) {
+                                                    //跳转到身份证激活页面
+                                                    Intent intent = new Intent(LoginActivity.this, ActivateKinderStdActivity.class);
+                                                    startActivity(intent);
+                                                } else {
+                                                    //跳转到学籍号激活页面
+                                                    Intent intent = new Intent(LoginActivity.this, ActivateOtherStdActivity.class);
+                                                    startActivity(intent);
+                                                }
+
                                             } else if (role.equals("parent")) {
                                                 //跳转到家长激活界面
 //                                                Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
 //                                                startActivity(intent2);
+                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                return;
                                             }
                                             break;
                                         case 1:
@@ -219,6 +230,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
 //                                                startActivity(intent4);
 //                                                finish();
+                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                return;
                                             }
                                             break;
                                     }

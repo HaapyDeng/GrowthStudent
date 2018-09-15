@@ -68,7 +68,7 @@
         android:gravity="center"
         android:text="输入学籍号"
         android:textColor="#ff333333"
-        android:textSize="18sp" />
+        android:textSize="18dp" />
 
     <com.mpl.GrowthStud.Student.Tools.LineEditText
         android:id="@+id/et_schoolnum"
@@ -76,15 +76,16 @@
         android:layout_height="50dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:background="@null"
         android:gravity="center"
+        android:hint="请输入16位学籍号码"
         android:inputType="number"
         android:lines="1"
-        android:maxLength="24" />
+        android:maxLength="30"
+        android:textSize="15dp" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="18dp" />
+        android:layout_height="10dp" />
 
     <TextView
         android:layout_width="match_parent"

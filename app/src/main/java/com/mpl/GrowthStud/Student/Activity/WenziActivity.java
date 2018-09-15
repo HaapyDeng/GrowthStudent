@@ -60,7 +60,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             case R.id.tv_commit:
                 et_wenzi = findViewById(R.id.et_wenzi);
                 wenzi = et_wenzi.getText().toString().trim();
-                if (wenzi.length() < 100) {
+                if (wenzi.length() <= 0) {
                     Toast.makeText(this, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
                     break;
                 }

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="个人"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="家长账号"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
     </LinearLayout>
 
@@ -50,7 +50,7 @@
         android:gravity="center_vertical"
         android:text="已绑定"
         android:textColor="#ff666666"
-        android:textSize="8dp" />
+        android:textSize="17dp" />
 
     <ListView
         android:id="@+id/already_listview"
@@ -64,7 +64,7 @@
         android:gravity="center_vertical"
         android:text="绑定申请"
         android:textColor="#ff666666"
-        android:textSize="8dp" />
+        android:textSize="17dp" />
 
     <ListView
         android:id="@+id/no_listview"

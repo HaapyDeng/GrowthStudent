@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="发现"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:gravity="center"
             android:text="我的成就"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
         <TextView
             android:id="@+id/tv_choose"
@@ -47,7 +47,7 @@
             android:gravity="center"
             android:text="筛选"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 
@@ -102,7 +102,7 @@
             android:gravity="center"
             android:text="已完成"
             android:textColor="#ffffff"
-            android:textSize="9dp" />
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/underway"
@@ -113,7 +113,7 @@
             android:gravity="center"
             android:text="进行中"
             android:textColor="#007aff"
-            android:textSize="9dp" />
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/todo"
@@ -125,7 +125,7 @@
             android:gravity="center"
             android:text="待完成"
             android:textColor="#007aff"
-            android:textSize="9dp" />
+            android:textSize="13dp" />
     </LinearLayout>
 
     <LinearLayout

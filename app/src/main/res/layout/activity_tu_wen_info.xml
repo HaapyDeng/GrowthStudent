@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="成就"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:text="我的成就"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:gravity="center_vertical"
             android:text="认识他人"
             android:textColor="#333333"
-            android:textSize="12dp" />
+            android:textSize="19dp" />
 
         <TextView
             android:id="@+id/tv_start_time"
@@ -68,7 +68,7 @@
             android:gravity="center_vertical"
             android:text="2018-12-30"
             android:textColor="#999999"
-            android:textSize="8dp" />
+            android:textSize="13dp" />
     </LinearLayout>
 
     <TextView
@@ -79,7 +79,7 @@
         android:layout_marginRight="10dp"
         android:text="我的同桌叫Daved，是个有趣的男孩子。他特别喜欢摄影，他说好的摄影作品可以发人深省或者给人温暖。"
         android:textColor="#ff333333"
-        android:textSize="9dp" />
+        android:textSize="15dp" />
 
     <ImageView
         android:layout_width="match_parent"

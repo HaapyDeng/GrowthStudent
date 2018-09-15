@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="发现"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="综合评价"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
 
     </LinearLayout>
@@ -99,14 +99,14 @@
                     android:layout_height="wrap_content"
                     android:text="422"
                     android:textColor="#3699ed"
-                    android:textSize="16dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="获星总分"
                     android:textColor="#333333"
-                    android:textSize="9dp" />
+                    android:textSize="17dp" />
             </LinearLayout>
 
             <ImageView
@@ -126,14 +126,14 @@
                     android:layout_height="wrap_content"
                     android:text="422"
                     android:textColor="#3699ed"
-                    android:textSize="16dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="获评总分"
                     android:textColor="#333333"
-                    android:textSize="9dp" />
+                    android:textSize="17dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -162,7 +162,7 @@
             android:layout_marginLeft="5dp"
             android:text="获星个数"
             android:textColor="#333333"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
             android:layout_marginRight="35dp"
             android:text="520"
             android:textColor="#3699ed"
-            android:textSize="16dp" />
+            android:textSize="25dp" />
     </LinearLayout>
 
     <ImageView
@@ -202,7 +202,7 @@
             android:paddingRight="5dp"
             android:text="数据详情"
             android:textColor="#999999"
-            android:textSize="9dp" />
+            android:textSize="15dp" />
 
         <com.mpl.GrowthStud.Student.View.CircleImageView
             android:layout_width="5dp"
@@ -225,7 +225,7 @@
             android:gravity="center"
             android:text="获星详情"
             android:textColor="#ffffff"
-            android:textSize="9dp" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/get_score_info"
@@ -237,7 +237,7 @@
             android:gravity="center"
             android:text="获分详情"
             android:textColor="#007aff"
-            android:textSize="9dp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
     <LinearLayout

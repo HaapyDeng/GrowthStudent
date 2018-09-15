@@ -96,22 +96,6 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         iv_video = findViewById(R.id.iv_video);
         iv_video.setOnClickListener(this);
 
-        File filePathFile = new File("/storage/emulated/0/im/video/");
-        if (filePathFile != null && filePathFile.listFiles() != null) {
-            if (filePathFile.listFiles().length > 0) {
-                path = filePathFile.listFiles()[0].getPath();
-                Bitmap bitmap = Utils.createVideoThumbnail(path);
-                BitmapDrawable drawable = new BitmapDrawable(bitmap);
-//                drawable.setTileModeXY(Shader.TileMode.REPEAT,
-//                        Shader.TileMode.REPEAT);
-                drawable.setDither(true);
-//                btnPlay.setBackgroundDrawable(drawable);
-                iv_button.setVisibility(View.GONE);
-                iv_video.setVisibility(View.VISIBLE);
-                iv_video.setBackgroundDrawable(drawable);
-                btn_delete.setVisibility(View.VISIBLE);
-            }
-        }
     }
 
     @Override
@@ -123,7 +107,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             case R.id.tv_commit:
                 et_wenzi = findViewById(R.id.et_wenzi);
                 wenzi = et_wenzi.getText().toString().trim();
-                if (wenzi.length() < 100) {
+                if (wenzi.length() == 0) {
                     Toast.makeText(this, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
                     break;
                 }

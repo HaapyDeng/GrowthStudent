@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="返回"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="绑定申请"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
     </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:layout_marginBottom="41dp"
             android:text="刘天天"
             android:textColor="#ffffff"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:id="@+id/iv_gender"
@@ -109,7 +109,7 @@
             android:gravity="center_vertical"
             android:text="电话"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_phone"
@@ -118,7 +118,7 @@
             android:gravity="center_vertical"
             android:text="139*****8832"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -137,7 +137,7 @@
             android:gravity="center_vertical"
             android:text="身份"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_type"
@@ -146,7 +146,7 @@
             android:gravity="center_vertical"
             android:text="爷爷"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -164,7 +164,7 @@
             android:gravity="center_vertical"
             android:text="留言信息"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -178,7 +178,7 @@
             android:gravity="center_vertical"
             android:text="我是你爷爷，你同意一下呗，乖孙子！"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
@@ -200,7 +200,7 @@
             android:gravity="center"
             android:text="同意"
             android:textColor="#ffffffff"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:layout_width="20dp"
@@ -217,6 +217,6 @@
             android:gravity="center"
             android:text="拒绝"
             android:textColor="#3699ed"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 </LinearLayout>

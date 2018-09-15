@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="个人"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="设置"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
     </LinearLayout>
 
@@ -58,7 +58,7 @@
             android:gravity="center_vertical"
             android:text="修改密码"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             android:background="@mipmap/right_arrow"
             android:gravity="center_vertical"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
@@ -92,7 +92,7 @@
             android:gravity="center_vertical"
             android:text="版本更新"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_version"
@@ -102,7 +102,7 @@
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
@@ -127,7 +127,7 @@
             android:gravity="center_vertical"
             android:text="清除缓存"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_cache"
@@ -137,7 +137,7 @@
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
@@ -162,7 +162,7 @@
             android:gravity="center_vertical"
             android:text="关于我们"
             android:textColor="#353535"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
             android:background="@mipmap/right_arrow"
             android:gravity="center_vertical"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
@@ -193,6 +193,6 @@
         android:gravity="center"
         android:text="退出登录"
         android:textColor="#ff4700"
-        android:textSize="11dp" />
+        android:textSize="17dp" />
 
 </LinearLayout>

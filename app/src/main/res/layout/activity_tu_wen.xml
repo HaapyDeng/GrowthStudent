@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/gradual_change"
         android:gravity="center"
         android:orientation="horizontal">
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="成就"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:text="我的成就"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
         <TextView
             android:id="@+id/tv_commit"
@@ -49,7 +49,7 @@
             android:gravity="center"
             android:text="提交"
             android:textColor="#ffffff"
-            android:textSize="15dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 
@@ -62,10 +62,10 @@
         android:layout_marginTop="10dp"
         android:background="#F8F8F8"
         android:gravity="left"
-        android:hint="请在此用一段话描述生活中自己的样子，比如活泼、可爱、认证、用心、粗心（100-300字）"
+        android:hint="请在此用一段话描述生活中自己的样子，比如活泼、可爱、认证、用心、粗心"
         android:maxLength="300"
         android:textColorHint="#999999"
-        android:textSize="10dp" />
+        android:textSize="15dp" />
     <!--展示上传的图片-->
     <GridView
         android:id="@+id/gridView"
