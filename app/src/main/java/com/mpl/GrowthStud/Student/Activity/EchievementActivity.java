@@ -2,6 +2,7 @@ package com.mpl.GrowthStud.Student.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,13 +10,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.app.FragmentActivity;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +33,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Adapter.CategoryListViewAdapter;
+import com.mpl.GrowthStud.Student.Bean.CategoryListItem;
+import com.mpl.GrowthStud.Student.Bean.StudentInfo;
+import com.mpl.GrowthStud.Student.Tools.MyRadioGroup;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.RingView;
 
@@ -31,12 +45,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EchievementActivity extends FragmentActivity implements View.OnClickListener {
+public class EchievementActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private ChengJiuYiWanChengFragment fragment1;
     private ChengJiuJinXingZhongFragment fragment2;
     private ChengJiuDaiWanChengFragment fragment3;
@@ -46,12 +61,69 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private TextView tv_count, tv_choose;
     private String totalNumber, completeNumber;
     private RingView ringView;
-    private DrawerLayout drawerlayout;
+    private DrawerLayout drawerLayout;
+    private TextView tv_start_time, tv_end_time, tv_clear, tv_ok;
+    private RadioButton rb_youeryuan, rb_xiaoxue, rb_chuzhong, rb_gaozhong;
+    private MyRadioGroup radioGroup;
+    private ListView lv_category, lv_label;
+    private int school_scope;
+    private CharSequence choose_start_time, choose_end_time;
+    private CategoryListItem categoryListItem;
+    private List<CategoryListItem> listCategoryListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_echievement);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_na);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭手势滑动
+        radioGroup = (MyRadioGroup) findViewById(R.id.radioGroupID);
+        //设置监听
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.tv_youeryuan:
+                        school_scope = 1;
+                        rb_youeryuan.setTextColor(getResources().getColor(R.color.white));
+                        rb_xiaoxue.setTextColor(getResources().getColor(R.color.tab_checked));
+                        rb_chuzhong.setTextColor(getResources().getColor(R.color.tab_checked));
+                        break;
+                    case R.id.tv_xiaoxue:
+                        school_scope = 2;
+                        rb_xiaoxue.setTextColor(getResources().getColor(R.color.white));
+                        rb_youeryuan.setTextColor(getResources().getColor(R.color.tab_checked));
+                        rb_chuzhong.setTextColor(getResources().getColor(R.color.tab_checked));
+                        break;
+                    case R.id.tv_chuzhong:
+                        school_scope = 3;
+                        rb_chuzhong.setTextColor(getResources().getColor(R.color.white));
+                        rb_youeryuan.setTextColor(getResources().getColor(R.color.tab_checked));
+                        rb_xiaoxue.setTextColor(getResources().getColor(R.color.tab_checked));
+                        break;
+
+                }
+                Log.d("school_scope==>>", "" + school_scope);
+            }
+        });
+        rb_youeryuan = findViewById(R.id.tv_youeryuan);
+        rb_xiaoxue = findViewById(R.id.tv_xiaoxue);
+        rb_chuzhong = findViewById(R.id.tv_chuzhong);
+        rb_gaozhong = findViewById(R.id.tv_gaozhong);
+
+        tv_start_time = findViewById(R.id.tv_start_time);
+        tv_start_time.setOnClickListener(this);
+        tv_end_time = findViewById(R.id.tv_end_time);
+        tv_end_time.setOnClickListener(this);
+        tv_clear = findViewById(R.id.tv_clear);
+        tv_clear.setOnClickListener(this);
+        tv_ok = findViewById(R.id.tv_ok);
+        tv_ok.setOnClickListener(this);
+        lv_category = findViewById(R.id.lv_category);
+        lv_category.setOnItemClickListener(this);
+        lv_label = findViewById(R.id.lv_label);
+        lv_label.setOnItemClickListener(this);
+
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -156,9 +228,10 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             case R.id.back:
                 finish();
                 break;
-//            case R.id.tv_choose:
-//                drawerlayout.openDrawer(Gravity.RIGHT);
-//                break;
+            case R.id.tv_choose:
+                drawerLayout.openDrawer(Gravity.RIGHT);
+                getCategoryList();
+                break;
             case R.id.completed:
                 selectFragment(0);
                 break;
@@ -168,7 +241,101 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             case R.id.todo:
                 selectFragment(2);
                 break;
+            case R.id.tv_start_time:
+                final Calendar c;
+                c = Calendar.getInstance();
+                DatePickerDialog dialog = new DatePickerDialog(EchievementActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year, monthOfYear, dayOfMonth);
+                        Log.d("data>>>", "" + DateFormat.format("yyy-MM-dd", c));
+                        tv_start_time.setText(DateFormat.format("yyy-MM-dd", c));
+                        choose_start_time = DateFormat.format("yyy-MM-dd", c);
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+                break;
+            case R.id.tv_end_time:
+                final Calendar c2;
+                c2 = Calendar.getInstance();
+                DatePickerDialog dialog2 = new DatePickerDialog(EchievementActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c2.set(year, monthOfYear, dayOfMonth);
+                        Log.d("data>>>", "" + DateFormat.format("yyy-MM-dd", c2));
+                        tv_end_time.setText(DateFormat.format("yyy-MM-dd", c2));
+                        choose_end_time = DateFormat.format("yyy-MM-dd", c2);
+                    }
+                }, c2.get(Calendar.YEAR), c2.get(Calendar.MONTH), c2.get(Calendar.DAY_OF_MONTH));
+                dialog2.show();
+                break;
         }
+    }
+
+    private void getCategoryList() {
+        if (NetworkUtils.checkNetWork(EchievementActivity.this) == false) {
+            Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = EchievementActivity.this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/category";
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray list = data.getJSONArray("list");
+                        listCategoryListItem = new ArrayList<>();
+                        if (list.length() <= 0) {
+
+                        } else {
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                categoryListItem = new CategoryListItem(id, name);
+                                listCategoryListItem.add(categoryListItem);
+                            }
+                            CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listCategoryListItem);
+                            lv_category.setAdapter(categoryListViewAdapter);
+                        }
+                    } else {
+                        Toast.makeText(EchievementActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 
     // 切换Fragment
@@ -303,5 +470,87 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             underway.setTextColor(getResources().getColor(R.color.getstarinfo));
         }
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (view.getId()) {
+            case R.id.lv_category:
+                String id = listCategoryListItem.get(i).getId();
+                String name = listCategoryListItem.get(i).getName();
+                Log.d("Categoryid==>>>>", id);
+                doGetLableList(id);
+                break;
+            case R.id.lv_label:
+                Log.d("Labelid", listCategoryListItem.get(i).getName());
+                break;
+        }
+
+    }
+
+    private void doGetLableList(String id) {
+        if (NetworkUtils.checkNetWork(EchievementActivity.this) == false) {
+            Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = EchievementActivity.this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/label/" + id;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray list = data.getJSONArray("list");
+                        listCategoryListItem = new ArrayList<>();
+                        if (list.length() <= 0) {
+
+                        } else {
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                categoryListItem = new CategoryListItem(id, name);
+                                listCategoryListItem.add(categoryListItem);
+                            }
+                            CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listCategoryListItem);
+                            lv_label.setAdapter(categoryListViewAdapter);
+                        }
+                    } else {
+                        Toast.makeText(EchievementActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
