@@ -20,6 +20,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.CancelOrOkDialog;
 import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button btn_login;
     private String userName, password;
     private TextView tv_forget_psd;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void doLogin(final String userName, final String password) {
+        loadingDialog = new LoadingDialog(this, "正在登录...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         String url = getResources().getString(R.string.local_url) + "/login";
         Log.d("url==>>", url + "+" + userName + password);
         RequestParams params = new RequestParams();
@@ -198,6 +202,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             try {
                                 int code = response.getInt("code");
                                 if (code == 0) {
+                                    loadingDialog.dismiss();
                                     switch (isActive) {
                                         case 0:
                                             if (role.equals("student")) {

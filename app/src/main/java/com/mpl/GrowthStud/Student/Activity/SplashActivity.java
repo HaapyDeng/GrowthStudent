@@ -20,6 +20,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class SplashActivity extends Activity {
     boolean isFirstIn = false;
     boolean update = false;
     private String updateUrl, updateVersion, content, mandatory, app_code;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +193,8 @@ public class SplashActivity extends Activity {
     }
 
     private void doLogin(final String userName, final String password) {
+        loadingDialog = new LoadingDialog(this, "正在登录...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         String url = getResources().getString(R.string.local_url) + "/login";
         Log.d("url==>>", url + "+" + userName + password);
         RequestParams params = new RequestParams();
@@ -281,6 +285,7 @@ public class SplashActivity extends Activity {
                             try {
                                 int code = response.getInt("code");
                                 if (code == 0) {
+                                    loadingDialog.dismiss();
                                     switch (isActive) {
                                         case 0:
                                             if (role.equals("student")) {
