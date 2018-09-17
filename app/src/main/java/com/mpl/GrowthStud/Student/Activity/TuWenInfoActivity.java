@@ -10,11 +10,14 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +49,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     private int task_star, star;
     private JSONArray audit;
     private String[] image = new String[]{};
-    private ScrollView ll_addView;
+    private LinearLayout ll_open;
     private GridView gridview;
     private List<String> listImage = new ArrayList<>();
 
@@ -68,7 +71,8 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
         tv_start_time = findViewById(R.id.tv_start_time);
         tv_answer = findViewById(R.id.tv_answer);
 
-        ll_addView = findViewById(R.id.ll_addView);
+        ll_open = findViewById(R.id.ll_open);
+        ll_open.setOnClickListener(this);
 
         gridview = findViewById(R.id.gridview);
         initData();
@@ -153,6 +157,98 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
             case R.id.back:
                 finish();
                 break;
+            case R.id.ll_open:
+                ll_open.setVisibility(View.INVISIBLE);
+                //判断是谁评价了
+                if (audit.length() == 0) {
+                    // 声明PopupWindow
+                    final PopupWindow popupWindow;
+                    // 声明PopupWindow对应的视图
+                    View popupView;
+                    // 声明平移动画
+                    popupView = View.inflate(TuWenInfoActivity.this, R.layout.no_evaluate_item, null);
+                    // 参数2,3：指明popupwindow的宽度和高度
+                    popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.WRAP_CONTENT);
+                    // 设置点击popupwindow外屏幕其它地方不消失
+                    popupWindow.setOutsideTouchable(false);
+                    // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                    popupWindow.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    LinearLayout ll_close = popupView.findViewById(R.id.ll_close);
+                    ll_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            popupWindow.dismiss();
+                            ll_open.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } else if (audit.length() == 1) {
+                    // 声明PopupWindow
+                    final PopupWindow popupWindow2;
+                    // 声明PopupWindow对应的视图
+                    View popupView2;
+                    popupView2 = View.inflate(TuWenInfoActivity.this, R.layout.parent_evaluate_item, null);
+                    // 参数2,3：指明popupwindow的宽度和高度
+                    popupWindow2 = new PopupWindow(popupView2, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    // 设置点击popupwindow外屏幕其它地方不消失
+                    popupWindow2.setOutsideTouchable(false);
+                    // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                    popupWindow2.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    try {
+                        JSONObject object = audit.getJSONObject(0);
+                        String role = object.getString("role");
+                        String comment = object.getString("comment");
+                        TextView tv_comment = popupView2.findViewById(R.id.tv_comment);
+                        tv_comment.setText(comment);
+                        LinearLayout ll_close = popupView2.findViewById(R.id.ll_close);
+                        ll_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                popupWindow2.dismiss();
+                                ll_open.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // 声明PopupWindow
+                    final PopupWindow popupWindow3;
+                    // 声明PopupWindow对应的视图
+                    View popupView3;
+                    popupView3 = View.inflate(TuWenInfoActivity.this, R.layout.teacher_evaluate_item, null);
+                    // 参数2,3：指明popupwindow的宽度和高度
+                    popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    // 设置点击popupwindow外屏幕其它地方不消失
+                    popupWindow3.setOutsideTouchable(false);
+                    // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                    popupWindow3.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    try {
+                        JSONObject object1 = audit.getJSONObject(0);
+                        String role1 = object1.getString("role");
+                        String comment1 = object1.getString("comment");
+                        JSONObject object2 = audit.getJSONObject(1);
+                        String role2 = object1.getString("role");
+                        String comment2 = object1.getString("comment");
+                        TextView tv_omment1 = popupView3.findViewById(R.id.comment1);
+                        tv_omment1.setText(comment1);
+                        TextView tv_omment2 = popupView3.findViewById(R.id.comment2);
+                        tv_omment2.setText(comment2);
+                        LinearLayout ll_close = popupView3.findViewById(R.id.ll_close);
+                        ll_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                popupWindow3.dismiss();
+                                ll_open.setVisibility(View.VISIBLE);
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
         }
     }
 
@@ -163,6 +259,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+                    ll_open.setVisibility(View.INVISIBLE);
                     tv_prompt.setText(prompt);
                     tv_start_time.setText(start_time);
                     tv_answer.setText(answer);
@@ -176,21 +273,68 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                     gridview.setAdapter(new ImageAdapter(TuWenInfoActivity.this, listImage));
                     //判断是谁评价了
                     if (audit.length() == 0) {
-                        View view = View.inflate(TuWenInfoActivity.this, R.layout.no_evaluate_item, null);
-                        ll_addView.addView(view);
+                        // 声明PopupWindow
+                        final PopupWindow popupWindow;
+                        // 声明PopupWindow对应的视图
+                        View popupView;
+                        // 声明平移动画
+                        popupView = View.inflate(TuWenInfoActivity.this, R.layout.no_evaluate_item, null);
+                        // 参数2,3：指明popupwindow的宽度和高度
+                        popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT,
+                                WindowManager.LayoutParams.WRAP_CONTENT);
+                        // 设置点击popupwindow外屏幕其它地方不消失
+                        popupWindow.setOutsideTouchable(false);
+                        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                        popupWindow.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        LinearLayout ll_close = popupView.findViewById(R.id.ll_close);
+                        ll_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                popupWindow.dismiss();
+                                ll_open.setVisibility(View.VISIBLE);
+                            }
+                        });
                     } else if (audit.length() == 1) {
+                        // 声明PopupWindow
+                        final PopupWindow popupWindow2;
+                        // 声明PopupWindow对应的视图
+                        View popupView2;
+                        popupView2 = View.inflate(TuWenInfoActivity.this, R.layout.parent_evaluate_item, null);
+                        // 参数2,3：指明popupwindow的宽度和高度
+                        popupWindow2 = new PopupWindow(popupView2, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        // 设置点击popupwindow外屏幕其它地方不消失
+                        popupWindow2.setOutsideTouchable(false);
+                        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                        popupWindow2.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                         try {
                             JSONObject object = audit.getJSONObject(0);
                             String role = object.getString("role");
                             String comment = object.getString("comment");
-                            View view = View.inflate(TuWenInfoActivity.this, R.layout.parent_evaluate_item, null);
-                            ll_addView.addView(view);
-                            TextView tv_comment = view.findViewById(R.id.tv_comment);
+                            TextView tv_comment = popupView2.findViewById(R.id.tv_comment);
                             tv_comment.setText(comment);
+                            LinearLayout ll_close = popupView2.findViewById(R.id.ll_close);
+                            ll_close.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    popupWindow2.dismiss();
+                                    ll_open.setVisibility(View.VISIBLE);
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     } else {
+                        // 声明PopupWindow
+                        final PopupWindow popupWindow3;
+                        // 声明PopupWindow对应的视图
+                        View popupView3;
+                        popupView3 = View.inflate(TuWenInfoActivity.this, R.layout.teacher_evaluate_item, null);
+                        // 参数2,3：指明popupwindow的宽度和高度
+                        popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        // 设置点击popupwindow外屏幕其它地方不消失
+                        popupWindow3.setOutsideTouchable(false);
+                        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+                        popupWindow3.showAtLocation(TuWenInfoActivity.this.findViewById(R.id.tv_answer), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                         try {
                             JSONObject object1 = audit.getJSONObject(0);
                             String role1 = object1.getString("role");
@@ -198,12 +342,19 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                             JSONObject object2 = audit.getJSONObject(1);
                             String role2 = object1.getString("role");
                             String comment2 = object1.getString("comment");
-                            View view2 = View.inflate(TuWenInfoActivity.this, R.layout.teacher_evaluate_item, null);
-                            ll_addView.addView(view2);
-                            TextView tv_omment1 = view2.findViewById(R.id.comment1);
+                            TextView tv_omment1 = popupView3.findViewById(R.id.comment1);
                             tv_omment1.setText(comment1);
-                            TextView tv_omment2 = view2.findViewById(R.id.comment2);
+                            TextView tv_omment2 = popupView3.findViewById(R.id.comment2);
                             tv_omment2.setText(comment2);
+                            LinearLayout ll_close = popupView3.findViewById(R.id.ll_close);
+                            ll_close.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    popupWindow3.dismiss();
+                                    ll_open.setVisibility(View.VISIBLE);
+                                }
+                            });
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
