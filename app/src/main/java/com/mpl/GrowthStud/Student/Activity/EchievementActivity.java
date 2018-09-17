@@ -51,7 +51,7 @@ import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EchievementActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class EchievementActivity extends FragmentActivity implements View.OnClickListener {
     private ChengJiuYiWanChengFragment fragment1;
     private ChengJiuJinXingZhongFragment fragment2;
     private ChengJiuDaiWanChengFragment fragment3;
@@ -70,6 +70,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private CharSequence choose_start_time, choose_end_time;
     private CategoryListItem categoryListItem;
     private List<CategoryListItem> listCategoryListItem;
+    private List<CategoryListItem> listLableListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +121,23 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         tv_ok = findViewById(R.id.tv_ok);
         tv_ok.setOnClickListener(this);
         lv_category = findViewById(R.id.lv_category);
-        lv_category.setOnItemClickListener(this);
+        lv_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String categoryid = listCategoryListItem.get(position).getId();
+                String name = listCategoryListItem.get(position).getName();
+                Log.d("Categoryid==>>>>", categoryid);
+                doGetLableList(categoryid);
+            }
+        });
         lv_label = findViewById(R.id.lv_label);
-        lv_label.setOnItemClickListener(this);
+        lv_label.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String lableid = listLableListItem.get(position).getId();
+                Log.d("lableid==>>>>", lableid);
+            }
+        });
 
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
@@ -472,21 +487,6 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (view.getId()) {
-            case R.id.lv_category:
-                String id = listCategoryListItem.get(i).getId();
-                String name = listCategoryListItem.get(i).getName();
-                Log.d("Categoryid==>>>>", id);
-                doGetLableList(id);
-                break;
-            case R.id.lv_label:
-                Log.d("Labelid", listCategoryListItem.get(i).getName());
-                break;
-        }
-
-    }
 
     private void doGetLableList(String id) {
         if (NetworkUtils.checkNetWork(EchievementActivity.this) == false) {
@@ -508,7 +508,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
-                        listCategoryListItem = new ArrayList<>();
+                        listLableListItem = new ArrayList<>();
                         if (list.length() <= 0) {
 
                         } else {
@@ -517,9 +517,9 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
                                 String id = object.getString("id");
                                 String name = object.getString("name");
                                 categoryListItem = new CategoryListItem(id, name);
-                                listCategoryListItem.add(categoryListItem);
+                                listLableListItem.add(categoryListItem);
                             }
-                            CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listCategoryListItem);
+                            CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listLableListItem);
                             lv_label.setAdapter(categoryListViewAdapter);
                         }
                     } else {
