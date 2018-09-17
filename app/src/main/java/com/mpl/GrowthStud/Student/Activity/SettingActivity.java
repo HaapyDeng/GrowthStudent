@@ -18,7 +18,7 @@ import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
     private int scope;
-    private ImageButton back;
+    private LinearLayout back;
     private LinearLayout ll_fix_password, ll_upgrade, ll_clear, ll_about;
     private TextView tv_version, tv_cache, log_out;
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class ParentsAccountActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private ListView already_listview, no_listview;
     private List<ParentApplyListItem> listItems;
     private List<ChildParentListItem> listItems2;

@@ -40,7 +40,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     private String achieveId;
     private String headTitle;
     private TextView tv_title;
-    private ImageButton back;
+    private LinearLayout back;
     private int question_count;
     private int total_point;
     private QuestionItem questionItem;

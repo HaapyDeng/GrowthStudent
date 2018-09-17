@@ -73,7 +73,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mDay = ca.get(Calendar.DAY_OF_MONTH);
         initView(root);
         getParentList();
-        initData();
+
 
         // Inflate the layout for this fragment
         return root;
@@ -122,6 +122,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                             ParentApplyListItem parentApplyListItem = new ParentApplyListItem(id, user_id, parent_id, parent_username, role, status, content, mobile, gender);
                             listItems.add(parentApplyListItem);
                         }
+                        initData();
                     } else {
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;

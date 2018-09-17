@@ -42,6 +42,7 @@ public class QuestionInfoActivity extends AppCompatActivity {
     private LinearLayout ll_addView;
     private View cv;
     private JSONArray audit;
+    private LinearLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,13 @@ public class QuestionInfoActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");
         headTitle = extras.getString("headtitle");
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
         listView = findViewById(R.id.listview);

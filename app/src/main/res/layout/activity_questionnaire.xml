@@ -14,20 +14,28 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="15dp"
-            android:background="@mipmap/icon_white_back" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="成就"
-            android:textColor="#ffffff"
-            android:textSize="17dp" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/icon_white_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="成就"
+                android:textColor="#ffffff"
+                android:textSize="17dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_title"

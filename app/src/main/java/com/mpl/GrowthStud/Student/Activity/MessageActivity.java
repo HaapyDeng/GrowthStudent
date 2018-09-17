@@ -40,7 +40,7 @@ public class MessageActivity extends AppCompatActivity {
     private ListView listView;
     private List<MessageItem> mDatas;
     private MessageListViewAdapter messageListViewAdapter;
-    private ImageButton back;
+    private LinearLayout back;
     private int refresh = 0;
 
 

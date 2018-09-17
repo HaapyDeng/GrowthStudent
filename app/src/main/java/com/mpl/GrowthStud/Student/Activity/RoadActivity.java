@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.mpl.GrowthStud.R;
 
 public class RoadActivity extends Activity implements View.OnClickListener {
-    private ImageView back;
+    private LinearLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
     private TextView tv_title, tv_commit;
-    private ImageButton back;
+    private LinearLayout back;
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;

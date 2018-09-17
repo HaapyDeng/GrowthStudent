@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class VideoInfoActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title;
     private String achieveId;
     private String headTitle;

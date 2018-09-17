@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class WenziActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title, tv_commit;
     private EditText et_wenzi;
     private String wenzi;

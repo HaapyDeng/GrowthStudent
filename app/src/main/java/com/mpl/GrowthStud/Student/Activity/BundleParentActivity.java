@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import cz.msebera.android.httpclient.Header;
 public class BundleParentActivity extends AppCompatActivity implements View.OnClickListener {
     private String parent_name, phone, content;
     private int id, gender, role;
-    private ImageButton back;
+    private LinearLayout back;
     private ImageView head_img, iv_gender;
     private TextView tv_parent_name, tv_phone, tv_type, tv_content, tv_ok, tv_refuse;
 

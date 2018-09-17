@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
     private GetScoreInfoFragment fragment2;// 第二个操作界面
 
     private android.app.FragmentManager fm;//管理器
-    private ImageButton back;
+    private LinearLayout back;
     /*
     one_star_point (integer, optional): 一颗星等于多少分 ,
     starCount (integer, optional): 获得星 ,

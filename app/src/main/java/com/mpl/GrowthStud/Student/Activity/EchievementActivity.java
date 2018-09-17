@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private ChengJiuDaiWanChengFragment fragment3;
     private android.app.FragmentManager fm;//管理器
     private TextView completed, underway, todo;
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_count, tv_choose;
     private String totalNumber, completeNumber;
     private RingView ringView;

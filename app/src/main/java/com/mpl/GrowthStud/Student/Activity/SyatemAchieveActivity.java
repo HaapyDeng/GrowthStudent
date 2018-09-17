@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mpl.GrowthStud.R;
 
 public class SyatemAchieveActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title, tv_commit;
     private String achieveId;
     private String headTitle;

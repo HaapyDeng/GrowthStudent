@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class GetScoreInfoInfoActivity extends AppCompatActivity implements View.
     private String categoryid;
     private ListView listview;
     private List<GetStarInfoInfoItem> mDatas;
-    private ImageButton back;
+    private LinearLayout back;
     private TextView title;
     private String categoryname;
     private GetScoreInfoInfoListViewAdapter getScoreInfoInfoListViewAdapter;

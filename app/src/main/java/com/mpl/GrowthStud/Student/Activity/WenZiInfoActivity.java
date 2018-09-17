@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class WenZiInfoActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title, tv_start_time, tv_prompt, tv_answer;
     private String wenzi;
     private String achieveId;

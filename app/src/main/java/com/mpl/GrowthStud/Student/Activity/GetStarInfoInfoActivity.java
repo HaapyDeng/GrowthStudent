@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ public class GetStarInfoInfoActivity extends AppCompatActivity implements View.O
     private ListView listview;
     private List<GetStarInfoInfoItem> mDatas;
     private GetStarInfoInfoListViewAdapter getStarInfoInfoListViewAdapter;
-    private ImageButton back;
+    private LinearLayout back;
     private TextView title;
     private String categoryname;
 

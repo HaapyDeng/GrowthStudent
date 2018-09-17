@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -52,7 +53,7 @@ import static com.mpl.GrowthStud.Student.Tools.Utils.saveBitmap;
 
 public class VideoActivity extends Activity implements View.OnClickListener {
     private Context mContext;
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title, tv_commit;
     private EditText et_wenzi;
     private String wenzi;

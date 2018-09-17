@@ -37,7 +37,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class TuWenInfoActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_title;
     private String achieveId;
     private String headTitle;
