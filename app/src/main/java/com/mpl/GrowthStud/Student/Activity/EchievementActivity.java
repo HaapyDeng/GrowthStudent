@@ -44,8 +44,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -66,16 +68,27 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private RadioButton rb_youeryuan, rb_xiaoxue, rb_chuzhong, rb_gaozhong;
     private MyRadioGroup radioGroup;
     private ListView lv_category, lv_label;
-    private int school_scope;
-    private CharSequence choose_start_time, choose_end_time;
+    private int school_scope = 0;
+    private CharSequence choose_start_time = "0", choose_end_time = "0";
     private CategoryListItem categoryListItem;
     private List<CategoryListItem> listCategoryListItem;
     private List<CategoryListItem> listLableListItem;
+    private String categoryid = "0";
+    private String lableid = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_echievement);
+        //初始化参数
+        SharedPreferences sp3 = getSharedPreferences("parameters", MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = sp3.edit();
+        editor3.putString("start", "0");
+        editor3.putString("end", "0");
+        editor3.putString("cid", "0");
+        editor3.putString("lid", "0");
+        editor3.commit();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_na);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭手势滑动
         radioGroup = (MyRadioGroup) findViewById(R.id.radioGroupID);
@@ -112,10 +125,17 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         rb_chuzhong = findViewById(R.id.tv_chuzhong);
         rb_gaozhong = findViewById(R.id.tv_gaozhong);
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
         tv_start_time = findViewById(R.id.tv_start_time);
+        tv_start_time.setText(simpleDateFormat.format(date));
         tv_start_time.setOnClickListener(this);
+
         tv_end_time = findViewById(R.id.tv_end_time);
         tv_end_time.setOnClickListener(this);
+        tv_end_time.setText(simpleDateFormat.format(date));
+
         tv_clear = findViewById(R.id.tv_clear);
         tv_clear.setOnClickListener(this);
         tv_ok = findViewById(R.id.tv_ok);
@@ -124,7 +144,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         lv_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String categoryid = listCategoryListItem.get(position).getId();
+                categoryid = listCategoryListItem.get(position).getId();
                 String name = listCategoryListItem.get(position).getName();
                 Log.d("Categoryid==>>>>", categoryid);
                 doGetLableList(categoryid);
@@ -134,7 +154,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         lv_label.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String lableid = listLableListItem.get(position).getId();
+                lableid = listLableListItem.get(position).getId();
                 Log.d("lableid==>>>>", lableid);
             }
         });
@@ -148,8 +168,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         completed.setOnClickListener(this);
         tv_choose = findViewById(R.id.tv_choose);
         tv_choose.setOnClickListener(this);
-//        View view = LayoutInflater.from(this).inflate(R.layout.choose_side_bar, null);
-//        drawerlayout = view.findViewById(R.id.drawerlayout);
+
 
         underway = findViewById(R.id.underway);
         underway.setOnClickListener(this);
@@ -158,12 +177,12 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         todo.setOnClickListener(this);
 
         tv_count = findViewById(R.id.tv_count);
-        initData();
+        initData(choose_start_time, choose_end_time, categoryid, lableid);
         selectFragment(0);
 
     }
 
-    private void initData() {
+    private void initData(CharSequence choose_start_time, CharSequence choose_end_time, String categoryid, String lableid) {
         if (!NetworkUtils.checkNetWork(EchievementActivity.this)) {
             Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -171,7 +190,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + 1 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0 + "/" + 0;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + 1 + "/" + 0 + "/" + choose_start_time + "/" + choose_end_time + "/" + categoryid + "/" + lableid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -237,6 +256,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         }
     };
 
+    @SuppressLint("NewApi")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -283,6 +303,59 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
                     }
                 }, c2.get(Calendar.YEAR), c2.get(Calendar.MONTH), c2.get(Calendar.DAY_OF_MONTH));
                 dialog2.show();
+                break;
+            case R.id.tv_clear:
+                //清空选择按钮
+                if (rb_xiaoxue.isChecked()) {
+                    rb_xiaoxue.setTextColor(getResources().getColor(R.color.tab_checked));
+                }
+                if (rb_youeryuan.isChecked()) {
+                    rb_youeryuan.setTextColor(getResources().getColor(R.color.tab_checked));
+                }
+                if (rb_chuzhong.isChecked()) {
+                    rb_chuzhong.setTextColor(getResources().getColor(R.color.tab_checked));
+                }
+                rb_xiaoxue.setChecked(false);
+                rb_youeryuan.setChecked(false);
+                rb_chuzhong.setChecked(false);
+                school_scope = 0;
+                //清空时间
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
+                //获取当前时间
+                Date date = new Date(System.currentTimeMillis());
+                tv_start_time.setText(simpleDateFormat.format(date));
+                tv_end_time.setText(simpleDateFormat.format(date));
+                choose_start_time = "0";
+                choose_end_time = "0";
+                //清空选择分类和标签
+                listLableListItem = new ArrayList<>();
+                String id = ("");
+                String name = ("");
+                categoryListItem = new CategoryListItem(id, name);
+                listLableListItem.add(categoryListItem);
+                CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listLableListItem);
+                lv_label.setAdapter(categoryListViewAdapter);
+                lableid = "0";
+                categoryid = "0";
+                SharedPreferences sp2 = getSharedPreferences("parameters", MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = sp2.edit();
+                editor2.putString("start", "0");
+                editor2.putString("end", "0");
+                editor2.putString("cid", "0");
+                editor2.putString("lid", "0");
+                editor2.commit();
+                break;
+            case R.id.tv_ok:
+                Log.d("Parameters==>>", "start:" + choose_start_time + "/" + "end:" + choose_end_time + "/" + "cid:" + categoryid + "/" + "lid:" + lableid);
+                SharedPreferences sp = getSharedPreferences("parameters", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("start", String.valueOf(choose_start_time));
+                editor.putString("end", String.valueOf(choose_end_time));
+                editor.putString("cid", categoryid);
+                editor.putString("lid", lableid);
+                editor.commit();
+                initData(choose_start_time, choose_end_time, categoryid, lableid);
+                drawerLayout.closeDrawers();
                 break;
         }
     }
@@ -359,7 +432,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        hideFragment(transaction);
+//        hideFragment(transaction);
 
         changeView(i);// 设置选项颜色
 
@@ -367,15 +440,21 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
             case 0:
 
+//                if (fragment1 == null) {
+//
+//                    fragment1 = new ChengJiuYiWanChengFragment();
+//
+//                    transaction.add(R.id.fragment, fragment1);
+//
+//                }
+
+//                transaction.show(fragment1);
                 if (fragment1 == null) {
-
                     fragment1 = new ChengJiuYiWanChengFragment();
-
-                    transaction.add(R.id.fragment, fragment1);
-
                 }
+                transaction.replace(R.id.fragment, fragment1);
+                transaction.commit();
 
-                transaction.show(fragment1);
 
                 break;
 
@@ -383,33 +462,24 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
             case 1:
 
                 if (fragment2 == null) {
-
                     fragment2 = new ChengJiuJinXingZhongFragment();
-
-                    transaction.add(R.id.fragment, fragment2);
-
                 }
-
-                transaction.show(fragment2);
+                transaction.replace(R.id.fragment, fragment2);
+                transaction.commit();
 
                 break;
             case 2:
 
                 if (fragment3 == null) {
-
                     fragment3 = new ChengJiuDaiWanChengFragment();
-
-                    transaction.add(R.id.fragment, fragment3);
-
                 }
-
-                transaction.show(fragment3);
+                transaction.replace(R.id.fragment, fragment3);
+                transaction.commit();
 
                 break;
 
         }
 
-        transaction.commit();
 
     }
     // 隐藏fragment
@@ -510,7 +580,12 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
                         JSONArray list = data.getJSONArray("list");
                         listLableListItem = new ArrayList<>();
                         if (list.length() <= 0) {
-
+                            String id = ("");
+                            String name = ("");
+                            categoryListItem = new CategoryListItem(id, name);
+                            listLableListItem.add(categoryListItem);
+                            CategoryListViewAdapter categoryListViewAdapter = new CategoryListViewAdapter(EchievementActivity.this, listLableListItem);
+                            lv_label.setAdapter(categoryListViewAdapter);
                         } else {
                             for (int i = 0; i < list.length(); i++) {
                                 JSONObject object = list.getJSONObject(i);

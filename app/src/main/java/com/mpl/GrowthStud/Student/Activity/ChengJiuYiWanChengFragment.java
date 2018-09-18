@@ -38,6 +38,9 @@ public class ChengJiuYiWanChengFragment extends Fragment {
     private ListView listView;
     private List<ChengJiuJinXingZhongItem> mDatas;
     private ChengJiuJinXingZhongListViewAdapter chengJiuJinXingZhongListViewAdapter;
+    private CharSequence choose_start_time = "0", choose_end_time = "0";
+    private String categoryid = "0";
+    private String lableid = "0";
 
     public ChengJiuYiWanChengFragment() {
         // Required empty public constructor
@@ -51,11 +54,18 @@ public class ChengJiuYiWanChengFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_cheng_jiu_yi_wan_cheng, container, false);
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
-        getCpmpletAchieve();
+        SharedPreferences sp = getActivity().getSharedPreferences("parameters", MODE_PRIVATE);
+        choose_start_time = sp.getString("start", "");
+        choose_end_time = sp.getString("end", "");
+        categoryid = sp.getString("cid", "");
+        lableid = sp.getString("lid", "");
+
+        getCpmpletAchieve(choose_start_time, choose_end_time, categoryid, lableid);
         return root;
     }
 
-    private void getCpmpletAchieve() {
+
+    private void getCpmpletAchieve(CharSequence choose_start_time, CharSequence choose_end_time, String categoryid, String lableid) {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -63,7 +73,7 @@ public class ChengJiuYiWanChengFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + "1/" + uid + "/" + "0/" + "0/" + "0/" + "0";
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/statistical/" + "1/" + uid + "/" + choose_start_time + "/" + choose_end_time + "/" + categoryid + "/" + lableid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -81,25 +91,26 @@ public class ChengJiuYiWanChengFragment extends Fragment {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
+                        } else {
+                            mDatas = new ArrayList<ChengJiuJinXingZhongItem>();
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                String type = object.getString("type");
+                                String image = object.getString("image");
+                                String category_name = object.getString("category_name");
+                                String label_name = object.getString("label_name");
+                                String task_star = object.getString("task_star");
+                                String status = object.getString("status");
+                                String classroom_id = object.getString("classroom_id");
+                                String star = object.getString("star");
+                                ChengJiuJinXingZhongItem chengJiuJinXingZhongItem = new ChengJiuJinXingZhongItem(id, name, type, image, category_name, label_name, task_star, status, classroom_id, star);
+                                mDatas.add(chengJiuJinXingZhongItem);
+                            }
+                            chengJiuJinXingZhongListViewAdapter = new ChengJiuJinXingZhongListViewAdapter(getActivity(), mDatas);
+                            listView.setAdapter(chengJiuJinXingZhongListViewAdapter);
                         }
-                        mDatas = new ArrayList<ChengJiuJinXingZhongItem>();
-                        for (int i = 0; i < list.length(); i++) {
-                            JSONObject object = list.getJSONObject(i);
-                            String id = object.getString("id");
-                            String name = object.getString("name");
-                            String type = object.getString("type");
-                            String image = object.getString("image");
-                            String category_name = object.getString("category_name");
-                            String label_name = object.getString("label_name");
-                            String task_star = object.getString("task_star");
-                            String status = object.getString("status");
-                            String classroom_id = object.getString("classroom_id");
-                            String star = object.getString("star");
-                            ChengJiuJinXingZhongItem chengJiuJinXingZhongItem = new ChengJiuJinXingZhongItem(id, name, type, image, category_name, label_name, task_star, status, classroom_id, star);
-                            mDatas.add(chengJiuJinXingZhongItem);
-                        }
-                        chengJiuJinXingZhongListViewAdapter = new ChengJiuJinXingZhongListViewAdapter(getActivity(), mDatas);
-                        listView.setAdapter(chengJiuJinXingZhongListViewAdapter);
                     } else {
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
