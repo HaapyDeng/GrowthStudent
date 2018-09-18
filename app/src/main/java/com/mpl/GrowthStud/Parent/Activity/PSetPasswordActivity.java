@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Activity.SetPasswordActivity;
+import com.mpl.GrowthStud.Student.Activity.SettingActivity;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 import org.json.JSONArray;
@@ -24,7 +27,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class PSetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private EditText et_new_psd;
     private TextView tv_save;
     private String newPassword;
@@ -56,7 +59,7 @@ public class PSetPasswordActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void doUpdatePassword(String newPassword) {
+    private void doUpdatePassword(final String newPassword) {
         if (NetworkUtils.checkNetWork(PSetPasswordActivity.this) == false) {
             Toast.makeText(PSetPasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -77,7 +80,14 @@ public class PSetPasswordActivity extends AppCompatActivity implements View.OnCl
                     int code = response.getInt("code");
                     String message = response.getString("message");
                     if (message.equals("Success")) {
+                        SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("password", newPassword);
+                        editor.commit();
                         Toast.makeText(PSetPasswordActivity.this, "保存成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PSetPasswordActivity.this, PSettingActivity.class);
+                        startActivity(intent);
+                        finish();
                         return;
                     } else {
                         Toast.makeText(PSetPasswordActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();

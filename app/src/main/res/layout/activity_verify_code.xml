@@ -60,7 +60,7 @@
         android:textColor="#333333"
         android:textSize="18dp" />
 
-    <com.mpl.GrowthStud.Student.Tools.LineEditText
+    <EditText
         android:id="@+id/et_card_num"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -99,5 +99,5 @@
         android:gravity="center"
         android:text="重新获取验证码"
         android:textColor="#ff2e97f0"
-        android:textSize="9dp" />
+        android:textSize="16dp" />
 </LinearLayout>

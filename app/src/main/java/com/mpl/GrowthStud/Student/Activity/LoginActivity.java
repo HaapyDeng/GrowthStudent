@@ -128,7 +128,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         String role = data.getString("role");
                         int isActive = data.getInt("is_active");
                         String userId = data.getString("user_id");
-                        int scope = data.getInt("scope");
+                        int scope;
+                        if (role.equals("student")) {
+                            scope = data.getInt("scope");
+                        } else {
+                            scope = 0;
+                        }
                         SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("token", token);
@@ -217,10 +222,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                                 }
 
                                             } else if (role.equals("parent")) {
-                                                //跳转到家长激活界面
-//                                                Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
-//                                                startActivity(intent2);
-                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+//                                                跳转到家长激活界面
+                                                Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
+                                                startActivity(intent2);
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;
@@ -232,10 +237,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                                 //跳转到学生主页面
                                             } else if (role.equals("parent")) {
                                                 //跳转到家长主界面
-//                                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
-//                                                startActivity(intent4);
-//                                                finish();
-                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
+                                                startActivity(intent4);
+                                                finish();
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;

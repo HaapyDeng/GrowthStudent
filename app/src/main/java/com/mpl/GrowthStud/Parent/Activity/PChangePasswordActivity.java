@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class PChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private TextView tv_text, tv_get_num;
     private EditText et_num;
     private String scope;

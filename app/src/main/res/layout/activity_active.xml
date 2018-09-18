@@ -60,7 +60,7 @@
         android:textColor="#333333"
         android:textSize="18dp" />
 
-    <com.mpl.GrowthStud.Student.Tools.LineEditText
+    <EditText
         android:id="@+id/et_card_num"
         android:layout_width="match_parent"
         android:layout_height="50dp"

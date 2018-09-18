@@ -187,6 +187,8 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
                         }
                         tv_teacher.setText(student_teacher_name);
                         tv_in_school.setText(student_school_name);
+                    } else {
+                        tv_bundle_chlid.setText("绑定孩子账号");
                     }
                     break;
             }
@@ -218,6 +220,8 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent3);
                 break;
             case R.id.tv_bundle_chlid:
+                Intent intent4 = new Intent(getActivity(), PStudentAccountActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.ll_set:
                 Intent intent = new Intent(getActivity(), PSettingActivity.class);

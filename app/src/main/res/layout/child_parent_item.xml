@@ -18,8 +18,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:src="@mipmap/head_parent_man" />
+            android:background="@mipmap/head_parent_man"
+            android:gravity="center_vertical" />
     </LinearLayout>
 
     <LinearLayout

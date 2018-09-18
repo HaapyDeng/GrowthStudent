@@ -252,20 +252,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PMainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PChangePasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PSettingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.ChangePsdVerifyCodeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PSetPasswordActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".Parent.Activity.PStudentAccountActivity" />
+        <activity android:name=".Parent.Activity.AddChildActivity"></activity>
     </application>
 
 </manifest>

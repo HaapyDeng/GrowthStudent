@@ -17,7 +17,7 @@ import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 public class PSettingActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton back;
+    private LinearLayout back;
     private LinearLayout ll_fix_password, ll_upgrade, ll_clear, ll_about;
     private TextView tv_version, tv_cache, log_out;
 
@@ -68,6 +68,31 @@ public class PSettingActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent1);
                 break;
             case R.id.ll_upgrade:
+                //实例化自定义对话框
+                final ConstomDialog mdialog = new ConstomDialog(this);
+                mdialog.setTv("没有新版本升级");
+                //对话框中确认按钮事件
+                mdialog.setOnExitListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //如果对话框处于显示状态
+                        if (mdialog.isShowing()) {
+                            mdialog.dismiss();
+                        }
+
+                    }
+                });
+                //对话框中取消按钮事件
+                mdialog.setOnCancelListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mdialog != null && mdialog.isShowing()) {
+                            //关闭对话框
+                            mdialog.dismiss();
+                        }
+                    }
+                });
+                mdialog.show();
                 break;
             case R.id.ll_clear:
                 showDialog();
@@ -101,8 +126,8 @@ public class PSettingActivity extends AppCompatActivity implements View.OnClickL
                     SharedPreferences.Editor editor2 = sp2.edit();
                     editor2.putInt("tag", 0);
                     editor2.commit();
-                    Intent intent = new Intent(PSettingActivity.this, MainActivity.class);
-                    intent.putExtra(MainActivity.TAG_EXIT, true);
+                    Intent intent = new Intent(PSettingActivity.this, PMainActivity.class);
+                    intent.putExtra(PMainActivity.TAG_EXIT, true);
                     startActivity(intent);
                     //关闭对话框
                     mdialog.dismiss();

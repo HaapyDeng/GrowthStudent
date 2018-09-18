@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mpl.GrowthStud.Parent.Activity.ActiveParentActivity;
+import com.mpl.GrowthStud.Parent.Activity.PMainActivity;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
@@ -295,9 +297,9 @@ public class SplashActivity extends Activity {
                                                 finish();
                                             } else if (role.equals("parent")) {
                                                 //跳转到家长激活界面
-//                                                Intent intent2 = new Intent(SplashActivity.this, ActiveParentActivity.class);
-//                                                startActivity(intent2);
-//                                                finish();
+                                                Intent intent2 = new Intent(SplashActivity.this, ActiveParentActivity.class);
+                                                startActivity(intent2);
+                                                finish();
                                             }
                                             break;
                                         case 1:
@@ -308,9 +310,9 @@ public class SplashActivity extends Activity {
                                                 //跳转到学生主页面
                                             } else if (role.equals("parent")) {
                                                 //跳转到家长主界面
-//                                                Intent intent4 = new Intent(SplashActivity.this, PMainActivity.class);
-//                                                startActivity(intent4);
-//                                                finish();
+                                                Intent intent4 = new Intent(SplashActivity.this, PMainActivity.class);
+                                                startActivity(intent4);
+                                                finish();
                                             }
                                             break;
                                     }
