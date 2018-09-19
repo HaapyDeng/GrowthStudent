@@ -4,6 +4,7 @@ package com.mpl.GrowthStud.Parent.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,12 +21,14 @@ public class ParentChildApplyListViewAdapter extends ListViewAdapter<PstudentApp
     private Context context1;
     private List<PstudentApplyListItem> mdatas;
     private int mposition;
+    private OnClickListener onClickListener;
 
     //MyAdapter需要一个Context，通过Context获得Layout.inflater，然后通过inflater加载item的布局
     public ParentChildApplyListViewAdapter(Context context, List<PstudentApplyListItem> datas) {
         super(context, datas, R.layout.parent_child_item);
         context1 = context;
         mdatas = datas;
+        onClickListener = (OnClickListener) context;
 
     }
 
@@ -47,11 +50,23 @@ public class ParentChildApplyListViewAdapter extends ListViewAdapter<PstudentApp
         if (mposition == 0) {
             ((CheckBox) holder.getView(R.id.main_list_item_checkBox)).setChecked(true);
         }
+        ((CheckBox) holder.getView(R.id.main_list_item_checkBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    onClickListener.setSelectedNum(mposition);
+                }
+            }
+        });
     }
 
     @Override
     public long getItemId(int position) {
         mposition = position;
         return mposition;
+    }
+
+    public interface OnClickListener {
+        public void setSelectedNum(int num);
     }
 }

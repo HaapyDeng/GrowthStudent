@@ -37,8 +37,10 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
+        android:name=".Student.Activity.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/android_family_icon"
         android:label="@string/app_name"
@@ -252,6 +254,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PChangePasswordActivity"
@@ -265,8 +268,12 @@
         <activity
             android:name=".Parent.Activity.PSetPasswordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Parent.Activity.PStudentAccountActivity" />
-        <activity android:name=".Parent.Activity.AddChildActivity"></activity>
+        <activity
+            android:name=".Parent.Activity.PStudentAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.AddChildActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

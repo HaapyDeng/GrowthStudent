@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.mpl.GrowthStud.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
@@ -43,8 +44,8 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
     private Timer mTimer;// 计时器
     private OnRecordFinishListener mOnRecordFinishListener;// 录制完成回调接口
 
-    private int mWidth ;// 视频分辨率宽度
-    private int mHeight ;// 视频分辨率高度
+    private int mWidth;// 视频分辨率宽度
+    private int mHeight;// 视频分辨率高度
     private boolean isOpenCamera;// 是否一开始就打开摄像头
     private int mRecordMaxTime;// 一次拍摄最长时间
     private int mTimeCount;// 时间计数
@@ -82,7 +83,6 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
     }
 
     /**
-     * @date 2015-2-5
      */
     private class CustomCallBack implements Callback {
 
@@ -198,12 +198,12 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
         mMediaRecorder.setVideoSource(VideoSource.CAMERA);// 视频源
         mMediaRecorder.setAudioSource(AudioSource.MIC);// 音频源
         mMediaRecorder.setOutputFormat(OutputFormat.MPEG_4);// 视频输出格式
-        mMediaRecorder.setAudioEncoder(AudioEncoder.AMR_NB);// 音频格式
+        mMediaRecorder.setAudioEncoder(AudioEncoder.AAC);// 音频格式
         mMediaRecorder.setVideoSize(mWidth, mHeight);// 设置分辨率：
         // mMediaRecorder.setVideoFrameRate(16);// 这个我把它去掉了，感觉没什么用
         mMediaRecorder.setVideoEncodingBitRate(1 * 1280 * 720);// 设置帧频率，然后就清晰了
         mMediaRecorder.setOrientationHint(90);// 输出旋转90度，保持竖屏录制
-        mMediaRecorder.setVideoEncoder(VideoEncoder.MPEG_4_SP);// 视频录制格式
+        mMediaRecorder.setVideoEncoder(VideoEncoder.H264);// 视频录制格式
         // mediaRecorder.setMaxDuration(Constant.MAXVEDIOTIME * 1000);
         mMediaRecorder.setOutputFile(mRecordFile.getAbsolutePath());
         mMediaRecorder.prepare();

@@ -1,17 +1,17 @@
 package com.mpl.GrowthStud.Parent.Activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.AboutActivity;
-import com.mpl.GrowthStud.Student.Activity.ChangePasswordActivity;
 import com.mpl.GrowthStud.Student.Activity.MainActivity;
 import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
@@ -126,6 +126,12 @@ public class PSettingActivity extends AppCompatActivity implements View.OnClickL
                     SharedPreferences.Editor editor2 = sp2.edit();
                     editor2.putInt("tag", 0);
                     editor2.commit();
+                    SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
+                    if (sharedPreferences3.getBoolean("have", false)) {
+                        SharedPreferences.Editor editor3 = sharedPreferences3.edit();
+                        editor3.clear();
+                        editor3.commit();
+                    }
                     Intent intent = new Intent(PSettingActivity.this, PMainActivity.class);
                     intent.putExtra(PMainActivity.TAG_EXIT, true);
                     startActivity(intent);

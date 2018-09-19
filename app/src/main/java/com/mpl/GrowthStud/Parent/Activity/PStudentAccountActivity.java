@@ -1,9 +1,10 @@
 package com.mpl.GrowthStud.Parent.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,11 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.Parent.Adapter.ParentChildApplyListViewAdapter;
 import com.mpl.GrowthStud.Parent.Bean.PstudentApplyListItem;
 import com.mpl.GrowthStud.R;
-import com.mpl.GrowthStud.Student.Activity.ParentsAccountActivity;
-import com.mpl.GrowthStud.Student.Adapter.ChildParentListViewAdapter;
-import com.mpl.GrowthStud.Student.Adapter.ParentApplyListViewAdapter;
-import com.mpl.GrowthStud.Student.Bean.ChildParentListItem;
-import com.mpl.GrowthStud.Student.Bean.ParentApplyListItem;
+import com.mpl.GrowthStud.Student.Activity.MyApplication;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 import org.json.JSONArray;
@@ -33,13 +30,14 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class PStudentAccountActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class PStudentAccountActivity extends AppCompatActivity implements ParentChildApplyListViewAdapter.OnClickListener, View.OnClickListener {
     private LinearLayout back;
     private ListView already_listview, no_listview;
     private TextView tv_add;
     private List<PstudentApplyListItem> listItems;
     private PstudentApplyListItem pstudentApplyListItem;
     private ParentChildApplyListViewAdapter parentChildApplyListViewAdapter;
+    private String choose_userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +49,21 @@ public class PStudentAccountActivity extends AppCompatActivity implements Adapte
         tv_add.setOnClickListener(this);
 
         already_listview = findViewById(R.id.already_listview);
-        already_listview.setOnItemClickListener(this);
 
         no_listview = findViewById(R.id.no_listview);
-        no_listview.setOnItemClickListener(this);
         initData();
+    }
+
+    @Override
+    public void setSelectedNum(int num) {
+        choose_userId = listItems.get(num).getUser_id();
+        Log.d("choose_userId==>>111", choose_userId);
+        SharedPreferences sharedPreferences = getSharedPreferences("userid", Context.MODE_PRIVATE);
+        //获取editor对象
+        SharedPreferences.Editor editor = sharedPreferences.edit();//获取编辑器
+        editor.putString("id", choose_userId);
+        editor.putBoolean("have", true);
+        editor.commit();
     }
 
     @Override
@@ -104,6 +112,21 @@ public class PStudentAccountActivity extends AppCompatActivity implements Adapte
                             pstudentApplyListItem = new PstudentApplyListItem(user_id, username, classroom_name, grade, school, gender);
                             listItems.add(pstudentApplyListItem);
                         }
+                        choose_userId = listItems.get(0).getUser_id();
+                        Log.d("choose_userId==>>", choose_userId);
+                        SharedPreferences sharedPreferences = getSharedPreferences("userid", Context.MODE_PRIVATE);
+                        if (!sharedPreferences.getBoolean("have", false)) {
+                            //获取editor对象
+                            SharedPreferences.Editor editor = sharedPreferences.edit();//获取编辑器
+                            editor.putString("id", choose_userId);
+                            editor.putBoolean("have", true);
+                            editor.commit();
+                            Log.d("choose_userId==>>222", choose_userId);
+                        } else {
+                            SharedPreferences sharedPreferences2 = getSharedPreferences("userid", Context.MODE_PRIVATE);
+                            choose_userId = sharedPreferences2.getString("id", "");
+                            Log.d("choose_userId==>>3333", choose_userId);
+                        }
                         parentChildApplyListViewAdapter = new ParentChildApplyListViewAdapter(PStudentAccountActivity.this, listItems);
                         already_listview.setAdapter(parentChildApplyListViewAdapter);
 
@@ -139,11 +162,5 @@ public class PStudentAccountActivity extends AppCompatActivity implements Adapte
         });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (view.getId()) {
-            case R.id.already_listview:
-                break;
-        }
-    }
+
 }

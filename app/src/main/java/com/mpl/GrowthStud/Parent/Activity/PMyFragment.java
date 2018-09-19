@@ -1,6 +1,7 @@
 package com.mpl.GrowthStud.Parent.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mpl.GrowthStud.Parent.Bean.PMyChildItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.MessageActivity;
 import com.mpl.GrowthStud.Student.Activity.SettingActivity;
@@ -27,6 +29,9 @@ import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -51,6 +56,8 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
     private String student_account;
     private JSONArray student = null;
     private ImageView ib_message;
+    private PMyChildItem pMyChildItem;
+    private List<PMyChildItem> listData;
 
     public PMyFragment() {
         // Required empty public constructor
@@ -72,14 +79,18 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getParentInfo();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_pmy, container, false);
         initView(root);
         getParentInfo();
-//        initData();
-        // Inflate the layout for this fragment
         return root;
     }
 
@@ -108,20 +119,19 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
                         parent_mobile = data.getString("mobile");
                         if (data.has("student")) {
                             student = data.getJSONArray("student");
+                            listData = new ArrayList<>();
                             if (student.length() > 0) {
-                                JSONObject object = student.getJSONObject(0);
-                                student_user_id = object.getString("user_id");
-                                student_username = object.getString("username");
-                                if (object.has("info")) {
-                                    JSONObject sinfo = object.getJSONObject("info");
-                                    student_school_name = sinfo.getString("school_name");
-                                    student_classroom_name = sinfo.getString("classroom_name");
-                                    student_grade = sinfo.getString("grade");
-                                    student_teacher_name = sinfo.getString("teacher_name");
-                                    student_birthday = sinfo.getString("birthday");
-                                    student_gender = sinfo.getInt("gender");
-                                    student_scope = sinfo.getInt("scope");
-                                    student_account = sinfo.getString("account");
+                                for (int i = 0; i < student.length(); i++) {
+                                    JSONObject sinfo = null;
+                                    JSONObject object = student.getJSONObject(0);
+                                    student_user_id = object.getString("user_id");
+                                    student_username = object.getString("username");
+                                    if (object.has("info")) {
+                                        sinfo = object.getJSONObject("info");
+
+                                    }
+                                    pMyChildItem = new PMyChildItem(student_user_id, student_username, sinfo);
+                                    listData.add(pMyChildItem);
                                 }
                             }
                         }
@@ -174,7 +184,48 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
                     } else {
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_girl_img));
                     }
+                    String id = "";
                     if (student.length() > 0) {
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userid", Context.MODE_PRIVATE);
+                        if (sharedPreferences.getBoolean("have", false)) {
+                            id = sharedPreferences.getString("id", "");
+                            Log.d("studentid==>>", id);
+
+                            for (int i = 0; i < listData.size(); i++) {
+                                if ((listData.get(i).getUser_id()).equals(id)) {
+                                    JSONObject sinfo = listData.get(i).getInfo();
+                                    try {
+                                        student_username = listData.get(i).getUsername();
+                                        student_school_name = sinfo.getString("school_name");
+                                        student_classroom_name = sinfo.getString("classroom_name");
+                                        student_grade = sinfo.getString("grade");
+                                        student_teacher_name = sinfo.getString("teacher_name");
+                                        student_birthday = sinfo.getString("birthday");
+                                        student_gender = sinfo.getInt("gender");
+                                        student_scope = sinfo.getInt("scope");
+                                        student_account = sinfo.getString("account");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        } else {
+                            Log.d("first==>>", "first");
+                            JSONObject sinfo = listData.get(0).getInfo();
+                            try {
+                                student_username = listData.get(0).getUsername();
+                                student_school_name = sinfo.getString("school_name");
+                                student_classroom_name = sinfo.getString("classroom_name");
+                                student_grade = sinfo.getString("grade");
+                                student_teacher_name = sinfo.getString("teacher_name");
+                                student_birthday = sinfo.getString("birthday");
+                                student_gender = sinfo.getInt("gender");
+                                student_scope = sinfo.getInt("scope");
+                                student_account = sinfo.getString("account");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         tv_bundle_chlid.setText(student_username);
                         tv_grade.setText(student_grade);
                         tv_class.setText(student_classroom_name);
