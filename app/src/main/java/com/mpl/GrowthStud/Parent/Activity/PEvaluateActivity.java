@@ -1,15 +1,14 @@
-package com.mpl.GrowthStud.Student.Activity;
+package com.mpl.GrowthStud.Parent.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +16,9 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Activity.EvaluateActivity;
+import com.mpl.GrowthStud.Student.Activity.GetScoreInfoFragment;
+import com.mpl.GrowthStud.Student.Activity.GetStarInfoFragment;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
 import org.json.JSONArray;
@@ -25,8 +27,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EvaluateActivity extends FragmentActivity implements View.OnClickListener {
-
+public class PEvaluateActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView get_star_info, get_score_info, pingjia_point, star_point, total_point, star_count;
     private GetStarInfoFragment fragment1;// 第一个操作界面
 
@@ -42,12 +43,15 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
     totalPoint (integer, optional): 总分
      */
     private String one_star_point, starCount, starPoint, pingjiaPoint, totalPoint;
+    private String cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_evaluate);
+        setContentView(R.layout.activity_pevaluate);
         initviews();
+        initData();
+        selectFragment(0);
     }
 
     private void initviews() {
@@ -61,19 +65,25 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
         star_point = findViewById(R.id.star_point);
         total_point = findViewById(R.id.total_point);
         star_count = findViewById(R.id.star_count);
-        selectFragment(0);
-        initData();
     }
 
     private void initData() {
-        if (NetworkUtils.checkNetWork(EvaluateActivity.this) == false) {
-            Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+        SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
+        if (!sharedPreferences3.getBoolean("have", false)) {
+            Toast.makeText(this, "请先绑定你的孩子", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            cid = sharedPreferences3.getString("id", "");
+        }
+        Log.d("cid==>>", cid);
+        if (NetworkUtils.checkNetWork(PEvaluateActivity.this) == false) {
+            Toast.makeText(PEvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/" + cid;
         Log.d("url==>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -95,7 +105,7 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
                         message.what = 1;
                         handler.sendMessage(message);
                     } else {
-                        Toast.makeText(EvaluateActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PEvaluateActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
                 } catch (JSONException e) {
@@ -106,21 +116,21 @@ public class EvaluateActivity extends FragmentActivity implements View.OnClickLi
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PEvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PEvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(EvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(PEvaluateActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
         });

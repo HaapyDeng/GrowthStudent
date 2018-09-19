@@ -276,7 +276,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Parent.Activity.PWenZiCheckActivity" />
         <activity android:name=".Parent.Activity.PTuWenCheckActivity" />
-        <activity android:name=".Parent.Activity.PVideoCheckActivity"></activity>
+        <activity android:name=".Parent.Activity.PVideoCheckActivity" />
+        <activity android:name=".Parent.Activity.PEvaluateActivity"></activity>
     </application>
 
 </manifest>

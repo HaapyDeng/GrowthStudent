@@ -46,6 +46,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     private LinearLayout ll_empty;
     private List<PAchieveCompletItem> mDatas;
     private PAchieveCompletListViewAdapter pachieveCompletListViewAdapter;
+    private String cid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,13 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     }
 
     private void getCpmpletAchieve() {
+        SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
+        if (!sharedPreferences3.getBoolean("have", false)) {
+            Toast.makeText(getActivity(), "请先绑定你的孩子", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            cid = sharedPreferences3.getString("id", "");
+        }
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -79,7 +87,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + cid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
