@@ -126,12 +126,12 @@ public class PSettingActivity extends AppCompatActivity implements View.OnClickL
                     SharedPreferences.Editor editor2 = sp2.edit();
                     editor2.putInt("tag", 0);
                     editor2.commit();
-                    SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
-                    if (sharedPreferences3.getBoolean("have", false)) {
-                        SharedPreferences.Editor editor3 = sharedPreferences3.edit();
-                        editor3.clear();
-                        editor3.commit();
-                    }
+//                    SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
+//                    if (sharedPreferences3.getBoolean("have", false)) {
+//                        SharedPreferences.Editor editor3 = sharedPreferences3.edit();
+//                        editor3.clear();
+//                        editor3.commit();
+//                    }
                     Intent intent = new Intent(PSettingActivity.this, PMainActivity.class);
                     intent.putExtra(PMainActivity.TAG_EXIT, true);
                     startActivity(intent);

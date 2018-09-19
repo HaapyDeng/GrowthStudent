@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee" />
+
+    <LinearLayout
+        android:id="@+id/ll_close"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="评审"
+            android:textColor="#333333"
+            android:textSize="19dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:src="@mipmap/opened"
+            android:textColor="#333333"
+            android:textSize="11dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee" />
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:checked="true"
+            android:gravity="center"
+            android:text="合格"
+            android:textColor="#ff333333"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="match_parent" />
+
+        <RadioButton
+            android:id="@+id/rb_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="不合格"
+            android:textColor="#ff333333"
+            android:textSize="17dp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/ck_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_shape_grey"
+            android:button="@null"
+            android:text="图文并茂很生动"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/ck_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_shape_grey"
+            android:button="@null"
+            android:text="我看好你哦加油"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/ck_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_shape_grey"
+            android:button="@null"
+            android:text="相互共同进步"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/ck_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_shape_grey"
+            android:button="@null"
+            android:text="多学多问问题"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/ck_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_shape_grey"
+            android:button="@null"
+            android:text="很棒很棒"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#F8F8F8">
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="填写更多有问题的原因"
+            android:inputType="textMultiLine"
+            android:textColor="#333333"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee" />
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="#3699ed"
+        android:textSize="19dp" />
+</LinearLayout>

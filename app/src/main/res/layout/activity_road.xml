@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".Student.Activity.RoadActivity">
 
@@ -70,6 +71,6 @@
             android:layout_height="wrap_content"
             android:text="正在建设中，尽请期待"
             android:textColor="#333333"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

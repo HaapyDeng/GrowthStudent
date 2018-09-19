@@ -273,7 +273,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.AddChildActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Parent.Activity.PWenZiCheckActivity" />
+        <activity android:name=".Parent.Activity.PTuWenCheckActivity" />
+        <activity android:name=".Parent.Activity.PVideoCheckActivity"></activity>
     </application>
 
 </manifest>

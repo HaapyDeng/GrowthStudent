@@ -1,4 +1,4 @@
-package com.mpl.GrowthStud.Student.Adapter;
+package com.mpl.GrowthStud.Parent.Adapter;
 
 
 import android.annotation.SuppressLint;
@@ -9,25 +9,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mpl.GrowthStud.Parent.Bean.PAchieveCompletItem;
 import com.mpl.GrowthStud.R;
-import com.mpl.GrowthStud.Student.Bean.ChengJiuJinXingZhongItem;
+import com.mpl.GrowthStud.Student.Adapter.ListViewAdapter;
+import com.mpl.GrowthStud.Student.Adapter.ViewHolder;
+import com.mpl.GrowthStud.Student.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
 
 import java.util.List;
 
 
-public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJiuJinXingZhongItem> {
+public class PAchieveCompletListViewAdapter extends ListViewAdapter<PAchieveCompletItem> {
     private Context context1;
 
     //MyAdapter需要一个Context，通过Context获得Layout.inflater，然后通过inflater加载item的布局
-    public ChengJiuJinXingZhongListViewAdapter(Context context, List<ChengJiuJinXingZhongItem> datas) {
-        super(context, datas, R.layout.complet_achieve_item);
+    public PAchieveCompletListViewAdapter(Context context, List<PAchieveCompletItem> datas) {
+        super(context, datas, R.layout.pcomplet_achieve_item);
         context1 = context;
     }
 
     @SuppressLint("NewApi")
     @Override
-    public void convert(final ViewHolder holder, ChengJiuJinXingZhongItem bean) {
+    public void convert(final ViewHolder holder, PAchieveCompletItem bean) {
         ((TextView) holder.getView(R.id.tv_title)).setText(bean.getName());
         ((TextView) holder.getView(R.id.tv_1)).setText(bean.getCategory_name());
 
@@ -48,6 +51,7 @@ public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJi
         if (bean.getStatus().equals("0")) {
             ((TextView) holder.getView(R.id.status)).setText("驳回");
         } else if (bean.getStatus().equals("1")) {
+            ((TextView) holder.getView(R.id.status)).setText("待完成");
         } else if (bean.getStatus().equals("2")) {
             ((TextView) holder.getView(R.id.status)).setText("家长审核");
         } else if (bean.getStatus().equals("3")) {
@@ -55,7 +59,7 @@ public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJi
         } else if (bean.getStatus().equals("4")) {
             ((TextView) holder.getView(R.id.status)).setText("待评星");
         } else if (bean.getStatus().equals("5")) {
-            ((TextView) holder.getView(R.id.status)).setBackground(mContext.getResources().getDrawable(R.mipmap.icon_selected));
+            ((TextView) holder.getView(R.id.status)).setText("完成");
         }
         if (bean.getType().equals("1")) {
             Drawable drawable = context1.getResources().getDrawable(R.mipmap.little_wenzi_img);
@@ -104,7 +108,7 @@ public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJi
             ((ImageView) holder.getView(R.id.iv_star3)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
-        } else if (bean.getStar().equals("2")) {
+        } else if (bean.getTask_star().equals("2")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star1)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
@@ -119,7 +123,7 @@ public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJi
             ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
-        } else {
+        } else if (bean.getStar().equals("0")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);

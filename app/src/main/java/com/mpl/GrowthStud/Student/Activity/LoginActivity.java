@@ -225,7 +225,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                                                跳转到家长激活界面
                                                 Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
                                                 startActivity(intent2);
-//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;
@@ -240,7 +240,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                                 Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
                                                 startActivity(intent4);
                                                 finish();
-//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;
