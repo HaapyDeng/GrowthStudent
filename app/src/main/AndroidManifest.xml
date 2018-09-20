@@ -292,7 +292,12 @@
         <activity
             android:name=".Parent.Activity.PGetScoreInfoInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Parent.Activity.PEchievementActivity"></activity>
+        <activity
+            android:name=".Parent.Activity.PEchievementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.AlbumMakingActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
