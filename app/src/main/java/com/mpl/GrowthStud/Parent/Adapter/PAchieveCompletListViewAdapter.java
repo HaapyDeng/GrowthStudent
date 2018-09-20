@@ -49,13 +49,13 @@ public class PAchieveCompletListViewAdapter extends ListViewAdapter<PAchieveComp
             });
         }
         if (bean.getStatus().equals("0")) {
-            ((TextView) holder.getView(R.id.status)).setText("驳回");
+            ((TextView) holder.getView(R.id.status)).setText("待学生重做");
         } else if (bean.getStatus().equals("1")) {
             ((TextView) holder.getView(R.id.status)).setText("待完成");
         } else if (bean.getStatus().equals("2")) {
-            ((TextView) holder.getView(R.id.status)).setText("家长审核");
+            ((TextView) holder.getView(R.id.status)).setText("待家长审核");
         } else if (bean.getStatus().equals("3")) {
-            ((TextView) holder.getView(R.id.status)).setText("老师审核");
+            ((TextView) holder.getView(R.id.status)).setText("待老师审核");
         } else if (bean.getStatus().equals("4")) {
             ((TextView) holder.getView(R.id.status)).setText("待评星");
         } else if (bean.getStatus().equals("5")) {

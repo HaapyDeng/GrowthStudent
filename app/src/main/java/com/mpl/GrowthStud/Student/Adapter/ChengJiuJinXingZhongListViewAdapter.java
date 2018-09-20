@@ -46,7 +46,7 @@ public class ChengJiuJinXingZhongListViewAdapter extends ListViewAdapter<ChengJi
             });
         }
         if (bean.getStatus().equals("0")) {
-            ((TextView) holder.getView(R.id.status)).setText("待学生重做驳回");
+            ((TextView) holder.getView(R.id.status)).setText("待学生重做");
         } else if (bean.getStatus().equals("1")) {
         } else if (bean.getStatus().equals("2")) {
             ((TextView) holder.getView(R.id.status)).setText("待家长审核");
