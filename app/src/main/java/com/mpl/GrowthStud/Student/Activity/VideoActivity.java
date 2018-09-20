@@ -122,7 +122,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/image/show/" + achieveId;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/video/show/" + achieveId;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
