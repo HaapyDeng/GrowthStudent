@@ -3,10 +3,12 @@ package com.mpl.GrowthStud.Parent.Activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,7 @@ import cz.msebera.android.httpclient.Header;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +56,8 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
     private PAchieveToDoListViewAdapter pachieveToDoListViewAdapter;
     private LinearLayout ll_empty;
     private String cid;
+    private SwipeRefreshLayout mSwipeLayout;
+    private boolean isRefresh = false;//是否刷新中
 
     public PAchieveTodoFragment() {
         // Required empty public constructor
@@ -89,7 +93,44 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
         listView.setOnItemClickListener(this);
         getTodoAchieve();
         // Inflate the layout for this fragment
+        //设置SwipeRefreshLayout
+        mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
+        //设置进度条的颜色主题，最多能设置四种 加载颜色是循环播放的，只要没有完成刷新就会一直循环
+        mSwipeLayout.setColorSchemeColors(Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.RED);
+        // 设置手指在屏幕下拉多少距离会触发下拉刷新
+        mSwipeLayout.setDistanceToTriggerSync(300);
+        // 设定下拉圆圈的背景
+        mSwipeLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        mSwipeLayout.setTag("下拉刷新");
+        // 设置圆圈的大小
+        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
+
+        //设置下拉刷新的监听
+        mSwipeLayout.setOnRefreshListener(this);
         return root;
+    }
+    @Override
+    public void onRefresh() {
+//检查是否处于刷新状态
+        if (!isRefresh) {
+            isRefresh = true;
+            //模拟加载网络数据，这里设置4秒，正好能看到4色进度条
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    //显示或隐藏刷新进度条
+                    mSwipeLayout.setRefreshing(false);
+                    //修改adapter的数据
+                    getTodoAchieve();
+                    pachieveToDoListViewAdapter.notifyDataSetChanged();
+                    isRefresh = false;
+                }
+            }, 3000);
+        }
+
     }
 
     private void getTodoAchieve() {

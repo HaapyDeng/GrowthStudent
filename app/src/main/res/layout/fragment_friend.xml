@@ -26,7 +26,7 @@
             android:gravity="center_horizontal"
             android:text="伙伴动态"
             android:textColor="#ffffff"
-            android:textSize="29dp" />
+            android:textSize="19dp" />
 
         <ImageButton
             android:id="@+id/ib_message"

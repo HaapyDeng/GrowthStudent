@@ -57,7 +57,7 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
         } else if (bean.getStatus().equals("4")) {
             ((TextView) holder.getView(R.id.status)).setText("待评星");
         } else if (bean.getStatus().equals("5")) {
-            ((TextView) holder.getView(R.id.status)).setText("完成");
+            ((TextView) holder.getView(R.id.status)).setText("已评星");
         }
         if (bean.getType().equals("1")) {
             Drawable drawable = context1.getResources().getDrawable(R.mipmap.little_wenzi_img);
