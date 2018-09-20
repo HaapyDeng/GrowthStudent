@@ -106,7 +106,7 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
             ((ImageView) holder.getView(R.id.iv_star3)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
-        } else if (bean.getTask_star().equals("2")) {
+        } else if (bean.getStar().equals("2")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star1)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
