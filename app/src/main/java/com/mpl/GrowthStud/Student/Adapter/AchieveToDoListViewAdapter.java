@@ -90,6 +90,10 @@ public class AchieveToDoListViewAdapter extends ListViewAdapter<AchieveToDoItem>
             ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
         }
+
+        if (bean.getStatus().equals("0")) {
+            ((TextView) holder.getView(R.id.tv_redo)).setVisibility(View.VISIBLE);
+        }
 //        ((TextView) holder.getView(R.id.titleTv)).setText(bean.getTitle());
 //        ((TextView) holder.getView(R.id.descTv)).setText(bean.getDesc());
 //        ((TextView) holder.getView(R.id.timeTv)).setText(bean.getTime());
