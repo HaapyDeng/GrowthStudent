@@ -231,6 +231,7 @@ public class SplashActivity extends Activity {
                         doSetAlia(token, role, isActive, userId);
                     } else {
                         Toast.makeText(SplashActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        loadingDialog.dismiss();
                         return;
                     }
                 } catch (JSONException e) {
@@ -243,6 +244,7 @@ public class SplashActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
 
@@ -250,6 +252,7 @@ public class SplashActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
 
@@ -257,6 +260,7 @@ public class SplashActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
         });
@@ -318,6 +322,7 @@ public class SplashActivity extends Activity {
                                     }
                                 } else {
                                     Toast.makeText(SplashActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                    loadingDialog.dismiss();
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -330,6 +335,7 @@ public class SplashActivity extends Activity {
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                             super.onFailure(statusCode, headers, throwable, errorResponse);
                             Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
 
@@ -337,6 +343,7 @@ public class SplashActivity extends Activity {
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             super.onFailure(statusCode, headers, responseString, throwable);
                             Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
 
@@ -344,6 +351,7 @@ public class SplashActivity extends Activity {
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                             super.onFailure(statusCode, headers, throwable, errorResponse);
                             Toast.makeText(SplashActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
                     });

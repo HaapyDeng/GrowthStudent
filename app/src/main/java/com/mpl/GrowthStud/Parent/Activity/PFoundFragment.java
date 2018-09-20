@@ -71,6 +71,8 @@ public class PFoundFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.tv_jiliance:
+                Intent intent1 = new Intent(getActivity(), AlbumMakingActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.tv_echievement:
                 Intent intent2 = new Intent(getActivity(), PEchievementActivity.class);

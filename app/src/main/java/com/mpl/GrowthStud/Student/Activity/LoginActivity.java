@@ -151,6 +151,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         doSetAlia(token, role, isActive, userId, scope);
                     } else {
                         Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        loadingDialog.dismiss();
                         return;
                     }
                 } catch (JSONException e) {
@@ -163,6 +164,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
 
@@ -170,6 +172,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
 
@@ -177,6 +180,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
                 return;
             }
         });
@@ -247,6 +251,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     }
                                 } else {
                                     Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                    loadingDialog.dismiss();
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -259,6 +264,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                             super.onFailure(statusCode, headers, throwable, errorResponse);
                             Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
 
@@ -266,6 +272,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             super.onFailure(statusCode, headers, responseString, throwable);
                             Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
 
@@ -273,11 +280,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                             super.onFailure(statusCode, headers, throwable, errorResponse);
                             Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                            loadingDialog.dismiss();
                             return;
                         }
                     });
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    loadingDialog.dismiss();
                     return;
                 }
             }
