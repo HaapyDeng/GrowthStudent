@@ -291,7 +291,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Parent.Activity.PGetScoreInfoInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Parent.Activity.PEchievementActivity"></activity>
     </application>
 
 </manifest>
