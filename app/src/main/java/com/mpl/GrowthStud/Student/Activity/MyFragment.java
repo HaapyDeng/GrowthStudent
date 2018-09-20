@@ -226,7 +226,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 1:
                     tv_student_name.setText(userName);
-                    tv_brithday.setText(birthday);
+                    tv_brithday.setText(birthday.substring(0, birthday.indexOf(" ")));
                     tv_school.setText(schoolName);
                     tv_grade.setText(grade);
                     if (scope == 2) {
