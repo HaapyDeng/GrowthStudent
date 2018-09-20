@@ -2,6 +2,8 @@ package com.mpl.GrowthStud.Student.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;
-    private String headTitle;
+    private String headTitle, prompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,75 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
         tv_commit.setOnClickListener(this);
 
         et_wenzi = findViewById(R.id.et_wenzi);
+        doGetInfo();
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    et_wenzi.setHint(prompt);
+                    break;
+            }
+
+        }
+    };
+
+    private void doGetInfo() {
+        if (!NetworkUtils.checkNetWork(WenziActivity.this)) {
+            Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/text/show/" + achieveId;
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        JSONObject data = response.getJSONObject("data");
+                        prompt = data.getString("prompt");
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    } else {
+                        Toast.makeText(WenziActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 
     @Override

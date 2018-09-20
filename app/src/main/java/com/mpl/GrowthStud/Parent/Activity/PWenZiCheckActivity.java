@@ -158,7 +158,7 @@ public class PWenZiCheckActivity extends AppCompatActivity implements View.OnCli
             switch (msg.what) {
                 case 1:
                     ll_open.setVisibility(View.INVISIBLE);
-                    tv_prompt.setText(prompt);
+                    tv_prompt.setText(headTitle);
                     tv_start_time.setText(start_time);
                     tv_answer.setText(answer);
                     ShowPopuWindow();

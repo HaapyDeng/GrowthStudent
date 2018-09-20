@@ -140,7 +140,7 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
             switch (msg.what) {
                 case 1:
                     ll_open.setVisibility(View.INVISIBLE);
-                    tv_prompt.setText(prompt);
+                    tv_prompt.setText(headTitle);
                     tv_start_time.setText(start_time);
                     tv_answer.setText(answer);
                     //判断是谁评价了
