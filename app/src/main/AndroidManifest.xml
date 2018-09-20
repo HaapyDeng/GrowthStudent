@@ -274,10 +274,24 @@
         <activity
             android:name=".Parent.Activity.AddChildActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Parent.Activity.PWenZiCheckActivity" />
-        <activity android:name=".Parent.Activity.PTuWenCheckActivity" />
-        <activity android:name=".Parent.Activity.PVideoCheckActivity" />
-        <activity android:name=".Parent.Activity.PEvaluateActivity"></activity>
+        <activity
+            android:name=".Parent.Activity.PWenZiCheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PTuWenCheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PVideoCheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PEvaluateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PGetStarInfoInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PGetScoreInfoInfoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -29,9 +29,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class PEvaluateActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView get_star_info, get_score_info, pingjia_point, star_point, total_point, star_count;
-    private GetStarInfoFragment fragment1;// 第一个操作界面
+    private PGetStarInfoFragment fragment1;// 第一个操作界面
 
-    private GetScoreInfoFragment fragment2;// 第二个操作界面
+    private PGetScoreInfoFragment fragment2;// 第二个操作界面
 
     private android.app.FragmentManager fm;//管理器
     private LinearLayout back;
@@ -198,7 +198,7 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
 
                 if (fragment1 == null) {
 
-                    fragment1 = new GetStarInfoFragment();
+                    fragment1 = new PGetStarInfoFragment();
 
                     transaction.add(R.id.fragment, fragment1);
 
@@ -213,7 +213,7 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
 
                 if (fragment2 == null) {
 
-                    fragment2 = new GetScoreInfoFragment();
+                    fragment2 = new PGetScoreInfoFragment();
 
                     transaction.add(R.id.fragment, fragment2);
 
