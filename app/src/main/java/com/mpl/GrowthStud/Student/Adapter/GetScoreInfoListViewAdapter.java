@@ -24,7 +24,7 @@ public class GetScoreInfoListViewAdapter extends ListViewAdapter<GetStarInfoItem
     @Override
     public void convert(final ViewHolder holder, GetStarInfoItem bean) {
         ((TextView) holder.getView(R.id.tv_title)).setText(bean.getCategory_name());
-        ((TextView) holder.getView(R.id.tv_score)).setText(bean.getPoint());
+        ((TextView) holder.getView(R.id.tv_score)).setText(bean.getTotal_point());
 
     }
 }

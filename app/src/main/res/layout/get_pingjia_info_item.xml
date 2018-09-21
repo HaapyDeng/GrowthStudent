@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_weight="5"
-        android:text="多彩生活"
+        android:text=""
         android:textColor="#333333"
         android:textSize="11dp" />
 
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:drawableRight="@mipmap/right_arrow"
         android:gravity="center"
-        android:text="119分"
+        android:text=""
         android:textColor="#3699ed"
         android:textSize="11dp" />
 </LinearLayout>

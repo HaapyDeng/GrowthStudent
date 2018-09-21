@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
-        android:text="多彩生活"
+        android:text=""
         android:textColor="#333333"
         android:textSize="11dp" />
 
@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:drawableLeft="@mipmap/star_little"
             android:drawablePadding="5dp"
-            android:text="112"
+            android:text=""
             android:textColor="#3699ed"
             android:textSize="11dp" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="128"
+            android:text=""
             android:textColor="#999999"
             android:textSize="11dp" />
     </LinearLayout>
@@ -58,7 +58,7 @@
         android:layout_weight="1"
         android:drawableRight="@mipmap/right_arrow"
         android:gravity="center"
-        android:text="119分"
+        android:text=""
         android:textColor="#3699ed"
         android:textSize="11dp" />
 </LinearLayout>
