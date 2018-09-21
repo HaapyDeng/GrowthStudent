@@ -68,7 +68,7 @@ public class PGetStarInfoInfoActivity extends AppCompatActivity implements View.
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/{category}/{type}/{uid}" + categoryid + "/" + "1/" + cid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/" + categoryid + "/" + "1/" + cid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -96,7 +96,7 @@ public class PGetStarInfoInfoActivity extends AppCompatActivity implements View.
                             String grade = object.getString("grade");
                             String star = object.getString("star");
                             String task_star = object.getString("task_star");
-                            String point = object.getString("point");
+                            String point = object.getString("total_point");
                             String total_point = object.getString("total_point");
                             String updated_at = object.getString("updated_at");
                             GetStarInfoInfoItem getStarInfoInfoItem = new GetStarInfoInfoItem(id, classroom_id, category_name, label_name, name, image, complete_name,

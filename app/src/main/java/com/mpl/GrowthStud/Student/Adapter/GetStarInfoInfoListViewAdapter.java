@@ -44,178 +44,50 @@ public class GetStarInfoInfoListViewAdapter extends ListViewAdapter<GetStarInfoI
         ((TextView) holder.getView(R.id.tv_score)).setText(bean.getTotal_point());
 
         ((TextView) holder.getView(R.id.tv_name)).setText(bean.getComplete_name());
-
-        switch (Integer.getInteger(bean.getTask_star())) {
-            case 1:
-                if (bean.getStar().equals("0")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                }
-                break;
-            case 2:
-                if (bean.getStar().equals("0")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("1")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                }
-                break;
-            case 3:
-                if (bean.getStar().equals("0")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("1")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("2")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.INVISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                }
-                break;
-            case 4:
-                if (bean.getStar().equals("0")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("1")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("2")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else if (bean.getStar().equals("3")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                } else {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.INVISIBLE);
-                }
-                break;
-            case 5:
-                if (bean.getStar().equals("0")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                } else if (bean.getStar().equals("1")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                } else if (bean.getStar().equals("2")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                } else if (bean.getStar().equals("3")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                } else if (bean.getStar().equals("4")) {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star4)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                    ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
-                    ((ImageView) holder.getView(R.id.star5)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
-                }
-                break;
+        if (bean.getTask_star().equals("5")) {
+            ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star5)).setVisibility(View.VISIBLE);
+        } else if (bean.getTask_star().equals("4")) {
+            ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star4)).setVisibility(View.VISIBLE);
+        } else if (bean.getTask_star().equals("3")) {
+            ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star3)).setVisibility(View.VISIBLE);
+        } else if (bean.getTask_star().equals("2")) {
+            ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.star2)).setVisibility(View.VISIBLE);
+        } else if (bean.getTask_star().equals("1")) {
+            ((ImageView) holder.getView(R.id.star1)).setVisibility(View.VISIBLE);
         }
+
+        if (bean.getStar().equals("5")) {
+            ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star4)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star5)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+        } else if (bean.getStar().equals("4")) {
+            ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star4)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+        } else if (bean.getStar().equals("3")) {
+            ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star3)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+        } else if (bean.getStar().equals("2")) {
+            ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+            ((ImageView) holder.getView(R.id.star2)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+        } else if (bean.getStar().equals("1")) {
+            ((ImageView) holder.getView(R.id.star1)).setBackgroundDrawable(context1.getResources().getDrawable(R.mipmap.star_big));
+        }
+
+
     }
 }

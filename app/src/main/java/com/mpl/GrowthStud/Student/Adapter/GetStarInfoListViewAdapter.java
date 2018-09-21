@@ -32,7 +32,7 @@ public class GetStarInfoListViewAdapter extends ListViewAdapter<GetStarInfoItem>
         ((TextView) holder.getView(R.id.tv_title)).setText(bean.getCategory_name());
         ((TextView) holder.getView(R.id.start)).setText(bean.getStar());
         ((TextView) holder.getView(R.id.total_start)).setText(bean.getTask_star());
-        ((TextView) holder.getView(R.id.tv_score)).setText(bean.getTotal_point());
+        ((TextView) holder.getView(R.id.tv_score)).setText(bean.getTotal_point() + "分");
 
     }
 }

@@ -91,7 +91,7 @@ public class GetStarInfoInfoActivity extends AppCompatActivity implements View.O
                             String grade = object.getString("grade");
                             String star = object.getString("star");
                             String task_star = object.getString("task_star");
-                            String point = object.getString("point");
+                            String point = object.getString("total_point");
                             String total_point = object.getString("total_point");
                             String updated_at = object.getString("updated_at");
                             GetStarInfoInfoItem getStarInfoInfoItem = new GetStarInfoInfoItem(id, classroom_id, category_name, label_name, name, image, complete_name,

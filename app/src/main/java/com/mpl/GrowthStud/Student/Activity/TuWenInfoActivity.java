@@ -151,6 +151,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -229,7 +230,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                         String comment1 = object1.getString("comment");
                         JSONObject object2 = audit.getJSONObject(1);
                         String role2 = object1.getString("role");
-                        String comment2 = object1.getString("comment");
+                        String comment2 = object2.getString("comment");
                         TextView tv_omment1 = popupView3.findViewById(R.id.comment1);
                         tv_omment1.setText(comment1);
                         TextView tv_omment2 = popupView3.findViewById(R.id.comment2);
@@ -242,6 +243,67 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                                 ll_open.setVisibility(View.VISIBLE);
                             }
                         });
+                        ImageView iv1 = popupView3.findViewById(R.id.iv1);
+                        ImageView iv2 = popupView3.findViewById(R.id.iv2);
+                        ImageView iv3 = popupView3.findViewById(R.id.iv3);
+                        ImageView iv4 = popupView3.findViewById(R.id.iv4);
+                        ImageView iv5 = popupView3.findViewById(R.id.iv5);
+                        int task_star = object2.getInt("task_star");
+                        int star = object2.getInt("star");
+                        switch (task_star) {
+                            case 5:
+                                iv1.setVisibility(View.VISIBLE);
+                                iv2.setVisibility(View.VISIBLE);
+                                iv3.setVisibility(View.VISIBLE);
+                                iv4.setVisibility(View.VISIBLE);
+                                iv5.setVisibility(View.VISIBLE);
+                                break;
+                            case 4:
+                                iv1.setVisibility(View.VISIBLE);
+                                iv2.setVisibility(View.VISIBLE);
+                                iv3.setVisibility(View.VISIBLE);
+                                iv4.setVisibility(View.VISIBLE);
+                                break;
+                            case 3:
+                                iv1.setVisibility(View.VISIBLE);
+                                iv2.setVisibility(View.VISIBLE);
+                                iv3.setVisibility(View.VISIBLE);
+                                break;
+                            case 2:
+                                iv1.setVisibility(View.VISIBLE);
+                                iv2.setVisibility(View.VISIBLE);
+                                break;
+                            case 1:
+                                iv1.setVisibility(View.VISIBLE);
+                                break;
+                        }
+                        switch (star) {
+                            case 1:
+                                iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                break;
+                            case 2:
+                                iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                break;
+                            case 3:
+                                iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                break;
+                            case 4:
+                                iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv4.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                break;
+                            case 5:
+                                iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv4.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                iv5.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                break;
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -254,6 +316,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
+        @SuppressLint("NewApi")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -341,7 +404,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                             String comment1 = object1.getString("comment");
                             JSONObject object2 = audit.getJSONObject(1);
                             String role2 = object1.getString("role");
-                            String comment2 = object1.getString("comment");
+                            String comment2 = object2.getString("comment");
                             TextView tv_omment1 = popupView3.findViewById(R.id.comment1);
                             tv_omment1.setText(comment1);
                             TextView tv_omment2 = popupView3.findViewById(R.id.comment2);
@@ -354,6 +417,67 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                                     ll_open.setVisibility(View.VISIBLE);
                                 }
                             });
+                            ImageView iv1 = popupView3.findViewById(R.id.iv1);
+                            ImageView iv2 = popupView3.findViewById(R.id.iv2);
+                            ImageView iv3 = popupView3.findViewById(R.id.iv3);
+                            ImageView iv4 = popupView3.findViewById(R.id.iv4);
+                            ImageView iv5 = popupView3.findViewById(R.id.iv5);
+                            int task_star = object2.getInt("task_star");
+                            int star = object2.getInt("star");
+                            switch (task_star) {
+                                case 5:
+                                    iv1.setVisibility(View.VISIBLE);
+                                    iv2.setVisibility(View.VISIBLE);
+                                    iv3.setVisibility(View.VISIBLE);
+                                    iv4.setVisibility(View.VISIBLE);
+                                    iv5.setVisibility(View.VISIBLE);
+                                    break;
+                                case 4:
+                                    iv1.setVisibility(View.VISIBLE);
+                                    iv2.setVisibility(View.VISIBLE);
+                                    iv3.setVisibility(View.VISIBLE);
+                                    iv4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 3:
+                                    iv1.setVisibility(View.VISIBLE);
+                                    iv2.setVisibility(View.VISIBLE);
+                                    iv3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    iv1.setVisibility(View.VISIBLE);
+                                    iv2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    iv1.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+                            switch (star) {
+                                case 1:
+                                    iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    break;
+                                case 2:
+                                    iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    break;
+                                case 3:
+                                    iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    break;
+                                case 4:
+                                    iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv4.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    break;
+                                case 5:
+                                    iv1.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv2.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv3.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv4.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    iv5.setBackground(getResources().getDrawable(R.mipmap.star_little));
+                                    break;
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

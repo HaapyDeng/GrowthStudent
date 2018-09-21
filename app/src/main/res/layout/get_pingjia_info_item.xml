@@ -13,7 +13,7 @@
         android:layout_weight="5"
         android:text=""
         android:textColor="#333333"
-        android:textSize="11dp" />
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -26,5 +26,5 @@
         android:gravity="center"
         android:text=""
         android:textColor="#3699ed"
-        android:textSize="11dp" />
+        android:textSize="17dp" />
 </LinearLayout>
