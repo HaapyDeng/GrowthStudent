@@ -108,12 +108,6 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getCpmpletAchieve();
-    }
-
     private void getCpmpletAchieve() {
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
         if (!sharedPreferences3.getBoolean("have", false)) {

@@ -78,11 +78,6 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getParentInfo();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

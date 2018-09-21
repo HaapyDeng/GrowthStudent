@@ -103,12 +103,6 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getCpmpletAchieve();
-    }
-
     private void getCpmpletAchieve() {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();

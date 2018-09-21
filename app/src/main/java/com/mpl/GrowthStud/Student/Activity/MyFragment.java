@@ -79,12 +79,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getParentList();
-        initData();
-    }
 
     private void getParentList() {
         if (NetworkUtils.checkNetWork(getActivity()) == false) {

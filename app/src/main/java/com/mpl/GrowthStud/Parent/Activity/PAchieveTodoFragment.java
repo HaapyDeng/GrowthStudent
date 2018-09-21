@@ -78,11 +78,6 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getTodoAchieve();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

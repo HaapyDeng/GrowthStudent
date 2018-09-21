@@ -1,6 +1,7 @@
 package com.mpl.GrowthStud.Parent.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -66,11 +67,14 @@ public class PAchievementFragment extends Fragment implements View.OnClickListen
         todo = root.findViewById(R.id.tv_todo);
         todo.setOnClickListener(this);
         iv_dot = root.findViewById(R.id.iv_dot);
+
         selectFragment(0);
         doGetNewMessage();
+
         // Inflate the layout for this fragment
         return root;
     }
+
 
     @Override
     public void onResume() {

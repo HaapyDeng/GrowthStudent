@@ -70,12 +70,6 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getTodoAchieve();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_achieve_todo, container, false);

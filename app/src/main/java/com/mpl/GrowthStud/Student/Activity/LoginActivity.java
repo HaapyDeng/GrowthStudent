@@ -1,6 +1,7 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -134,21 +135,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         } else {
                             scope = 0;
                         }
-                        SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("token", token);
-                        editor.putInt("scope", scope);
-                        editor.putString("username", userName);
-                        editor.putString("password", password);
-                        editor.putString("userid", userId);
-                        editor.putInt("schoolid", schoolId);
-                        editor.putString("schoolname", schoolName);
-                        editor.commit();
-                        SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
-                        SharedPreferences.Editor editor2 = sp2.edit();
-                        editor2.putInt("tag", 1);
-                        editor2.commit();
-                        doSetAlia(token, role, isActive, userId, scope);
+                        doSetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
                     } else {
                         Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         loadingDialog.dismiss();
@@ -186,14 +173,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    private void doSetAlia(final String token, final String role, final int isActive, String userId, final int scope) {
+    private void doSetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
         final String[] registrationID = new String[1];
         JPushInterface.setAlias(this, NetworkUtils.getIMEI(this), new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
+
                 if (i == 0) {
                     registrationID[0] = JPushInterface.getRegistrationID(LoginActivity.this);
                     if (registrationID[0].equals("")) {
+                        Log.d(" setAlias=Callback==>>>", "" + i);
                         Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -211,9 +200,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             try {
                                 int code = response.getInt("code");
                                 if (code == 0) {
-                                    loadingDialog.dismiss();
+                                    SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("token", token);
+                                    editor.putInt("scope", scope);
+                                    editor.putString("username", userName);
+                                    editor.putString("password", password);
+                                    editor.putString("userid", userId);
+                                    editor.putInt("schoolid", schoolId);
+                                    editor.putString("schoolname", schoolName);
+                                    editor.commit();
+                                    SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor2 = sp2.edit();
+                                    editor2.putInt("tag", 1);
+                                    editor2.commit();
                                     switch (isActive) {
                                         case 0:
+                                            loadingDialog.dismiss();
                                             if (role.equals("student")) {
                                                 if (scope == 1) {
                                                     //跳转到身份证激活页面
@@ -229,22 +232,30 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                                                跳转到家长激活界面
                                                 Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
                                                 startActivity(intent2);
-                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;
                                         case 1:
                                             if (role.equals("student")) {
+                                                loadingDialog.dismiss();
                                                 Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
                                                 startActivity(intent3);
                                                 finish();
                                                 //跳转到学生主页面
                                             } else if (role.equals("parent")) {
-                                                //跳转到家长主界面
-                                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
-                                                startActivity(intent4);
-                                                finish();
-                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                                SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
+                                                if (!sharedPreferences3.getBoolean("have", false)) {
+                                                    doGetChild(); //初次进入app获取第一个孩子的uid
+                                                } else {
+                                                    loadingDialog.dismiss();
+                                                    //跳转到家长主界面
+                                                    Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
+                                                    startActivity(intent4);
+                                                    finish();
+                                                }
+
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             break;
@@ -292,5 +303,82 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         });
 
+    }
+
+    private void doGetChild() {
+        Log.d("cid==>>>", "GetChild");
+        if (NetworkUtils.checkNetWork(this) == false) {
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/user/parent-info";
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        loadingDialog.dismiss();
+                        JSONObject data = response.getJSONObject("data");
+                        if (data.has("student")) {
+                            if (data.getJSONArray("student").length() > 0) {
+                                JSONArray student = data.getJSONArray("student");
+                                JSONObject object = student.getJSONObject(0);
+                                String student_user_id = object.getString("user_id");
+                                SharedPreferences sharedPreferences = getSharedPreferences("userid", Context.MODE_PRIVATE);
+                                //获取editor对象
+                                SharedPreferences.Editor editor = sharedPreferences.edit();//获取编辑器
+                                editor.putString("id", student_user_id);
+                                editor.putBoolean("have", true);
+                                editor.commit();
+                                //跳转到家长主界面
+                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
+                                startActivity(intent4);
+                                finish();
+                            } else {
+                                //跳转到家长主界面
+                                Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
+                                startActivity(intent4);
+                                finish();
+                            }
+                        }
+
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
