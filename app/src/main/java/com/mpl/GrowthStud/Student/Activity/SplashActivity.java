@@ -62,9 +62,6 @@ public class SplashActivity extends Activity {
             e.printStackTrace();
         }
         checkUpdate();
-        if (update == false) {
-            init();
-        }
 
 
     }
@@ -95,6 +92,7 @@ public class SplashActivity extends Activity {
                         int hasUpgrade = data.getInt("hasUpgrade");
                         if (hasUpgrade == 0) {
                             update = false;
+                            init();//进入app
                         } else {
                             update = true;
                             updateUrl = data.getString("url");
