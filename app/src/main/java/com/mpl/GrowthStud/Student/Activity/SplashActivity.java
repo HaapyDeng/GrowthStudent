@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
     // 延迟3秒
     private static final long SPLASH_DELAY_MILLIS = 3000;
     boolean isFirstIn = false;
-    boolean update = false;
+    boolean update = true;
     private String updateUrl, updateVersion, content, mandatory, app_code;
     private LoadingDialog loadingDialog;
 
@@ -81,6 +81,7 @@ public class SplashActivity extends Activity {
             e.printStackTrace();
         }
         String url = getResources().getString(R.string.local_url) + "/app-upgrade/" + 2 + "/" + version;
+        Log.d("url++>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler() {
             @Override
