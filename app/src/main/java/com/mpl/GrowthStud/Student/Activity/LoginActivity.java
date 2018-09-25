@@ -175,135 +175,120 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void doSetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
         final String[] registrationID = new String[1];
-        JPushInterface.setAlias(this, NetworkUtils.getIMEI(this), new TagAliasCallback() {
+
+        registrationID[0] = NetworkUtils.getIMEI(this);
+        Log.d("IMEI==>>", NetworkUtils.getIMEI(LoginActivity.this));
+        Log.d("registrationID==>>", registrationID[0]);
+        String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + registrationID[0];
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
             @Override
-            public void gotResult(int i, String s, Set<String> set) {
-
-                if (i == 0) {
-                    registrationID[0] = JPushInterface.getRegistrationID(LoginActivity.this);
-                    if (registrationID[0].equals("")) {
-                        Log.d(" setAlias=Callback==>>>", "" + i);
-                        Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    Log.d("IMEI==>>", NetworkUtils.getIMEI(LoginActivity.this));
-                    Log.d("registrationID==>>", registrationID[0]);
-                    String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + registrationID[0];
-                    Log.d("url==>>", url);
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.addHeader("X-Api-Token", token);
-                    client.get(url, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-                            Log.d("response==>>>", response.toString());
-                            try {
-                                int code = response.getInt("code");
-                                if (code == 0) {
-                                    SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sp.edit();
-                                    editor.putString("token", token);
-                                    editor.putInt("scope", scope);
-                                    editor.putString("username", userName);
-                                    editor.putString("password", password);
-                                    editor.putString("userid", userId);
-                                    editor.putInt("schoolid", schoolId);
-                                    editor.putString("schoolname", schoolName);
-                                    editor.commit();
-                                    SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor2 = sp2.edit();
-                                    editor2.putInt("tag", 1);
-                                    editor2.commit();
-                                    switch (isActive) {
-                                        case 0:
-                                            loadingDialog.dismiss();
-                                            if (role.equals("student")) {
-                                                if (scope == 1) {
-                                                    //跳转到身份证激活页面
-                                                    Intent intent = new Intent(LoginActivity.this, ActivateKinderStdActivity.class);
-                                                    startActivity(intent);
-                                                } else {
-                                                    //跳转到学籍号激活页面
-                                                    Intent intent = new Intent(LoginActivity.this, ActivateOtherStdActivity.class);
-                                                    startActivity(intent);
-                                                }
-
-                                            } else if (role.equals("parent")) {
-//                                                跳转到家长激活界面
-                                                Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
-                                                startActivity(intent2);
-//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
-                                                return;
-                                            }
-                                            break;
-                                        case 1:
-                                            if (role.equals("student")) {
-                                                loadingDialog.dismiss();
-                                                Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
-                                                startActivity(intent3);
-                                                finish();
-                                                //跳转到学生主页面
-                                            } else if (role.equals("parent")) {
-                                                SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
-                                                if (!sharedPreferences3.getBoolean("have", false)) {
-                                                    doGetChild(); //初次进入app获取第一个孩子的uid
-                                                } else {
-                                                    loadingDialog.dismiss();
-                                                    //跳转到家长主界面
-                                                    Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
-                                                    startActivity(intent4);
-                                                    finish();
-                                                }
-
-//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
-                                                return;
-                                            }
-                                            break;
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("token", token);
+                        editor.putInt("scope", scope);
+                        editor.putString("username", userName);
+                        editor.putString("password", password);
+                        editor.putString("userid", userId);
+                        editor.putInt("schoolid", schoolId);
+                        editor.putString("schoolname", schoolName);
+                        editor.commit();
+                        SharedPreferences sp2 = getSharedPreferences("tag", MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = sp2.edit();
+                        editor2.putInt("tag", 1);
+                        editor2.commit();
+                        switch (isActive) {
+                            case 0:
+                                loadingDialog.dismiss();
+                                if (role.equals("student")) {
+                                    if (scope == 1) {
+                                        //跳转到身份证激活页面
+                                        Intent intent = new Intent(LoginActivity.this, ActivateKinderStdActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        //跳转到学籍号激活页面
+                                        Intent intent = new Intent(LoginActivity.this, ActivateOtherStdActivity.class);
+                                        startActivity(intent);
                                     }
-                                } else {
-                                    Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                                    loadingDialog.dismiss();
+
+                                } else if (role.equals("parent")) {
+//                                                跳转到家长激活界面
+                                    Intent intent2 = new Intent(LoginActivity.this, ActiveParentActivity.class);
+                                    startActivity(intent2);
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
                                     return;
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                break;
+                            case 1:
+                                if (role.equals("student")) {
+                                    loadingDialog.dismiss();
+                                    Intent intent3 = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent3);
+                                    finish();
+                                    //跳转到学生主页面
+                                } else if (role.equals("parent")) {
+                                    SharedPreferences sharedPreferences3 = getSharedPreferences("userid", MODE_PRIVATE);
+                                    if (!sharedPreferences3.getBoolean("have", false)) {
+                                        doGetChild(); //初次进入app获取第一个孩子的uid
+                                    } else {
+                                        loadingDialog.dismiss();
+                                        //跳转到家长主界面
+                                        Intent intent4 = new Intent(LoginActivity.this, PMainActivity.class);
+                                        startActivity(intent4);
+                                        finish();
+                                    }
 
+//                                                Toast.makeText(LoginActivity.this, "家长账号敬请期待", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                                break;
                         }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
-                            loadingDialog.dismiss();
-                            return;
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            super.onFailure(statusCode, headers, responseString, throwable);
-                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
-                            loadingDialog.dismiss();
-                            return;
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                            Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
-                            loadingDialog.dismiss();
-                            return;
-                        }
-                    });
-                } else {
-                    Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
-                    loadingDialog.dismiss();
-                    return;
+                    } else {
+                        Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        loadingDialog.dismiss();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                loadingDialog.dismiss();
+                return;
             }
         });
 
     }
+
 
     private void doGetChild() {
         Log.d("cid==>>>", "GetChild");
