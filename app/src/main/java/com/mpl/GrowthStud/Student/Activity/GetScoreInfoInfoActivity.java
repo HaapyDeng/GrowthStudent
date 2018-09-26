@@ -62,7 +62,7 @@ public class GetScoreInfoInfoActivity extends AppCompatActivity implements View.
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/{category}/{type}/{uid}" + categoryid + "/" + "2/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/" + categoryid + "/" + "2/" + uid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);

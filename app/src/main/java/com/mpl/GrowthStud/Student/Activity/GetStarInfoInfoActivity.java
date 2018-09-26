@@ -63,7 +63,7 @@ public class GetStarInfoInfoActivity extends AppCompatActivity implements View.O
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/{category}/{type}/{uid}" + categoryid + "/" + "1/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/detail/" + categoryid + "/" + "1/" + uid;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
