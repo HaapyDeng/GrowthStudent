@@ -241,9 +241,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                     tv_teacher.setText(teacherName);
                     tv_in_school.setText(schoolName);
                     if (gender == 1) {
-                        head_img.setBackground(getActivity().getResources().getDrawable(R.mipmap.student_head_img));
+                        head_img.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.head_student_boy));
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_boy_img));
                     } else {
+                        head_img.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.head_student_girl));
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_girl_img));
                     }
                     break;

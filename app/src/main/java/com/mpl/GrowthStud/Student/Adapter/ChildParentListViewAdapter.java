@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Bean.ChildParentListItem;
+import com.mpl.GrowthStud.Student.View.CircleImageView;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class ChildParentListViewAdapter extends ListViewAdapter<ChildParentListI
     @Override
     public void convert(final ViewHolder holder, ChildParentListItem bean) {
         if (bean.getGender() == 1) {
-            ((ImageView) holder.getView(R.id.iv_head)).setBackground(context1.getResources().getDrawable(R.mipmap.head_parent_man));
+            ((ImageView) holder.getView(R.id.iv_head)).setImageDrawable(context1.getResources().getDrawable(R.mipmap.head_parent_man));
         } else {
-            ((ImageView) holder.getView(R.id.iv_head)).setBackground(context1.getResources().getDrawable(R.mipmap.head_parent_woman));
+            ((ImageView) holder.getView(R.id.iv_head)).setImageDrawable(context1.getResources().getDrawable(R.mipmap.head_parent_woman));
         }
         ((TextView) holder.getView(R.id.tv_name)).setText(bean.getParent_username());
         ((TextView) holder.getView(R.id.tv_phone)).setText(bean.getMobile());

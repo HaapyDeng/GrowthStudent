@@ -25,6 +25,7 @@ import com.mpl.GrowthStud.Student.Activity.MessageActivity;
 import com.mpl.GrowthStud.Student.Activity.SettingActivity;
 import com.mpl.GrowthStud.Student.Bean.StudentInfo;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.CircleImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,9 +40,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class PMyFragment extends Fragment implements View.OnClickListener {
+    private CircleImageView head_img;
     private TextView tv_parent_name, tv_bundle_chlid, tv_grade, tv_class, tv_section, tv_teacher, tv_in_school;
     private LinearLayout ll_set;
-    private ImageView head_img, iv_gender;
+    private ImageView iv_gender;
     private String parent_account, parent_username, parent_mobile;
     private int parent_gender;
     private String student_user_id;
@@ -176,8 +178,10 @@ public class PMyFragment extends Fragment implements View.OnClickListener {
                     tv_parent_name.setText(parent_username);
                     if (parent_gender == 1) {
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_boy_img));
+                        head_img.setImageDrawable(getResources().getDrawable(R.mipmap.head_parent_man));
                     } else {
                         iv_gender.setBackground(getActivity().getResources().getDrawable(R.mipmap.small_girl_img));
+                        head_img.setImageDrawable(getResources().getDrawable(R.mipmap.head_parent_woman));
                     }
                     String id = "";
                     if (student.length() > 0) {
