@@ -80,7 +80,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="2018-12-30"
                 android:textColor="#999999"
                 android:textSize="13dp" />
         </LinearLayout>

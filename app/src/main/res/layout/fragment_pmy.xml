@@ -33,7 +33,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="41dp"
-            android:text="刘天天"
             android:textColor="#ffffff"
             android:textSize="17dp" />
 
@@ -81,7 +80,6 @@
             android:layout_height="match_parent"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="绑定孩子账号"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>

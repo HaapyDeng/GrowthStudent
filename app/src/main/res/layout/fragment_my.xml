@@ -33,7 +33,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="41dp"
-            android:text="刘天天"
             android:textColor="#ffffff"
             android:textSize="17dp" />
 
@@ -60,7 +59,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_shape"
                 android:gravity="center_vertical"
-                android:text="北京市十四中学"
                 android:textColor="#ffffff"
                 android:textSize="13dp" />
 
@@ -74,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_shape"
                 android:gravity="center_vertical"
-                android:text="一年级·6班"
                 android:textColor="#ffffff"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -115,7 +112,6 @@
             android:layout_height="match_parent"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="2008年7月28日"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>
@@ -148,7 +144,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="小学"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>
@@ -223,7 +218,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="刘能"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>
@@ -256,7 +250,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="成都师大附小"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>

@@ -83,7 +83,6 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:gravity="center_vertical"
-            android:text="李刚"
             android:textColor="#333333"
             android:textSize="17dp" />
     </LinearLayout>
@@ -116,7 +115,6 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:gravity="center_vertical"
-            android:text="男"
             android:textColor="#333333"
             android:textSize="17dp" />
     </LinearLayout>

@@ -71,7 +71,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="认识他人"
                 android:textColor="#333333"
                 android:textSize="19dp" />
 
@@ -80,7 +79,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="2018-12-30"
                 android:textColor="#999999"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -91,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="我的同桌叫Daved，是个有趣的男孩子。他特别喜欢摄影，他说好的摄影作品可以发人深省或者给人温暖。"
             android:textColor="#ff333333"
             android:textSize="15dp" />
 

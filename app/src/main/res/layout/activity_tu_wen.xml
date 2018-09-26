@@ -70,7 +70,6 @@
         android:layout_marginTop="10dp"
         android:background="#F8F8F8"
         android:gravity="left"
-        android:hint="请在此用一段话描述生活中自己的样子，比如活泼、可爱、认证、用心、粗心"
         android:maxLength="300"
         android:textColorHint="#999999"
         android:textSize="15dp" />
