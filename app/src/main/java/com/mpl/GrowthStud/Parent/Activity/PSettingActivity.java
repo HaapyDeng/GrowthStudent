@@ -158,7 +158,7 @@ public class PSettingActivity extends AppCompatActivity implements View.OnClickL
     private void showDialog() {
         //实例化自定义对话框
         final ConstomDialog mdialog = new ConstomDialog(this);
-        mdialog.setTv("清空缓存");
+        mdialog.setTv("是否清除缓存？");
         //对话框中退出按钮事件
         mdialog.setOnExitListener(new View.OnClickListener() {
             @Override
