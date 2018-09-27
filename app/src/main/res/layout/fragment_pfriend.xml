@@ -21,12 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
-
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="伙伴动态"
             android:textColor="#ffffff"
-            android:textSize="29dp" />
+            android:textSize="19dp" />
 
         <ImageButton
             android:id="@+id/ib_message"
