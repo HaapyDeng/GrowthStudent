@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".Parent.Activity.ActiveParentActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
@@ -34,14 +34,16 @@
             android:id="@+id/tv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
             android:text="激活账号"
             android:textColor="#333333"
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

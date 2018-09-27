@@ -8,18 +8,17 @@
     android:orientation="vertical"
     tools:context=".Student.Activity.AboutActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
         android:background="@drawable/gradual_change"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageButton
@@ -40,16 +39,16 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:text="关于我们"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

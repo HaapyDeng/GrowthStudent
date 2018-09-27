@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".Student.Activity.VideoActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/gradual_change"
@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageButton
@@ -32,6 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:text="成就"
                 android:textColor="#ffffff"
@@ -40,11 +41,11 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
             android:text="我的成就"
             android:textColor="#ffffff"
             android:textSize="19dp" />
@@ -53,13 +54,15 @@
             android:id="@+id/tv_commit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="提交"
             android:textColor="#ffffff"
             android:textSize="17dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/et_wenzi"

@@ -8,22 +8,22 @@
     android:orientation="vertical"
     tools:context=".Parent.Activity.PEvaluateActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/gradual_change"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:background="@drawable/gradual_change">
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageButton
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:background="@mipmap/icon_white_back" />
@@ -31,24 +31,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="发现"
                 android:textColor="#ffffff"
                 android:textSize="17dp" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="综合评价"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -123,10 +125,10 @@
                 android:textSize="19dp" />
 
             <TextView
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"
+                android:gravity="center"
                 android:text="综合总分"
                 android:textColor="#ffffff"
                 android:textSize="11dp" />
@@ -196,7 +198,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#eeeeee" />
-
 
 
     <ImageView

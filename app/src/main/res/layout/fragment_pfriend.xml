@@ -7,21 +7,20 @@
     android:orientation="vertical"
     tools:context=".Parent.Activity.PFriendFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-
-
         android:background="@drawable/gradual_change"
         android:orientation="horizontal">
 
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="伙伴动态"
             android:textColor="#ffffff"
@@ -31,13 +30,15 @@
             android:id="@+id/ib_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:background="@mipmap/bell"
             android:gravity="center_vertical" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

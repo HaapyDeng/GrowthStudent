@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".Parent.Activity.PAchievementFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/gradual_change"
@@ -15,42 +15,45 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="我的成就"
                 android:textColor="#ffffff"
                 android:textSize="19dp" />
 
-            <ImageButton
-                android:id="@+id/ib_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@mipmap/bell" />
-
-            <com.mpl.GrowthStud.Student.View.CircleImageView
-                android:id="@+id/iv_dot"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center_vertical"
-                android:background="#FF4800"
-                android:visibility="invisible" />
         </LinearLayout>
 
+        <ImageButton
+            android:id="@+id/ib_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/bell" />
 
-    </LinearLayout>
+        <com.mpl.GrowthStud.Student.View.CircleImageView
+            android:id="@+id/iv_dot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="#FF4800" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

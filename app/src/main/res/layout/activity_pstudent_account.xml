@@ -8,18 +8,17 @@
     android:orientation="vertical"
     tools:context=".Parent.Activity.PStudentAccountActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/gradual_change"
-        android:gravity="center"
         android:orientation="horizontal">
 
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageButton
@@ -32,17 +31,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="个人"
                 android:textColor="#ffffff"
                 android:textSize="17dp" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="家长账号"
             android:textColor="#ffffff"
@@ -52,13 +52,15 @@
             android:id="@+id/tv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="添加"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
 

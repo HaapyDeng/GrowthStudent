@@ -8,17 +8,16 @@
     android:orientation="vertical"
     tools:context=".Student.Activity.BundleParentActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#3699ED"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageButton
@@ -31,6 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:text="返回"
                 android:textColor="#ffffff"
@@ -38,16 +38,16 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:text="绑定申请"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,7 +75,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="41dp"
-            android:text="刘天天"
             android:textColor="#ffffff"
             android:textSize="17dp" />
 
@@ -123,7 +122,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="139*****8832"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>
@@ -151,7 +149,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="爷爷"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>
@@ -183,7 +180,6 @@
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
-            android:text="我是你爷爷，你同意一下呗，乖孙子！"
             android:textColor="#999999"
             android:textSize="17dp" />
     </LinearLayout>

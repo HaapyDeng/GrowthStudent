@@ -8,22 +8,18 @@
     tools:context=".Student.Activity.FoundFragment">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/gradual_change"
-        android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
-
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:text="发现"
             android:textColor="#ffffff"
             android:textSize="19dp" />
@@ -32,11 +28,14 @@
             android:id="@+id/ib_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:background="@mipmap/bell" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_evaluate"
