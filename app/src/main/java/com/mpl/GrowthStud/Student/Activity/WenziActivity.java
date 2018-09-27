@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     private String wenzi;
     private String achieveId;
     private String headTitle, prompt;
+    private TextView tv_text_count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +54,36 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
         tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setOnClickListener(this);
 
+        tv_text_count = findViewById(R.id.tv_text_count);
+
         et_wenzi = findViewById(R.id.et_wenzi);
+        et_wenzi.addTextChangedListener(mTextWatcher);
         doGetInfo();
     }
+
+    TextWatcher mTextWatcher = new TextWatcher() {
+        private CharSequence temp;
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+            temp = s;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+            // TODO Auto-generated method stub
+            et_wenzi.setText(s);//将输入的内容实时显示
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // TODO Auto-generated method stub
+
+            tv_text_count.setText("" + temp.length());
+        }
+    };
 
     private Handler handler = new Handler() {
         @Override
