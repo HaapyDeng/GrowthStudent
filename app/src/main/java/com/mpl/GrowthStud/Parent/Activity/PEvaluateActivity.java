@@ -42,8 +42,9 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
     pingjiaPoint (integer, optional): 问卷分 ,
     totalPoint (integer, optional): 总分
      */
-    private String one_star_point, starCount, starPoint, pingjiaPoint, totalPoint;
+    private String student_name, student_classroom, student_grade, one_star_point, starCount, starPoint, pingjiaPoint, totalPoint;
     private String cid;
+    private TextView tv_studentname, tv_studentclass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
         star_point = findViewById(R.id.star_point);
         total_point = findViewById(R.id.total_point);
         star_count = findViewById(R.id.star_count);
+        tv_studentname = findViewById(R.id.tv_studentname);
+        tv_studentclass = findViewById(R.id.tv_studentclass);
     }
 
     private void initData() {
@@ -101,6 +104,9 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
                         totalPoint = data.getString("total_point");
                         starCount = data.getString("star");
                         one_star_point = data.getString("one_star_point");
+                        student_name = data.getString("username");
+                        student_classroom = data.getString("classroom");
+                        student_grade = data.getString("grade");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
@@ -137,6 +143,7 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -148,6 +155,8 @@ public class PEvaluateActivity extends AppCompatActivity implements View.OnClick
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("one_star_point", one_star_point);
                     editor.commit();
+                    tv_studentname.setText(student_name);
+                    tv_studentclass.setText(student_grade + "·" + student_classroom);
                     total_point.setText(totalPoint);
                     star_point.setText(starPoint);
                     pingjia_point.setText(pingjiaPoint);
