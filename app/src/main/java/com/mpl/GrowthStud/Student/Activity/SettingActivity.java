@@ -76,7 +76,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ll_upgrade:
                 //实例化自定义对话框
                 final ConstomDialog mdialog = new ConstomDialog(this);
-                mdialog.setTv("没有新版本升级");
+                mdialog.setTv("已经是最新版本");
                 //对话框中确认按钮事件
                 mdialog.setOnExitListener(new View.OnClickListener() {
                     @Override
