@@ -69,6 +69,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     String bitmapPath;
     String backBitmap, prompt;
     private TextView tv_text_count;
+    private ImageButton ib_start;
 
     // 文件路径
     private String path = "";
@@ -102,8 +103,12 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         iv_button.setOnClickListener(this);
 
         iv_video = findViewById(R.id.iv_video);
-        iv_video.setOnClickListener(this);
+
+        ib_start = findViewById(R.id.ib_start);
+        ib_start.setOnClickListener(this);
+
         doGetInfo();
+
 
     }
 
@@ -241,7 +246,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                 path = "";
                 btn_delete.setVisibility(View.GONE);
                 break;
-            case R.id.iv_video:
+            case R.id.ib_start:
                 if (path != null && !path.equalsIgnoreCase("")) {
                     Intent intent1 = new Intent(this, VideoPlayActivity.class);
                     Bundle bundle = new Bundle();
