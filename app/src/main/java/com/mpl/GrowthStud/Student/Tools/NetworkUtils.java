@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -136,6 +137,7 @@ public class NetworkUtils {
      */
     public static String getTotalCacheSize(Context context) throws Exception {
         long cacheSize = getFolderSize(context.getCacheDir());
+        Log.d("cacheSize==>>", "" + getFolderSize(context.getCacheDir()));
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             cacheSize += getFolderSize(context.getExternalCacheDir());
         }
@@ -146,6 +148,7 @@ public class NetworkUtils {
     //Context.getExternalFilesDir() --> SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
     //Context.getExternalCacheDir() --> SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
     public static long getFolderSize(File file) throws Exception {
+        Log.d("file:", "" + file);
         long size = 0;
         try {
             File[] fileList = file.listFiles();
@@ -224,6 +227,7 @@ public class NetworkUtils {
                 }
             }
         }
+        Log.d("dir.delete():", "" + dir.delete());
         return dir.delete();
     }
 

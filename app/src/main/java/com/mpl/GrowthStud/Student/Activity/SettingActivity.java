@@ -166,6 +166,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 //如果对话框处于显示状态
                 if (mdialog.isShowing()) {
                     NetworkUtils.clearAllCache(SettingActivity.this);
+                    try {
+                        tv_cache.setText("0k");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     //关闭对话框
                     mdialog.dismiss();
                 }

@@ -169,7 +169,7 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
     }
 
     private void createRecordDir() {
-        File sampleDir = new File(Environment.getExternalStorageDirectory() + File.separator + "im/video/");
+        File sampleDir = new File("/data/user/0/com.mpl.GrowthStud/cache/im/video/");
         if (!sampleDir.exists()) {
             sampleDir.mkdirs();
         }
