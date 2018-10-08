@@ -74,7 +74,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
         public void beforeTextChanged(CharSequence s, int start, int count,
                                       int after) {
             // TODO Auto-generated method stub
-            et_wenzi.setText(s);//将输入的内容实时显示
+//            et_wenzi.setText(s);//将输入的内容实时显示
         }
 
         @Override
