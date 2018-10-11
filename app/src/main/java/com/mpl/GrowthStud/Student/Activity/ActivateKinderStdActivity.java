@@ -64,7 +64,7 @@ public class ActivateKinderStdActivity extends Activity implements View.OnClickL
     }
 
     private void doActive(final String cardId) {
-        String url = getResources().getString(R.string.local_url) + "/user/validate-number/" + cardId;
+        String url = getResources().getString(R.string.local_url) + "/user/validate-number/" + "1/" + cardId;
         Log.d("url==>", url);
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");

@@ -62,7 +62,7 @@ public class ActivateOtherStdActivity extends Activity implements View.OnClickLi
     }
 
     private void doActive(String schoolNum) {
-        String url = getResources().getString(R.string.local_url) + "/user/validate-number/" + schoolNum;
+        String url = getResources().getString(R.string.local_url) + "/user/validate-number/" + "2/" + schoolNum;
         Log.d("url==>", url);
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
