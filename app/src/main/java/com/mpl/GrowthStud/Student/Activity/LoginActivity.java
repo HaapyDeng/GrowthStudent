@@ -52,7 +52,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void initView() {
         TextView app_version = findViewById(R.id.app_version);
         try {
-            app_version.setText(NetworkUtils.getVersionName(this));
+            app_version.setText("家庭端" + NetworkUtils.getVersionName(this));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,7 +135,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         } else {
                             scope = 0;
                         }
-                        doSetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
+                        doGetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
+
                     } else {
                         Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         loadingDialog.dismiss();
@@ -173,13 +174,32 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    private void doSetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
+    private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
         final String[] registrationID = new String[1];
 
+        final String[] jpregistrationID = new String[1];
         registrationID[0] = NetworkUtils.getIMEI(this);
         Log.d("IMEI==>>", NetworkUtils.getIMEI(LoginActivity.this));
-        Log.d("registrationID==>>", registrationID[0]);
-        String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + registrationID[0];
+        JPushInterface.setAlias(LoginActivity.this, registrationID[0], new TagAliasCallback() {
+
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                if (i == 0) {
+                    jpregistrationID[0] = JPushInterface.getRegistrationID(LoginActivity.this);
+                    Log.d("registrationID==>>", jpregistrationID[0]);
+                    doSetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope, jpregistrationID[0]);
+                } else {
+                    Toast.makeText(LoginActivity.this, "请检查网络稍后再试", Toast.LENGTH_LONG).show();
+                    loadingDialog.dismiss();
+                    return;
+                }
+            }
+        });
+    }
+
+    private void doSetAlia(final String token, final String userName, final String password, final int schoolId,
+                           final String schoolName, final String role, final int isActive, final String userId, final int scope, String jpregistrationID) {
+        String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + jpregistrationID;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
