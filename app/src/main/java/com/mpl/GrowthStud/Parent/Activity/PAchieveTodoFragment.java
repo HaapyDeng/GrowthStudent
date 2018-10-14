@@ -89,6 +89,9 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
+        if (mDatas.size() > 0) {
+            mDatas.clear();
+        }
         getTodoAchieve(currentPage);
         // Inflate the layout for this fragment
         //设置SwipeRefreshLayout
@@ -200,6 +203,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                         }
                         pachieveToDoListViewAdapter = new PAchieveToDoListViewAdapter(getActivity(), mDatas);
                         listView.setAdapter(pachieveToDoListViewAdapter);
+                        listView.setLoadCompleted();
                     } else {
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;

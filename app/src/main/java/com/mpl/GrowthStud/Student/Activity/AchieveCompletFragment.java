@@ -63,6 +63,9 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
+        if (mDatas.size() > 0) {
+            mDatas.clear();
+        }
         getCpmpletAchieve(currentPage);
         // Inflate the layout for this fragment
         //设置SwipeRefreshLayout
@@ -87,7 +90,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             @Override
             public void onloadMore() {
                 int i = Integer.parseInt(currentPage);
-                Log.d("i==>>", "" + i);
+                Log.d("i==>>", "" + i + "/" + totalPage);
                 if (i < totalPage) {
                     getCpmpletAchieve("" + (i + 1));
                 } else {
@@ -168,6 +171,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                         }
                         achieveCompletListViewAdapter = new AchieveCompletListViewAdapter(getActivity(), mDatas);
                         listView.setAdapter(achieveCompletListViewAdapter);
+                        listView.setLoadCompleted();
                     } else {
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;

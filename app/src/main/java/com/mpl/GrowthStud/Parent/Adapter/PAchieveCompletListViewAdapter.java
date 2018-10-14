@@ -32,7 +32,6 @@ public class PAchieveCompletListViewAdapter extends ListViewAdapter<PAchieveComp
     @Override
     public void convert(final ViewHolder holder, PAchieveCompletItem bean) {
         ((TextView) holder.getView(R.id.tv_title)).setText(bean.getName());
-        ((TextView) holder.getView(R.id.tv_1)).setText(bean.getCategory_name());
 
         Log.d("qqqqqqqqqqq", "" + bean.getType());
         if (bean.getImage().length() == 0) {
@@ -64,15 +63,19 @@ public class PAchieveCompletListViewAdapter extends ListViewAdapter<PAchieveComp
         if (bean.getType().equals("1")) {
             Drawable drawable = context1.getResources().getDrawable(R.mipmap.little_wenzi_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable);
+            ((TextView) holder.getView(R.id.tv_1)).setText("文字");
         } else if (bean.getType().equals("2")) {
             Drawable drawable2 = context1.getResources().getDrawable(R.mipmap.little_tuwen_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable2);
+            ((TextView) holder.getView(R.id.tv_1)).setText("图文");
         } else if (bean.getType().equals("3")) {
             Drawable drawable3 = context1.getResources().getDrawable(R.mipmap.little_video_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable3);
+            ((TextView) holder.getView(R.id.tv_1)).setText("视频");
         } else if (bean.getType().equals("4")) {
             Drawable drawable4 = context1.getResources().getDrawable(R.mipmap.little_pingjia_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable4);
+            ((TextView) holder.getView(R.id.tv_1)).setText("问卷");
         } else if (bean.getType().equals("5")) {
             Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_duocai_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable5);
