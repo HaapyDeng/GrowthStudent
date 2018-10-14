@@ -46,6 +46,14 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
     private JSONArray audit;
     private LinearLayout ll_open;
 
+    // 声明PopupWindow
+    PopupWindow popupWindow;
+
+    // 声明PopupWindow
+    PopupWindow popupWindow2;
+    // 声明PopupWindow
+    PopupWindow popupWindow3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,8 +156,7 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
                     tv_answer.setText(answer);
                     //判断是谁评价了
                     if (audit.length() == 0) {
-                        // 声明PopupWindow
-                        final PopupWindow popupWindow;
+
                         // 声明PopupWindow对应的视图
                         View popupView;
                         // 声明平移动画
@@ -170,8 +177,7 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
                             }
                         });
                     } else if (audit.length() == 1) {
-                        // 声明PopupWindow
-                        final PopupWindow popupWindow2;
+
                         // 声明PopupWindow对应的视图
                         View popupView2;
                         popupView2 = View.inflate(WenZiInfoActivity.this, R.layout.parent_evaluate_item, null);
@@ -199,8 +205,7 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
                             e.printStackTrace();
                         }
                     } else {
-                        // 声明PopupWindow
-                        final PopupWindow popupWindow3;
+
                         // 声明PopupWindow对应的视图
                         View popupView3;
                         popupView3 = View.inflate(WenZiInfoActivity.this, R.layout.teacher_evaluate_item, null);
@@ -307,6 +312,13 @@ public class WenZiInfoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                if (audit.length() == 0) {
+                    popupWindow.dismiss();
+                } else if (audit.length() == 1) {
+                    popupWindow2.dismiss();
+                } else {
+                    popupWindow3.dismiss();
+                }
                 finish();
                 break;
             case R.id.ll_open:

@@ -56,6 +56,12 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     private int totalPage;
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+//将super调用取消即可，表明当意外(比如系统内存吃紧将应用杀死)发生我不需要保存Fragmentde状态和数据等
+//        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -180,9 +186,12 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                             PAchieveCompletItem pachieveCompletItem = new PAchieveCompletItem(id, name, type, image, category_name, label_name, task_star, status, role, star);
                             mDatas.add(pachieveCompletItem);
                         }
-                        pachieveCompletListViewAdapter = new PAchieveCompletListViewAdapter(getActivity(), mDatas);
-                        listView.setAdapter(pachieveCompletListViewAdapter);
-                        listView.setLoadCompleted();
+                        if (getActivity() != null) {
+                            pachieveCompletListViewAdapter = new PAchieveCompletListViewAdapter(getActivity(), mDatas);
+                            listView.setAdapter(pachieveCompletListViewAdapter);
+                            listView.setLoadCompleted();
+                        }
+
                     } else {
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
