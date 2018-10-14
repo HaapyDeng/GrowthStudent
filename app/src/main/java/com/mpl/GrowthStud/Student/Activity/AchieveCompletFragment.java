@@ -26,6 +26,7 @@ import com.mpl.GrowthStud.Student.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,12 +41,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AchieveCompletFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private ListView listView;
+    private LoadMoreListView listView;
     private LinearLayout ll_empty;
-    private List<AchieveCompletItem> mDatas;
+    private List<AchieveCompletItem> mDatas = new ArrayList<AchieveCompletItem>();
     private AchieveCompletListViewAdapter achieveCompletListViewAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+    private String currentPage = "1";
+    private int totalPage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
-        getCpmpletAchieve();
+        getCpmpletAchieve(currentPage);
         // Inflate the layout for this fragment
         //设置SwipeRefreshLayout
         mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
@@ -79,6 +82,19 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
 
         //设置下拉刷新的监听
         mSwipeLayout.setOnRefreshListener(this);
+
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void onloadMore() {
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getCpmpletAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+            }
+        });
         return root;
     }
 
@@ -93,8 +109,11 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
 
                     //显示或隐藏刷新进度条
                     mSwipeLayout.setRefreshing(false);
+                    if (mDatas.size() > 0) {
+                        mDatas.clear();
+                    }
                     //修改adapter的数据
-                    getCpmpletAchieve();
+                    getCpmpletAchieve("1");
                     achieveCompletListViewAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
@@ -103,7 +122,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
 
     }
 
-    private void getCpmpletAchieve() {
+    private void getCpmpletAchieve(String page) {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -111,7 +130,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + uid + "?page=" + page;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -125,12 +144,13 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
+                        totalPage = data.getInt("totalPage");
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
-                        mDatas = new ArrayList<AchieveCompletItem>();
+
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
                             String id = object.getString("id");

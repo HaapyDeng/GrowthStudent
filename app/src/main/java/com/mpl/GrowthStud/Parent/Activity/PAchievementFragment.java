@@ -176,7 +176,7 @@ public class PAchievementFragment extends Fragment implements View.OnClickListen
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
-        hideFragment(transaction);
+//        hideFragment(transaction);
 
         changeView(i);// 设置选项颜色
 
@@ -188,11 +188,11 @@ public class PAchievementFragment extends Fragment implements View.OnClickListen
 
                     fragment1 = new PAchieveTodoFragment();
 
-                    transaction.add(R.id.fragment, fragment1);
 
                 }
 
-                transaction.show(fragment1);
+                transaction.replace(R.id.fragment, fragment1);
+                transaction.commit();
 
                 break;
 
@@ -203,17 +203,16 @@ public class PAchievementFragment extends Fragment implements View.OnClickListen
 
                     fragment2 = new PAchieveCompletFragment();
 
-                    transaction.add(R.id.fragment, fragment2);
 
                 }
 
-                transaction.show(fragment2);
+                transaction.replace(R.id.fragment, fragment2);
+                transaction.commit();
 
                 break;
 
         }
 
-        transaction.commit();
 
     }
     // 隐藏fragment

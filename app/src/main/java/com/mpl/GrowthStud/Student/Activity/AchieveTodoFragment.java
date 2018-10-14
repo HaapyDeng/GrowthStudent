@@ -24,6 +24,7 @@ import com.mpl.GrowthStud.Student.Adapter.AchieveToDoListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,12 +44,15 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private ListView listView;
-    private List<AchieveToDoItem> mDatas;
+    private LoadMoreListView listView;
+    private List<AchieveToDoItem> mDatas = new ArrayList<AchieveToDoItem>();
+    ;
     private AchieveToDoListViewAdapter achieveToDoListViewAdapter;
     private LinearLayout ll_empty;
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+    private String currentPage = "1";
+    private int totalPage;
 
     public AchieveTodoFragment() {
         // Required empty public constructor
@@ -76,7 +80,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
-        getTodoAchieve();
+        getTodoAchieve(currentPage);
         // Inflate the layout for this fragment
 
         //设置SwipeRefreshLayout
@@ -96,6 +100,19 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
         //设置下拉刷新的监听
         mSwipeLayout.setOnRefreshListener(this);
+
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void onloadMore() {
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getTodoAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+            }
+        });
         return root;
     }
 
@@ -110,8 +127,11 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
                     //显示或隐藏刷新进度条
                     mSwipeLayout.setRefreshing(false);
+                    if (mDatas.size() > 0) {
+                        mDatas.clear();
+                    }
                     //修改adapter的数据
-                    getTodoAchieve();
+                    getTodoAchieve("1");
                     achieveToDoListViewAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
@@ -120,7 +140,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
-    private void getTodoAchieve() {
+    private void getTodoAchieve(String page) {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -128,7 +148,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "1/" + uid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "1/" + uid + "?page=" + page;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -141,13 +161,14 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                     int code = response.getInt("code");
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
+                        totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
-                        mDatas = new ArrayList<AchieveToDoItem>();
+
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
                             String id = object.getString("id");

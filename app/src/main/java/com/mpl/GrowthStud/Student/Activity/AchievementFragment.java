@@ -180,7 +180,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
-        hideFragment(transaction);
+//        hideFragment(transaction);
 
         changeView(i);// 设置选项颜色
 
@@ -192,11 +192,10 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
                     fragment1 = new AchieveTodoFragment();
 
-                    transaction.add(R.id.fragment, fragment1);
-
                 }
 
-                transaction.show(fragment1);
+                transaction.replace(R.id.fragment, fragment1);
+                transaction.commit();
 
                 break;
 
@@ -206,18 +205,14 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 if (fragment2 == null) {
 
                     fragment2 = new AchieveCompletFragment();
-
-                    transaction.add(R.id.fragment, fragment2);
-
                 }
 
-                transaction.show(fragment2);
+                transaction.replace(R.id.fragment, fragment2);
+                transaction.commit();
 
                 break;
 
         }
-
-        transaction.commit();
 
     }
     // 隐藏fragment

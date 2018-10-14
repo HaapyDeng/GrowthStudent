@@ -30,6 +30,7 @@ import com.mpl.GrowthStud.Student.Activity.WenZiInfoActivity;
 import com.mpl.GrowthStud.Student.Adapter.AchieveCompletListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,13 +45,15 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PAchieveCompletFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private ListView listView;
+    private LoadMoreListView listView;
     private LinearLayout ll_empty;
-    private List<PAchieveCompletItem> mDatas;
+    private List<PAchieveCompletItem> mDatas = new ArrayList<PAchieveCompletItem>();
     private PAchieveCompletListViewAdapter pachieveCompletListViewAdapter;
     private String cid;
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+    private String currentPage = "1";
+    private int totalPage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
-        getCpmpletAchieve();
+        getCpmpletAchieve(currentPage);
         // Inflate the layout for this fragment
         //设置SwipeRefreshLayout
         mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
@@ -84,6 +87,18 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
 
         //设置下拉刷新的监听
         mSwipeLayout.setOnRefreshListener(this);
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void onloadMore() {
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getCpmpletAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+            }
+        });
         return root;
     }
 
@@ -98,8 +113,11 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
 
                     //显示或隐藏刷新进度条
                     mSwipeLayout.setRefreshing(false);
+                    if (mDatas.size() > 0) {
+                        mDatas.clear();
+                    }
                     //修改adapter的数据
-                    getCpmpletAchieve();
+                    getCpmpletAchieve("1");
                     pachieveCompletListViewAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
@@ -108,7 +126,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
 
     }
 
-    private void getCpmpletAchieve() {
+    private void getCpmpletAchieve(String page) {
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
         if (!sharedPreferences3.getBoolean("have", false)) {
             Toast.makeText(getActivity(), "请先绑定你的孩子", Toast.LENGTH_LONG).show();
@@ -123,7 +141,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + cid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "2/" + cid + "?page=" + page;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -136,13 +154,14 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                     int code = response.getInt("code");
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
+                        totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
-                        mDatas = new ArrayList<PAchieveCompletItem>();
+
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
                             String id = object.getString("id");

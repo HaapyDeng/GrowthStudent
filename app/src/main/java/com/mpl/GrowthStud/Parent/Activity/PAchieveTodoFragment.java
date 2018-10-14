@@ -32,6 +32,7 @@ import com.mpl.GrowthStud.Student.Activity.WenziActivity;
 import com.mpl.GrowthStud.Student.Adapter.AchieveToDoListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,13 +52,15 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private ListView listView;
-    private List<PAchieveToDoItem> mDatas;
+    private LoadMoreListView listView;
+    private List<PAchieveToDoItem> mDatas = new ArrayList<PAchieveToDoItem>();
     private PAchieveToDoListViewAdapter pachieveToDoListViewAdapter;
     private LinearLayout ll_empty;
     private String cid;
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+    private String currentPage = "1";
+    private int totalPage;
 
     public PAchieveTodoFragment() {
         // Required empty public constructor
@@ -86,7 +89,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
-        getTodoAchieve();
+        getTodoAchieve(currentPage);
         // Inflate the layout for this fragment
         //设置SwipeRefreshLayout
         mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
@@ -105,8 +108,21 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
         //设置下拉刷新的监听
         mSwipeLayout.setOnRefreshListener(this);
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void onloadMore() {
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getTodoAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+            }
+        });
         return root;
     }
+
     @Override
     public void onRefresh() {
 //检查是否处于刷新状态
@@ -118,8 +134,11 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
                     //显示或隐藏刷新进度条
                     mSwipeLayout.setRefreshing(false);
+                    if (mDatas.size() > 0) {
+                        mDatas.clear();
+                    }
                     //修改adapter的数据
-                    getTodoAchieve();
+                    getTodoAchieve("1");
                     pachieveToDoListViewAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
@@ -128,7 +147,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
     }
 
-    private void getTodoAchieve() {
+    private void getTodoAchieve(String page) {
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
         if (!sharedPreferences3.getBoolean("have", false)) {
             Toast.makeText(getActivity(), "请先绑定你的孩子", Toast.LENGTH_LONG).show();
@@ -143,7 +162,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "1/" + cid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/" + "1/" + cid + "?page=" + page;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -156,13 +175,14 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                     int code = response.getInt("code");
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
+                        totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
-                        mDatas = new ArrayList<PAchieveToDoItem>();
+
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
                             String id = object.getString("id");
