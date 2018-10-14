@@ -227,6 +227,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         tv_school_grade.setText("小学");
                     } else if (scope == 1) {
                         tv_school_grade.setText("幼儿园");
+                    } else if (scope == 3) {
+                        tv_school_grade.setText("初中");
+                    } else if (scope == 4) {
+                        tv_school_grade.setText("高中");
                     }
                     for (int i = 0; i < listItems.size(); i++) {
                         int status = listItems.get(i).getStatus();
