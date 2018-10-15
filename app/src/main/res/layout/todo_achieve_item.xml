@@ -33,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:text="我的基本信息"
                 android:textColor="#353535"
                 android:textSize="15dp" />
 
@@ -50,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
                 android:layout_gravity="center_vertical"
-                android:background="@mipmap/little_wenzi_img" />
+                 />
 
             <ImageView
                 android:layout_width="5dp"
@@ -62,7 +61,6 @@
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="5dp"
-                android:text="图文"
                 android:textColor="#000000"
                 android:textSize="10dp" />
 
@@ -72,12 +70,13 @@
 
             <TextView
                 android:id="@+id/tv_2"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:drawableLeft="@mipmap/little_duocai_img"
                 android:drawablePadding="5dp"
-                android:text="多彩生活"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="#000000"
                 android:textSize="10dp" />
 

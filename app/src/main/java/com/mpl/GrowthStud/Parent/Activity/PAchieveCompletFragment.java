@@ -31,6 +31,7 @@ import com.mpl.GrowthStud.Student.Adapter.AchieveCompletListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +55,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     private boolean isRefresh = false;//是否刷新中
     private String currentPage = "1";
     private int totalPage;
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -136,6 +138,8 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     }
 
     private void getCpmpletAchieve(String page) {
+        loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
         if (!sharedPreferences3.getBoolean("have", false)) {
             Toast.makeText(getActivity(), "请先绑定你的孩子", Toast.LENGTH_LONG).show();
@@ -162,6 +166,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
@@ -193,6 +198,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                         }
 
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -204,6 +210,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -211,6 +218,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -218,6 +226,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

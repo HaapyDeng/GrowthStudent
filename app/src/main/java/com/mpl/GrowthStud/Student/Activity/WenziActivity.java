@@ -21,6 +21,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     private String achieveId;
     private String headTitle, prompt;
     private TextView tv_text_count;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,8 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     };
 
     private void doGetInfo() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(WenziActivity.this)) {
             Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -117,12 +121,14 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(WenziActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -133,6 +139,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -140,6 +147,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -147,6 +155,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -172,6 +181,8 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void doUploadWenzi(String wenzi) {
+        loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(WenziActivity.this)) {
             Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -193,9 +204,11 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         Toast.makeText(WenziActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
                         finish();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(WenziActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -207,6 +220,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -214,6 +228,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -221,6 +236,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(WenziActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

@@ -33,6 +33,7 @@ import com.mpl.GrowthStud.Student.Adapter.AchieveToDoListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
     private boolean isRefresh = false;//是否刷新中
     private String currentPage = "1";
     private int totalPage;
+    private LoadingDialog loadingDialog;
 
     public PAchieveTodoFragment() {
         // Required empty public constructor
@@ -151,6 +153,8 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
     }
 
     private void getTodoAchieve(String page) {
+        loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);
         if (!sharedPreferences3.getBoolean("have", false)) {
             Toast.makeText(getActivity(), "请先绑定你的孩子", Toast.LENGTH_LONG).show();
@@ -177,6 +181,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
@@ -201,10 +206,13 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                             PAchieveToDoItem pachieveToDoItem = new PAchieveToDoItem(id, name, type, image, category_name, label_name, task_star, status, role, star);
                             mDatas.add(pachieveToDoItem);
                         }
-                        pachieveToDoListViewAdapter = new PAchieveToDoListViewAdapter(getActivity(), mDatas);
-                        listView.setAdapter(pachieveToDoListViewAdapter);
+                        if (getActivity() != null) {
+                            pachieveToDoListViewAdapter = new PAchieveToDoListViewAdapter(getActivity(), mDatas);
+                            listView.setAdapter(pachieveToDoListViewAdapter);
+                        }
                         listView.setLoadCompleted();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -216,6 +224,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -223,6 +232,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -230,6 +240,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

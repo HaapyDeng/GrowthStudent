@@ -28,6 +28,7 @@ import com.mpl.GrowthStud.Student.Adapter.ImageAdapter;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,8 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     // 声明PopupWindow
     PopupWindow popupWindow3;
 
+    private LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +90,8 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initData() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(TuWenInfoActivity.this)) {
             Toast.makeText(TuWenInfoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -105,6 +110,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         achieve_name = data.getString("name");
                         username = data.getString("username");
@@ -129,6 +135,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                         handler.sendMessage(message);
 
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(TuWenInfoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -139,6 +146,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenInfoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -146,6 +154,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenInfoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -153,6 +162,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenInfoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -164,13 +174,6 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
-                if (audit.length() == 0) {
-                    popupWindow.dismiss();
-                } else if (audit.length() == 1) {
-                    popupWindow2.dismiss();
-                } else {
-                    popupWindow3.dismiss();
-                }
                 finish();
                 break;
             case R.id.ll_open:

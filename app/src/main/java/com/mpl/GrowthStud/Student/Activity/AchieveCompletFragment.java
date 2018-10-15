@@ -27,6 +27,7 @@ import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +50,8 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
     private boolean isRefresh = false;//是否刷新中
     private String currentPage = "1";
     private int totalPage;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +129,8 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
     }
 
     private void getCpmpletAchieve(String page) {
+        loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -145,6 +150,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         JSONArray list = data.getJSONArray("list");
                         totalPage = data.getInt("totalPage");
@@ -169,10 +175,13 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                             AchieveCompletItem achieveCompletItem = new AchieveCompletItem(id, name, type, image, category_name, label_name, task_star, status, role, star);
                             mDatas.add(achieveCompletItem);
                         }
-                        achieveCompletListViewAdapter = new AchieveCompletListViewAdapter(getActivity(), mDatas);
-                        listView.setAdapter(achieveCompletListViewAdapter);
+                        if (getActivity() != null) {
+                            achieveCompletListViewAdapter = new AchieveCompletListViewAdapter(getActivity(), mDatas);
+                            listView.setAdapter(achieveCompletListViewAdapter);
+                        }
                         listView.setLoadCompleted();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -184,6 +193,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -191,6 +201,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -198,6 +209,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

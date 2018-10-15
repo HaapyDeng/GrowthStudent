@@ -37,6 +37,7 @@ import com.mpl.GrowthStud.Student.Tools.ImageToBase64;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.UploadFile;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +66,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private String backUrl = "";
     private int tag = 0;
     private TextView tv_text_count;
+    private LoadingDialog loadingDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         initGridView();
 
     }
+
     TextWatcher mTextWatcher = new TextWatcher() {
         private CharSequence temp;
 
@@ -129,6 +133,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     };
 
     private void doGetInfo() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
             Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -147,6 +153,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
                         Message message = new Message();
@@ -163,6 +170,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -170,6 +178,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -177,6 +186,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -268,6 +278,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.tv_commit:
+
                 et_wenzi = findViewById(R.id.et_wenzi);
                 wenzi = et_wenzi.getText().toString().trim();
                 if (wenzi.length() <= 0) {
@@ -278,6 +289,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
                     break;
                 }
+
                 doUploadImge(mPicList);
 //                doUploadTuWen(wenzi, mPicList);
 
@@ -289,6 +301,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 
     //上传图片到图片服务器
     private void doUploadImge(final ArrayList<String> mPicList) {
+        loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
             Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -367,6 +381,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void doUploadTuWen(String wenzi, String imge) {
+
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
             Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -389,9 +404,11 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         Toast.makeText(TuWenActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
                         finish();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -403,6 +420,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -410,6 +428,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -417,6 +436,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

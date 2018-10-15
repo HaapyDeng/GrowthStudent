@@ -25,6 +25,7 @@ import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +54,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     private boolean isRefresh = false;//是否刷新中
     private String currentPage = "1";
     private int totalPage;
+    private LoadingDialog loadingDialog;
 
     public AchieveTodoFragment() {
         // Required empty public constructor
@@ -145,6 +147,8 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     }
 
     private void getTodoAchieve(String page) {
+        loadingDialog = new LoadingDialog(getContext(), "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -164,6 +168,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
@@ -192,6 +197,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                         listView.setAdapter(achieveToDoListViewAdapter);
                         listView.setLoadCompleted();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -203,6 +209,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -210,6 +217,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -217,6 +225,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -238,41 +247,55 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mDatas.get(position).getType().equals("1")) {
+        if (mDatas.get(position).getType().equals("1")) {//文字
             Intent intent = new Intent(getActivity(), WenziActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("2")) {
+        } else if (mDatas.get(position).getType().equals("2")) {//图文
             Intent intent = new Intent(getActivity(), TuWenActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("3")) {
+        } else if (mDatas.get(position).getType().equals("3")) {//视频
             Intent intent = new Intent(getActivity(), VideoActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("4")) {
+        } else if (mDatas.get(position).getType().equals("4")) {//问卷
             Intent intent = new Intent(getActivity(), QuestionnaireActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("5")) {
-//            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("achieveid", mDatas.get(position).getId());
-//            bundle.putString("headtitle", mDatas.get(position).getName());
-//            intent.putExtras(bundle);
-//            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("5")) {//系统
+            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("6")) {//表单
+            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("7")) {//混合
+            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 }

@@ -39,6 +39,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.Utils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +71,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     String backBitmap, prompt;
     private TextView tv_text_count;
     private ImageButton ib_start;
+    private LoadingDialog loadingDialog;
 
     // 文件路径
     private String path = "";
@@ -150,6 +152,8 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     };
 
     private void doGetInfo() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(VideoActivity.this)) {
             Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -168,12 +172,14 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(VideoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -184,6 +190,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -191,6 +198,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -198,6 +206,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -359,6 +368,8 @@ public class VideoActivity extends Activity implements View.OnClickListener {
 
     //上传视频到视频服务器
     private void doUploadVideo(String path) {
+        loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(VideoActivity.this)) {
             Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -421,6 +432,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     }
 
     private void doUploadAll(String wenzi, String singUrl, String backBitmap) {
+
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String url = getResources().getString(R.string.local_url) + "/v1/achievement/video/update/" + achieveId;
@@ -439,9 +451,11 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         Toast.makeText(VideoActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
                         finish();
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(VideoActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -453,6 +467,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -460,6 +475,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -467,6 +483,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(VideoActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }

@@ -75,9 +75,18 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
             Drawable drawable4 = context1.getResources().getDrawable(R.mipmap.little_pingjia_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable4);
             ((TextView) holder.getView(R.id.tv_1)).setText("问卷");
-        } else if (bean.getType().equals("5")) {
-            Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_duocai_img);
+        }else if (bean.getType().equals("5")) {
+            Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_form);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable5);
+            ((TextView) holder.getView(R.id.tv_1)).setText("系统");
+        } else if (bean.getType().equals("6")) {
+            Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_system);
+            ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable5);
+            ((TextView) holder.getView(R.id.tv_1)).setText("表单");
+        } else if (bean.getType().equals("7")) {
+            Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_mix);
+            ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable5);
+            ((TextView) holder.getView(R.id.tv_1)).setText("混合");
         }
         ((TextView) holder.getView(R.id.tv_2)).setText(bean.getLabel_name());
         if (bean.getStar().equals("5")) {
