@@ -277,7 +277,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("5")) {
-//            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+//            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
 //            Bundle bundle = new Bundle();
 //            bundle.putString("achieveid", mDatas.get(position).getId());
 //            bundle.putString("headtitle", mDatas.get(position).getName());

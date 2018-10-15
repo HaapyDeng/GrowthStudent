@@ -56,4 +56,5 @@ dependencies {
     implementation 'com.github.mcxtzhang:all-base-adapter:V1.5.2'
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
     implementation 'cz.msebera.android:httpclient:4.4.1.2'
+    implementation 'com.yangchangfu:pickview-lib:1.0.3'
 }

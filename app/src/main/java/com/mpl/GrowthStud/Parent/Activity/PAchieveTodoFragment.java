@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -24,13 +23,10 @@ import com.mpl.GrowthStud.Parent.Adapter.PAchieveToDoListViewAdapter;
 import com.mpl.GrowthStud.Parent.Bean.PAchieveToDoItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.QuestionnaireActivity;
-import com.mpl.GrowthStud.Student.Activity.SyatemAchieveActivity;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveYouActivity;
 import com.mpl.GrowthStud.Student.Activity.TuWenActivity;
 import com.mpl.GrowthStud.Student.Activity.VideoActivity;
-import com.mpl.GrowthStud.Student.Activity.WenZiInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.WenziActivity;
-import com.mpl.GrowthStud.Student.Adapter.AchieveToDoListViewAdapter;
-import com.mpl.GrowthStud.Student.Bean.AchieveToDoItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
@@ -292,7 +288,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (mDatas.get(position).getType().equals("5")) {
-                Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
@@ -330,7 +326,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (mDatas.get(position).getType().equals("5")) {
-                Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());

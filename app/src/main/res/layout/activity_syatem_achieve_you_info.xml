@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".Student.Activity.SyatemAchieveYouActivity">
+    tools:context=".Student.Activity.SyatemAchieveYouInfoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,30 +38,124 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="我的成就"
+            android:text="成就详情"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
-        <TextView
-            android:id="@+id/tv_commit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="提交"
-            android:textColor="#ffffff"
-            android:textSize="17dp" />
-
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="#ff333333"
+            android:textSize="19dp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="34dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:textColor="#999999"
+            android:textSize="12dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ff3699ed"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_lable2"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ff3699ed"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_lable3"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ff3699ed"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_lable4"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ff3699ed"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_lable5"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ff3699ed"
+            android:textSize="12dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,16 +172,14 @@
             android:textColor="#999999"
             android:textSize="17dp" />
 
-        <EditText
-            android:id="@+id/et_username"
+        <TextView
+            android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="34dp"
-            android:background="@null"
             android:gravity="center_vertical"
-            android:hint="输入您的姓名"
-            android:textColor="#333333"
+            android:textColor="#ff333333"
             android:textColorHint="#ffc4c4c4"
             android:textSize="17dp" />
     </LinearLayout>
@@ -121,10 +213,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="15dp"
-            android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="选择您的性别"
-            android:textColor="#c4c4c4"
+            android:textColor="#ff333333"
             android:textSize="17dp" />
     </LinearLayout>
 
@@ -157,10 +247,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="15dp"
-            android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="选择您的生日"
-            android:textColor="#ffc4c4c4"
+            android:textColor="#ff333333"
             android:textSize="17dp" />
     </LinearLayout>
 
@@ -193,10 +281,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="15dp"
-            android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="选择您的属相"
-            android:textColor="#ffc4c4c4"
+            android:textColor="#ff333333"
             android:textSize="17dp" />
     </LinearLayout>
 
@@ -222,15 +308,14 @@
             android:textColor="#999999"
             android:textSize="17dp" />
 
-        <EditText
-            android:id="@+id/et_position"
+        <TextView
+            android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="填写您在班级担任职位"
-            android:textColor="#333333"
+            android:textColor="#ff333333"
             android:textColorHint="#ffc4c4c4"
             android:textSize="17dp" />
     </LinearLayout>
@@ -241,4 +326,59 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="#eeeeee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eeeeee" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="评价"
+                    android:textColor="#333333"
+                    android:textSize="17dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:src="@mipmap/closed"
+                    android:textColor="#333333"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eeeeee" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

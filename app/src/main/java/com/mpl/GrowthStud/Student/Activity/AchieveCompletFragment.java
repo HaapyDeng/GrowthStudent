@@ -259,13 +259,53 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("5")) {
-//            Intent intent = new Intent(getActivity(), SyatemAchieveActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("achieveid", mDatas.get(position).getId());
-//            bundle.putString("headtitle", mDatas.get(position).getName());
-//            intent.putExtras(bundle);
-//            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("5")) {//系统
+            SharedPreferences sp = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
+            int scope = sp.getInt("scope", 0);
+            if (scope == 1) {//幼儿园
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope == 2) {//小学
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope == 3) {//初中
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope == 4) {//高中
+//                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("achieveid", mDatas.get(position).getId());
+//                bundle.putString("headtitle", mDatas.get(position).getName());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+            }
+
+        } else if (mDatas.get(position).getType().equals("6")) {//表单
+            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("7")) {//混合
+            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 

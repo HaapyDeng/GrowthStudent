@@ -10,4 +10,6 @@
     <color name="text">#ffffff</color>
     <color name="dot_not_choose">#EEEEEE</color>
     <color name="text2">#666666</color>
+    <color name="text_blank">#000000</color>
+    <color name="label_bak">#E3F1FD</color>
 </resources>
