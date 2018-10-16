@@ -281,7 +281,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             int scope = sp.getInt("scope", 0);
             if (scope == 1) {//幼儿园
 //                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
-                Intent intent = new Intent(getActivity(), SyatemAchieveXiaoActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
@@ -295,7 +295,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (scope == 3) {//初中
-                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveChuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());

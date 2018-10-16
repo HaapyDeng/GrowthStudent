@@ -32,14 +32,15 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnClickListener {
+public class SyatemAchieveChuInfoActivity extends Activity implements View.OnClickListener {
+
     private LinearLayout back;
-    private TextView tv_title, tv_male, tv_birthy, tv_animal, tv_lable, tv_time, tv_idcard, tv_nation;
+    private TextView tv_title, tv_male, tv_birthy, tv_schoolnum, tv_lable, tv_time, tv_nation, tv_political_status, tv_gostudytime, tv_adress, tv_describe;
     private TextView tv_lable2, tv_lable3, tv_lable4, tv_lable5;
     private String achieveId;
     private String headTitle;
     private TextView tv_username, tv_position;
-    private String username, male, birthday, animal, postion, updated_at, name, idcard, nation, imagePath;
+    private String username, male, birthday, animal, postion, updated_at, name, idcard, nation, imagePath, political_status, gostudytime, schoolnum, adress, describe;
     private LoadingDialog loadingDialog;
     private JSONArray label;
     private ImageView iv_image;
@@ -59,7 +60,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_syatem_achieve_xiao_info);
+        setContentView(R.layout.activity_syatem_achieve_chu_info);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");
@@ -68,7 +69,6 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        tv_idcard = findViewById(R.id.tv_idcard);
         tv_nation = findViewById(R.id.tv_nation);
         iv_image = findViewById(R.id.iv_image);
         tv_title = findViewById(R.id.tv_title);
@@ -83,10 +83,14 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
         tv_username = findViewById(R.id.tv_username);
         tv_male = findViewById(R.id.tv_male);
         tv_birthy = findViewById(R.id.tv_birthy);
-        tv_animal = findViewById(R.id.tv_animal);
+        tv_schoolnum = findViewById(R.id.tv_schoolnum);
         tv_position = findViewById(R.id.tv_position);
         ll_open = findViewById(R.id.ll_open);
         ll_open.setOnClickListener(this);
+        tv_political_status = findViewById(R.id.tv_political_status);
+        tv_gostudytime = findViewById(R.id.tv_gostudytime);
+        tv_adress = findViewById(R.id.tv_adress);
+        tv_describe = findViewById(R.id.tv_describe);
         initData(achieveId);
     }
 
@@ -121,10 +125,13 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                         username = answers.getString("name");
                         male = answers.getString("gender");
                         birthday = answers.getString("birthday");
-                        animal = answers.getString("china_zodiac");
-                        idcard = answers.getString("idcard");
                         nation = answers.getString("nation");
                         imagePath = answers.getString("photo");
+                        political_status = answers.getString("political_affiliation");
+                        gostudytime = answers.getString("year");
+                        schoolnum = answers.getString("number");
+                        adress = answers.getString("address");
+                        describe = answers.getString("describe");
 
                         Message message = new Message();
                         message.what = 1;
@@ -187,7 +194,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                     // 设置点击popupwindow外屏幕其它地方不消失
                     popupWindow.setOutsideTouchable(false);
                     // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                    popupWindow.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    popupWindow.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     LinearLayout ll_close = popupView.findViewById(R.id.ll_close);
                     ll_close.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -207,7 +214,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                     // 设置点击popupwindow外屏幕其它地方不消失
                     popupWindow2.setOutsideTouchable(false);
                     // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                    popupWindow2.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    popupWindow2.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     try {
                         JSONObject object = audit.getJSONObject(0);
                         String role = object.getString("role");
@@ -236,7 +243,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                     // 设置点击popupwindow外屏幕其它地方不消失
                     popupWindow3.setOutsideTouchable(false);
                     // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                    popupWindow3.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    popupWindow3.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     try {
                         JSONObject object1 = audit.getJSONObject(0);
                         String role1 = object1.getString("role");
@@ -336,8 +343,12 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                     ll_open.setVisibility(View.INVISIBLE);
                     tv_title.setText(name);
                     tv_time.setText(updated_at);
-                    tv_idcard.setText(idcard);
                     tv_nation.setText(nation);
+                    tv_political_status.setText(political_status);
+                    tv_gostudytime.setText(gostudytime);
+                    tv_schoolnum.setText(schoolnum);
+                    tv_adress.setText(adress);
+                    tv_describe.setText(describe);
                     DownImage downImage = new DownImage(imagePath);
                     downImage.loadImage(new DownImage.ImageCallBack() {
                         @Override
@@ -379,7 +390,6 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                     tv_username.setText(username);
                     tv_male.setText(male);
                     tv_birthy.setText(birthday);
-                    tv_animal.setText(animal);
                     //判断是谁评价了
                     if (audit.length() == 0) {
 
@@ -393,7 +403,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                         // 设置点击popupwindow外屏幕其它地方不消失
                         popupWindow.setOutsideTouchable(false);
                         // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                        popupWindow.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        popupWindow.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                         LinearLayout ll_close = popupView.findViewById(R.id.ll_close);
                         ll_close.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -412,7 +422,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                         // 设置点击popupwindow外屏幕其它地方不消失
                         popupWindow2.setOutsideTouchable(false);
                         // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                        popupWindow2.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        popupWindow2.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                         try {
                             JSONObject object = audit.getJSONObject(0);
                             String role = object.getString("role");
@@ -440,7 +450,7 @@ public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnCl
                         // 设置点击popupwindow外屏幕其它地方不消失
                         popupWindow3.setOutsideTouchable(false);
                         // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-                        popupWindow3.showAtLocation(SyatemAchieveXiaoInfoActivity.this.findViewById(R.id.tv_animal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        popupWindow3.showAtLocation(SyatemAchieveChuInfoActivity.this.findViewById(R.id.tv_schoolnum), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                         try {
                             JSONObject object1 = audit.getJSONObject(0);
                             String role1 = object1.getString("role");
