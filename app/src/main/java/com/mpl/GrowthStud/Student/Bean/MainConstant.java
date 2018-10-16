@@ -7,4 +7,5 @@ public class MainConstant {
     public static final int MAX_SELECT_PIC_NUM = 9; // 最多上传9张图片
     public static final int REQUEST_CODE_MAIN = 10; //请求码
     public static final int RESULT_CODE_VIEW_IMG = 11; //查看大图页面的结果码
+    public static final int ONE_SELECT_PIC_NUM = 1;
 }

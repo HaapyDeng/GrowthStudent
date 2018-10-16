@@ -280,14 +280,15 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             SharedPreferences sp = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
             int scope = sp.getInt("scope", 0);
             if (scope == 1) {//幼儿园
-                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+//                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveXiaoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (scope == 2) {//小学
-                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveXiaoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());

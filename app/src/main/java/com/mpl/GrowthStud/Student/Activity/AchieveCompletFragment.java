@@ -270,7 +270,7 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (scope == 2) {//小学
-                Intent intent = new Intent(getActivity(), SyatemAchieveYouInfoActivity.class);
+                Intent intent = new Intent(getActivity(), SyatemAchieveXiaoInfoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
