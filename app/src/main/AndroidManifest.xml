@@ -312,7 +312,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.SyatemAchieveChuInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.FormActivity" />
+        <activity android:name=".Student.Activity.FormInfoActivity"></activity>
     </application>
 
 </manifest>

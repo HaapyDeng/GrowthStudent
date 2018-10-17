@@ -311,7 +311,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             }
 
         } else if (mDatas.get(position).getType().equals("6")) {//表单
-            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Intent intent = new Intent(getActivity(), FormActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
