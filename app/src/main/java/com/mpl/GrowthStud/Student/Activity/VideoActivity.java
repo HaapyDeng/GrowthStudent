@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -453,6 +454,10 @@ public class VideoActivity extends Activity implements View.OnClickListener {
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(VideoActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(VideoActivity.this).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         loadingDialog.dismiss();

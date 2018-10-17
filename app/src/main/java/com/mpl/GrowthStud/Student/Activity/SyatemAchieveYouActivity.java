@@ -3,6 +3,7 @@ package com.mpl.GrowthStud.Student.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -188,6 +189,11 @@ public class SyatemAchieveYouActivity extends AppCompatActivity implements View.
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(SyatemAchieveYouActivity.this, "提交成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(SyatemAchieveYouActivity.this).sendBroadcast(intent);
+                        sendBroadcast(intent);
+
                         finish();
                     } else {
                         loadingDialog.dismiss();

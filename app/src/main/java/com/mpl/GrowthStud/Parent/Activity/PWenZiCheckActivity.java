@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveYouActivity;
 import com.mpl.GrowthStud.Student.Activity.WenZiInfoActivity;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
@@ -362,6 +364,10 @@ public class PWenZiCheckActivity extends AppCompatActivity implements View.OnCli
                     if (code == 0) {
                         Toast.makeText(PWenZiCheckActivity.this, "提交评审完成", Toast.LENGTH_LONG).show();
                         popupWindow.dismiss();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("pdata", "refresh");
+                        LocalBroadcastManager.getInstance(PWenZiCheckActivity.this).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         Toast.makeText(PWenZiCheckActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();

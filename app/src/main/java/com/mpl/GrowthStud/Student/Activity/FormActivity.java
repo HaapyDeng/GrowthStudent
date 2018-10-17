@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -204,6 +205,10 @@ public class FormActivity extends Activity implements View.OnClickListener {
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         loadingDialog.dismiss();

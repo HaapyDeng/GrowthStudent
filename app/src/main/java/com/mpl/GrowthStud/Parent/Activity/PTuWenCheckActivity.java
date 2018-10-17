@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -389,6 +390,10 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
                     if (code == 0) {
                         Toast.makeText(PTuWenCheckActivity.this, "提交评审完成", Toast.LENGTH_LONG).show();
                         popupWindow.dismiss();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("pdata", "refresh");
+                        LocalBroadcastManager.getInstance(PTuWenCheckActivity.this).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         Toast.makeText(PTuWenCheckActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();

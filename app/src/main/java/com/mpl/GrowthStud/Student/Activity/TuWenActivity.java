@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -406,6 +407,10 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(TuWenActivity.this, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(TuWenActivity.this).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         loadingDialog.dismiss();

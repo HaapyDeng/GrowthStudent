@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -383,6 +384,10 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         loadingDialog.dismiss();

@@ -1,13 +1,17 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,11 +78,32 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
+    //fragment重新刷新的方法
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String msg = intent.getStringExtra("data");
+                if ("refresh".equals(msg)) {
+                    mDatas.clear();
+                    getTodoAchieve(currentPage);
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_achieve_todo, container, false);
+
         listView = root.findViewById(R.id.listview);
         ll_empty = root.findViewById(R.id.ll_empty);
         listView.setOnItemClickListener(this);
@@ -254,7 +279,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         } else if (mDatas.get(position).getType().equals("2")) {//图文
             Intent intent = new Intent(getActivity(), TuWenActivity.class);
             Bundle bundle = new Bundle();
@@ -318,7 +343,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("7")) {//混合
-            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Intent intent = new Intent(getActivity(), MixtureActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());

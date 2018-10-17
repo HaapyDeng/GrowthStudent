@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -300,6 +301,11 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                        intent.putExtra("data", "refresh");
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         loadingDialog.dismiss();
