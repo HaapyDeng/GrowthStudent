@@ -173,6 +173,9 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
     }
 
     private void getTodoAchieve(String page) {
+        if (page.equals("1")) {
+            mDatas.clear();
+        }
         loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         SharedPreferences sharedPreferences3 = this.getActivity().getSharedPreferences("userid", MODE_PRIVATE);

@@ -90,6 +90,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             public void onReceive(Context context, Intent intent) {
                 String msg = intent.getStringExtra("data");
                 if ("refresh".equals(msg)) {
+                    Log.d("refresh==>>>", 111111 + "");
                     mDatas.clear();
                     getTodoAchieve("1");
                 }
@@ -171,6 +172,9 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     }
 
     private void getTodoAchieve(String page) {
+        if (page.equals("1")) {
+            mDatas.clear();
+        }
         loadingDialog = new LoadingDialog(getContext(), "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(getActivity())) {
