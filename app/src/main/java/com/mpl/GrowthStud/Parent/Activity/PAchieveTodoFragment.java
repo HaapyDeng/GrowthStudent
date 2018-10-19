@@ -96,7 +96,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 String msg = intent.getStringExtra("pdata");
                 if ("refresh".equals(msg)) {
                     mDatas.clear();
-                    getTodoAchieve(currentPage);
+                    getTodoAchieve("1");
                 }
             }
         };

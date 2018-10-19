@@ -91,7 +91,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                 String msg = intent.getStringExtra("data");
                 if ("refresh".equals(msg)) {
                     mDatas.clear();
-                    getTodoAchieve(currentPage);
+                    getTodoAchieve("1");
                 }
             }
         };

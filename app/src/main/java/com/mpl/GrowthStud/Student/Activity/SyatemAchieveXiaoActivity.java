@@ -301,7 +301,6 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
                     if (code == 0) {
                         loadingDialog.dismiss();
                         Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
-                        Toast.makeText(mContext, R.string.commit_success, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent("android.intent.action.CART_BROADCAST");
                         intent.putExtra("data", "refresh");
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
