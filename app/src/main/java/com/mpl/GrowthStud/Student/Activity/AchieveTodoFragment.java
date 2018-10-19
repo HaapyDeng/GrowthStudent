@@ -59,6 +59,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     private int totalPage;
     private LoadingDialog loadingDialog;
 
+
     public AchieveTodoFragment() {
         // Required empty public constructor
     }
@@ -82,6 +83,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.intent.action.CART_BROADCAST");
@@ -89,10 +91,15 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void onReceive(Context context, Intent intent) {
                 String msg = intent.getStringExtra("data");
+                final int[] flag = {1};//返回刷新一下
                 if ("refresh".equals(msg)) {
-                    Log.d("refresh==>>>", 111111 + "");
-                    mDatas.clear();
-                    getTodoAchieve("1");
+                    if (flag[0] == 1) {
+                        Log.d("refresh==>>>", 111111 + "");
+                        mDatas.clear();
+                        getTodoAchieve("1");
+                        flag[0] = flag[0] + 1;
+                    }
+
                 }
             }
         };

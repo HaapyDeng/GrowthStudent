@@ -94,9 +94,15 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onReceive(Context context, Intent intent) {
                 String msg = intent.getStringExtra("pdata");
+                final int[] flag = {1};//返回刷新一下
                 if ("refresh".equals(msg)) {
-                    mDatas.clear();
-                    getTodoAchieve("1");
+                    if (flag[0] == 1) {
+                        Log.d("refresh==>>>", 111111 + "");
+                        mDatas.clear();
+                        getTodoAchieve("1");
+                        flag[0] = flag[0] + 1;
+                    }
+
                 }
             }
         };
