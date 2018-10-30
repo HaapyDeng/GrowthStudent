@@ -1,18 +1,21 @@
 package com.mpl.GrowthStud.Student.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
-import com.mpl.GrowthStud.Student.Adapter.FormListAdapter;
-import com.mpl.GrowthStud.Student.Bean.FormListItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
@@ -21,14 +24,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MixtureActivity extends Activity {
+public class MixtureActivity extends FragmentActivity {
     private String achieveId;
     private String headTitle;
     private LoadingDialog loadingDialog;
     private Context mContext;
+    private ViewPager view_pager;
+    private int templateLength;
+    List<PagerFragment> pageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,8 @@ public class MixtureActivity extends Activity {
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");
         headTitle = extras.getString("headtitle");
-        initData(achieveId);
+        view_pager = findViewById(R.id.view_pager);
+        initData(achieveId);//获得模板内容数据
     }
 
     private void initData(String id) {
@@ -64,7 +72,20 @@ public class MixtureActivity extends Activity {
                     int code = response.getInt("code");
                     if (code == 0) {
                         loadingDialog.dismiss();
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray template = data.getJSONArray("template");
+                        templateLength = template.length();
+                        pageList = new ArrayList<>();
 
+                        for (int i = 0; i < templateLength; i++) {
+                            PagerFragment fragment = new PagerFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("json", template.getJSONObject(i).toString());
+                            fragment.setArguments(bundle);
+                            pageList.add(fragment);
+                        }
+                        view_pager.setAdapter(new MyPageAdapter(getSupportFragmentManager(), pageList));
+                        view_pager.setOffscreenPageLimit(pageList.size());
 
                     } else {
                         loadingDialog.dismiss();
@@ -99,5 +120,25 @@ public class MixtureActivity extends Activity {
                 return;
             }
         });
+    }
+
+    //自定义FragmentStatePagerAdapter
+    private class MyPageAdapter extends FragmentStatePagerAdapter {
+        private List<PagerFragment> mFragments;
+
+        public MyPageAdapter(FragmentManager supportFragmentManager, List<PagerFragment> pageList) {
+            super(supportFragmentManager);
+            this.mFragments = pageList;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
     }
 }
