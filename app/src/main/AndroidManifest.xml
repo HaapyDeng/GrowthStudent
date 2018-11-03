@@ -321,7 +321,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.MixtureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.ParentRegisterActivity"></activity>
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private String userName, password;
     private TextView tv_forget_psd;
     private LoadingDialog loadingDialog;
+    private TextView tv_pregist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         tv_forget_psd = findViewById(R.id.tv_forget_psd);
         tv_forget_psd.setOnClickListener(this);
+
+        tv_pregist = findViewById(R.id.tv_pregist);
+        tv_pregist.setOnClickListener(this);
     }
 
     @Override
@@ -99,6 +103,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     }
                 });
                 dialog.show();
+                break;
+            case R.id.tv_pregist:
+                Intent intent = new Intent(this, ParentRegisterActivity.class);
+                startActivity(intent);
                 break;
         }
 
