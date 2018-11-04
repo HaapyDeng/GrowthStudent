@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mpl.GrowthStud.Student.Bean.AnswerBean;
@@ -139,5 +142,30 @@ public class Utils {
             tmpObj = null;
         }
         return jsonArray;
+    }
+
+    //获取屏幕的宽度(dp)
+    public static int getAndroiodScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;         // 屏幕宽度（像素）
+        float density = dm.density;         // 屏幕密度（0.75 / 1.0 / 1.5）
+        // 屏幕宽度算法:屏幕宽度（像素）/屏幕密度
+        int screenWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, width, context.getResources().getDisplayMetrics()); // 屏幕宽度(dp)
+        return screenWidth;
+
+    }
+
+    //获取屏幕的宽度(dp)
+    public static int getAndroiodScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int height = dm.heightPixels;       // 屏幕高度（像素）
+        float density = dm.density;         // 屏幕密度（0.75 / 1.0 / 1.5）
+        // 屏幕宽度算法:屏幕宽度（像素）/屏幕密度
+        int screenHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, height, context.getResources().getDisplayMetrics());// 屏幕高度(dp)
+        return screenHeight;
     }
 }
