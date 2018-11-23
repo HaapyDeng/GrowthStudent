@@ -1,5 +1,6 @@
 package com.mpl.GrowthStud.Student.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -10,10 +11,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
+import com.mpl.GrowthStud.Student.View.TipsDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,14 +40,21 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;
-    private String headTitle, prompt;
+    private String headTitle, prompt, tip;
     private TextView tv_text_count;
     private LoadingDialog loadingDialog;
+    private ImageButton ib_more;
+    private PopupWindow popupWindow;
+    private TextView tv_takephoto;
+    private TextView tv_preview;
+    private Context mContext;
+    private ImageButton ib_tips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wenzi);
+        mContext = this;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");
@@ -54,13 +65,20 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
 
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
+
         tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setOnClickListener(this);
+
+        ib_more = findViewById(R.id.ib_more);
+        ib_more.setOnClickListener(this);
 
         tv_text_count = findViewById(R.id.tv_text_count);
 
         et_wenzi = findViewById(R.id.et_wenzi);
         et_wenzi.addTextChangedListener(mTextWatcher);
+
+        ib_tips = findViewById(R.id.ib_tips);
+        ib_tips.setOnClickListener(this);
         doGetInfo();
     }
 
@@ -125,6 +143,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
+                        tip = data.getString("tip");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
@@ -178,6 +197,48 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                 }
                 doUploadWenzi(wenzi);
                 break;
+            //提示语
+            case R.id.ib_tips:
+                TipsDialog tipsDialog = new TipsDialog(mContext, tip);
+                tipsDialog.show();
+                break;
+            case R.id.ib_more:
+                // 获取自定义的菜单布局文件
+                View menu_view = getLayoutInflater().inflate(R.layout.more_menu, null, false);
+                // 创建PopupWindow实例,设置菜单宽度和高度为包裹其自身内容
+                popupWindow = new PopupWindow(menu_view,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                //设置菜单显示在按钮的下面
+                popupWindow.showAsDropDown(ib_more, 0, 0);
+                // 点击其他地方消失
+                menu_view.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        //如果菜单存在并且为显示状态，就关闭菜单并初始化菜单
+                        if (popupWindow != null && popupWindow.isShowing()) {
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                        return false;
+                    }
+                });
+                tv_takephoto = menu_view.findViewById(R.id.tv_takephoto);
+                tv_takephoto.setOnClickListener(this);
+
+                tv_preview = menu_view.findViewById(R.id.tv_preview);
+                tv_preview.setOnClickListener(this);
+
+                break;
+            //拍照上传
+            case R.id.tv_takephoto:
+                break;
+            //预览
+            case R.id.tv_preview:
+                Intent intent = new Intent(mContext, PreviewDoActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="88dp"
+        android:background="#D9F1FF"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示吉祥物提示" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="65dp"
+        android:background="@mipmap/img_leaf_left" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/img_panda" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="65dp"
+        android:background="@mipmap/img_leaf_right" />
+
+    <ImageView
+        android:id="@+id/iv11"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ll" />
+
+    <ImageButton
+        android:id="@+id/ib_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv11"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/icon_tips_exit" />
+
+
+</RelativeLayout>
