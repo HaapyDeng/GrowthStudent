@@ -172,7 +172,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         classroomName = data.getString("classroom_name");
                         grade = data.getString("grade");
                         teacherName = data.getString("teacher_name");
-                        birthday = data.getString("birthday");
+                        if (data.getString("birthday").equals("null")){
+                            birthday ="";
+                        }else {
+                            birthday = data.getString("birthday");
+                        }
+
                         gender = data.getInt("gender");
                         scope = data.getInt("scope");
                         userName = data.getString("username");
@@ -220,7 +225,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 1:
                     tv_student_name.setText(userName);
-                    tv_brithday.setText(birthday.substring(0, birthday.indexOf(" ")));
+                    if (birthday.equals("")){
+
+                    }else {
+                        tv_brithday.setText(birthday.substring(0, birthday.indexOf(" ")));
+                    }
                     tv_school.setText(schoolName);
                     tv_grade.setText(grade);
                     if (scope == 2) {

@@ -53,7 +53,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void initView() {
         TextView app_version = findViewById(R.id.app_version);
         try {
-            app_version.setText("家庭端" + NetworkUtils.getVersionName(this));
+            app_version.setText( NetworkUtils.getVersionName(this)+"家庭端");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,7 +139,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         String userId = data.getString("user_id");
                         int scope;
                         if (role.equals("student")) {
-                            scope = data.getInt("scope");
+                            scope = data.getJSONArray("scope").getInt(0);
                         } else {
                             scope = 0;
                         }

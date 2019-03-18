@@ -220,7 +220,7 @@ public class SplashActivity extends Activity {
                         String userId = data.getString("user_id");
                         int scope;
                         if (role.equals("student")) {
-                            scope = data.getInt("scope");
+                            scope = data.getJSONArray("scope").getInt(0);
                         } else {
                             scope = 0;
                         }
