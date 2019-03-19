@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -68,12 +71,21 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private int tag = 0;
     private TextView tv_text_count;
     private LoadingDialog loadingDialog;
+    public static int  screenWidth;//屏幕宽度
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tu_wen);
+//        获取屏幕宽度
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        Point outSize = new Point();
+        display.getSize(outSize);
+
+        screenWidth = outSize.x;
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");

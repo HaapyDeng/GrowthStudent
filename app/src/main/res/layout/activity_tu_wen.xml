@@ -112,9 +112,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:columnWidth="60dp"
         android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:numColumns="3"
         android:verticalSpacing="10dp" />
+
+    <RelativeLayout
+        android:layout_height="0dp"
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/tab_unchecked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/tab_checked" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
