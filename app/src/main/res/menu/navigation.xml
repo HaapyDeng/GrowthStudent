@@ -4,10 +4,10 @@
         android:id="@+id/navigation_home"
         android:icon="@mipmap/tabbar_achieve_default"
         android:title="成就" />
-    <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@mipmap/tabbar_friends_default"
-        android:title="伙伴" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_dashboard"-->
+        <!--android:icon="@mipmap/tabbar_friends_default"-->
+        <!--android:title="伙伴" />-->
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@mipmap/tabbar_found_default"

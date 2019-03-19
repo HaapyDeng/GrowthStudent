@@ -180,14 +180,14 @@ public class PMainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     viewPager.setCurrentItem(0);
                     return true;
-                case R.id.navigation_dashboard:
+//                case R.id.navigation_dashboard:
+//                    viewPager.setCurrentItem(1);
+//                    return true;
+                case R.id.navigation_notifications:
                     viewPager.setCurrentItem(1);
                     return true;
-                case R.id.navigation_notifications:
-                    viewPager.setCurrentItem(2);
-                    return true;
                 case R.id.navigation_person:
-                    viewPager.setCurrentItem(3);
+                    viewPager.setCurrentItem(2);
                     return true;
             }
             return false;
