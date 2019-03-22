@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,6 +22,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +64,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private GridView gridView;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
-    private TextView tv_title, tv_commit;
+    private TextView tv_title, tv_menu;
     private LinearLayout back;
+    private RelativeLayout rl_commit;
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;
@@ -71,8 +76,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private int tag = 0;
     private TextView tv_text_count;
     private LoadingDialog loadingDialog;
-    public static int  screenWidth;//屏幕宽度
-
+    public static int screenWidth;//屏幕宽度
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,6 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         Display display = windowManager.getDefaultDisplay();
         Point outSize = new Point();
         display.getSize(outSize);
-
         screenWidth = outSize.x;
 
         Intent intent = getIntent();
@@ -95,10 +98,13 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
+        tv_menu = findViewById(R.id.tv_menu);
+        tv_menu.setOnClickListener(this);
+
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setOnClickListener(this);
+        rl_commit = findViewById(R.id.rl_commit);
+        rl_commit.setOnClickListener(this);
 
         et_wenzi = findViewById(R.id.et_wenzi);
         et_wenzi.addTextChangedListener(mTextWatcher);
@@ -290,8 +296,12 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             case R.id.back:
                 finish();
                 break;
-            case R.id.tv_commit:
 
+            case R.id.tv_menu:
+                showOrderMenu(v);
+                break;
+
+            case R.id.rl_commit:
                 et_wenzi = findViewById(R.id.et_wenzi);
                 wenzi = et_wenzi.getText().toString().trim();
                 if (wenzi.length() <= 0) {
@@ -458,5 +468,24 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 return;
             }
         });
+    }
+
+    private void showOrderMenu(View v) {
+        final PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_order, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle().equals("拍照上传")) {
+                    Log.d("item.getTitle()==>","拍照上传");
+                    return true;
+                } else if (item.getTitle().equals("预览")) {
+                    Log.d("item.getTitle()==>","预览");
+                    return true;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 }
