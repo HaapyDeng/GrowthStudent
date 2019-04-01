@@ -5,14 +5,14 @@
     <!-- 个人觉得更形象的表达：top代表下边的阴影高度，left代表右边的阴影宽度。其实也就是相对应的offset，solid中的颜色是阴影的颜色，也可以设置角度等等 -->
     <item
         android:bottom="0.1dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="0.1dp">
+        android:left="0.1dp"
+        android:right="0.1dp"
+        android:top="2dp">
 
         <shape android:shape="rectangle">
             <gradient
                 android:angle="270"
-                android:endColor="#87CEFA"
+                android:endColor="#F8F8F8"
                 android:gradientRadius="50"
                 android:startColor="#FFFFFF" />
 
