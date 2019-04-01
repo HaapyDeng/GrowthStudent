@@ -38,17 +38,8 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:background="@mipmap/bell" />
+                android:background="@mipmap/system_icon_qr" />
 
-            <com.mpl.GrowthStud.Student.View.CircleImageView
-                android:id="@+id/iv_dot"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:background="#FF4800"
-                android:visibility="invisible" />
         </RelativeLayout>
 
 

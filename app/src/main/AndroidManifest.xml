@@ -6,6 +6,8 @@
     <permission
         android:name="com.mpl.GrowthStud.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
+    <!-- Required  一些二维码扫描相关权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.mpl.GrowthStud.permission.JPUSH_MESSAGE" />
@@ -322,9 +324,16 @@
         <activity
             android:name=".Student.Activity.MixtureActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.ParentRegisterActivity" />
-        <activity android:name=".Student.Activity.PreviewDoActivity" />
-        <activity android:name=".Student.Activity.ChangeBanShiActivity"></activity>
+        <activity android:name=".Student.Activity.ParentRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.PreviewDoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.Activity.ChangeBanShiActivity"
+            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".zxing.android.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
     </application>
 
 </manifest>

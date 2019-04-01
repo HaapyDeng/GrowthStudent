@@ -1,16 +1,22 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +32,7 @@ import com.mpl.GrowthStud.Student.Adapter.MessageListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.MessageItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.CircleImageView;
+import com.mpl.GrowthStud.zxing.android.CaptureActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +42,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -46,8 +54,10 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     private AchieveCompletFragment fragment2;
     private TextView completed, todo;
     private ImageButton ib_message;
-    private CircleImageView iv_dot;
 
+    private static final String DECODED_CONTENT_KEY = "codedContent";
+    private static final String DECODED_BITMAP_KEY = "codedBitmap";
+    private static final int REQUEST_CODE_SCAN = 0x0000;
     public AchievementFragment() {
         // Required empty public constructor
     }
@@ -63,9 +73,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         ib_message.setOnClickListener(this);
         todo = root.findViewById(R.id.tv_todo);
         todo.setOnClickListener(this);
-        iv_dot = root.findViewById(R.id.iv_dot);
         selectFragment(0);
-        doGetNewMessage();
         // Inflate the layout for this fragment
         return root;
     }
@@ -73,81 +81,9 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        doGetNewMessage();
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    iv_dot.setVisibility(View.INVISIBLE);
-                    break;
-                case 1:
-                    iv_dot.setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
-    };
 
-    private void doGetNewMessage() {
-        if (NetworkUtils.checkNetWork(getActivity()) == false) {
-            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
-            return;
-        }
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/message/is-new";
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("X-Api-Token", token);
-        client.get(url, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                Log.d("response==>>", response.toString());
-                try {
-                    int code = response.getInt("code");
-                    if (code == 0) {
-                        JSONObject data = response.getJSONObject("data");
-                        String isNew = data.getString("isNew");
-                        if (isNew.equals("false")) {
-                            Message message = new Message();
-                            message.what = 0;
-                            handler.sendMessage(message);
-                        } else if (isNew.equals("true")) {
-                            Message message = new Message();
-                            message.what = 1;
-                            handler.sendMessage(message);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
 
 
     public static Fragment newInstance(String name) {
@@ -169,9 +105,51 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 selectFragment(0);
                 break;
             case R.id.ib_message:
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                startActivity(intent);
+                //动态权限申请
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    goScan();
+                }
                 break;
+        }
+    }
+
+    /**
+     * 跳转到扫码界面扫码
+     */
+    private void goScan(){
+        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SCAN);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goScan();
+                } else {
+                    Toast.makeText(getActivity(), "你拒绝了权限申请，可能无法打开相机扫码哟！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+            if (data != null) {
+                //返回的文本内容
+                String content = data.getStringExtra(DECODED_CONTENT_KEY);
+                //返回的BitMap图像
+                Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
+
+              Log.d("扫描到的内容是：",content);
+            }
         }
     }
     // 切换Fragment
