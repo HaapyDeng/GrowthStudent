@@ -28,10 +28,13 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Adapter.AchieveCompletListViewAdapter;
 import com.mpl.GrowthStud.Student.Adapter.MessageListViewAdapter;
+import com.mpl.GrowthStud.Student.Bean.AchieveCompletItem;
 import com.mpl.GrowthStud.Student.Bean.MessageItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.CircleImageView;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 import com.mpl.GrowthStud.zxing.android.CaptureActivity;
 
 import org.json.JSONArray;
@@ -54,6 +57,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     private AchieveCompletFragment fragment2;
     private TextView completed, todo;
     private ImageButton ib_message;
+    private LoadingDialog loadingDialog;
 
     private static final String DECODED_CONTENT_KEY = "codedContent";
     private static final String DECODED_BITMAP_KEY = "codedBitmap";
@@ -147,11 +151,75 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 String content = data.getStringExtra(DECODED_CONTENT_KEY);
                 //返回的BitMap图像
                 Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
-
-              Log.d("扫描到的内容是：",content);
+                Log.d("扫描到的内容是：",content);
+                doSendContent(content);
             }
         }
     }
+
+    private void doSendContent(String content) {
+        loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
+        if (!NetworkUtils.checkNetWork(getActivity())) {
+            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String uid = sharedPreferences.getString("userid", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/search/" + content;
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        loadingDialog.dismiss();
+                        JSONObject data = response.getJSONObject("data");
+                        Log.d("data==>>>",data.toString());
+                    } else {
+                        loadingDialog.dismiss();
+                        Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
+                Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+
+
     // 切换Fragment
 
     private void selectFragment(int i) {
