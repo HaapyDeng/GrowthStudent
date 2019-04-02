@@ -16,7 +16,7 @@ import com.mpl.GrowthStud.R;
 public class FoundFragment extends Fragment implements View.OnClickListener {
 
 
-    private TextView tv_evaluate, tv_echievement, tv_road;
+    private TextView tv_evaluate, tv_echievement, tv_mybook;
     private ImageButton ib_message;
 
     public static FoundFragment newInstance(String name) {
@@ -41,8 +41,8 @@ public class FoundFragment extends Fragment implements View.OnClickListener {
         tv_echievement = root.findViewById(R.id.tv_echievement);
         tv_echievement.setOnClickListener(this);
 
-        tv_road = root.findViewById(R.id.tv_road);
-        tv_road.setOnClickListener(this);
+        tv_mybook = root.findViewById(R.id.tv_mybook);
+        tv_mybook.setOnClickListener(this);
         return root;
     }
 
@@ -61,8 +61,8 @@ public class FoundFragment extends Fragment implements View.OnClickListener {
                 Intent intent2 = new Intent(getActivity(), EchievementActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.tv_road:
-                Intent intent3 = new Intent(getActivity(), RoadActivity.class);
+            case R.id.tv_mybook:
+                Intent intent3 = new Intent(getActivity(), MyBookActivity.class);
                 startActivity(intent3);
                 break;
 

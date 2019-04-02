@@ -324,16 +324,20 @@
         <activity
             android:name=".Student.Activity.MixtureActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.ParentRegisterActivity"
+        <activity
+            android:name=".Student.Activity.ParentRegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.PreviewDoActivity"
+        <activity
+            android:name=".Student.Activity.PreviewDoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Student.Activity.ChangeBanShiActivity"
-            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".Student.Activity.ChangeBanShiActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".zxing.android.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".Student.Activity.MyBookActivity"></activity>
     </application>
 
 </manifest>
