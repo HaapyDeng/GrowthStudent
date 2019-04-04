@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -44,6 +45,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.ImageToBase64;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
+import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
 import com.mpl.GrowthStud.Student.Tools.UploadFile;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
@@ -53,6 +55,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,19 +67,21 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private GridView gridView;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
-    private TextView tv_title, tv_menu;
+    private TextView tv_title, tv_menu,tv_lable;
     private LinearLayout back;
     private RelativeLayout rl_commit;
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;
-    private String headTitle, prompt;
+    private String headTitle, prompt,label;
     private ProgressDialog progress;
     private String backUrl = "";
     private int tag = 0;
     private TextView tv_text_count;
     private LoadingDialog loadingDialog;
     public static int screenWidth;//屏幕宽度
+
+    private SelectPicPopupWindow menuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 
         tv_menu = findViewById(R.id.tv_menu);
         tv_menu.setOnClickListener(this);
+
+        tv_lable =findViewById(R.id.tv_lable);
 
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
@@ -145,6 +152,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             switch (msg.what) {
                 case 1:
                     et_wenzi.setHint(prompt);
+                    Log.d("label==>>>",label);
+                    tv_lable.setText(label);
                     break;
             }
 
@@ -175,6 +184,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
+                        label =data.getString("label");
+                        JSONArray array = data.getJSONArray("label");
+                        label = array.getString(0);
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
@@ -226,8 +238,11 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         //最多添加5张图片
                         viewPluImg(position);
                     } else {
-                        //添加凭证图片
-                        selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                        //实例化SelectPicPopupWindow
+                        menuWindow = new SelectPicPopupWindow(TuWenActivity.this,itemsOnClick );
+                        //显示窗口
+                        menuWindow.showAtLocation(TuWenActivity.this.findViewById(R.id.ll_tuwen), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+
                     }
                 } else {
                     viewPluImg(position);
@@ -235,8 +250,27 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
 
-    //查看大图
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.btn_take_photo:
+                    //添加凭证图片
+                        selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                    break;
+                case R.id.btn_pick_photo:
+                    Intent intent =new Intent(TuWenActivity.this,CloudPhotosActivity.class);
+                    startActivityForResult(intent,1);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+            //查看大图
     private void viewPluImg(int position) {
         Intent intent = new Intent(mContext, PlusImageActivity.class);
         intent.putStringArrayListExtra(MainConstant.IMG_LIST, mPicList);

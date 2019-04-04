@@ -337,7 +337,8 @@
             android:name=".zxing.android.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name=".Student.Activity.MyBookActivity"></activity>
+        <activity android:name=".Student.Activity.MyBookActivity" />
+        <activity android:name=".Student.Activity.CloudPhotosActivity"></activity>
     </application>
 
 </manifest>

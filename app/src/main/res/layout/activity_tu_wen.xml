@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:id="@+id/ll_tuwen"
     android:orientation="vertical"
     tools:context=".Student.Activity.TuWenActivity">
 
@@ -63,11 +64,33 @@
             android:textSize="40dp" />
 
     </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标签："
+        android:layout_marginLeft="10dp"
+        android:textColor="#999999"
+        android:textSize="18dp"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <TextView
+        android:id="@+id/tv_lable"
+        android:layout_width="wrap_content"
+        android:textSize="12dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:textColor="#3699ED"
+        android:background="#E3F1FD"
+        android:layout_height="20dp" />
 
     <EditText
         android:id="@+id/et_wenzi"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="130dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
