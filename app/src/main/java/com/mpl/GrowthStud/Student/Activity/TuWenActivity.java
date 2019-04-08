@@ -67,13 +67,13 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     private GridView gridView;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
-    private TextView tv_title, tv_menu,tv_lable;
+    private TextView tv_title, tv_menu, tv_lable;
     private LinearLayout back;
     private RelativeLayout rl_commit;
     private EditText et_wenzi;
     private String wenzi;
     private String achieveId;
-    private String headTitle, prompt,label;
+    private String headTitle, prompt, label;
     private ProgressDialog progress;
     private String backUrl = "";
     private int tag = 0;
@@ -106,7 +106,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         tv_menu = findViewById(R.id.tv_menu);
         tv_menu.setOnClickListener(this);
 
-        tv_lable =findViewById(R.id.tv_lable);
+        tv_lable = findViewById(R.id.tv_lable);
 
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
@@ -152,7 +152,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             switch (msg.what) {
                 case 1:
                     et_wenzi.setHint(prompt);
-                    Log.d("label==>>>",label);
+                    Log.d("label==>>>", label);
                     tv_lable.setText(label);
                     break;
             }
@@ -184,7 +184,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         prompt = data.getString("prompt");
-                        label =data.getString("label");
+                        label = data.getString("label");
                         JSONArray array = data.getJSONArray("label");
                         label = array.getString(0);
                         Message message = new Message();
@@ -239,9 +239,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         viewPluImg(position);
                     } else {
                         //实例化SelectPicPopupWindow
-                        menuWindow = new SelectPicPopupWindow(TuWenActivity.this,itemsOnClick );
+                        menuWindow = new SelectPicPopupWindow(TuWenActivity.this, itemsOnClick);
                         //显示窗口
-                        menuWindow.showAtLocation(TuWenActivity.this.findViewById(R.id.ll_tuwen), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+                        menuWindow.showAtLocation(TuWenActivity.this.findViewById(R.id.ll_tuwen), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
 
                     }
                 } else {
@@ -250,6 +250,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
     //为弹出窗口实现监听类
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {
 
@@ -258,11 +259,11 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             switch (v.getId()) {
                 case R.id.btn_take_photo:
                     //添加凭证图片
-                        selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                    selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
                     break;
                 case R.id.btn_pick_photo:
-                    Intent intent =new Intent(TuWenActivity.this,CloudPhotosActivity.class);
-                    startActivityForResult(intent,1);
+                    Intent intent = new Intent(TuWenActivity.this, CloudPhotosActivity.class);
+                    startActivityForResult(intent, 1);
                     break;
                 default:
                     break;
@@ -270,7 +271,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 
-            //查看大图
+    //查看大图
     private void viewPluImg(int position) {
         Intent intent = new Intent(mContext, PlusImageActivity.class);
         intent.putStringArrayListExtra(MainConstant.IMG_LIST, mPicList);
@@ -511,10 +512,30 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getTitle().equals("拍照上传")) {
-                    Log.d("item.getTitle()==>","拍照上传");
+                    Log.d("item.getTitle()==>", "拍照上传");
+                    Intent intent = new Intent(TuWenActivity.this, TuWenTakePhotoComActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("achieveid", achieveId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     return true;
                 } else if (item.getTitle().equals("预览")) {
-                    Log.d("item.getTitle()==>","预览");
+                    et_wenzi = findViewById(R.id.et_wenzi);
+                    wenzi = et_wenzi.getText().toString().trim();
+                    if (wenzi.length() <= 0) {
+                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    if (mPicList.size() == 0) {
+                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    Log.d("item.getTitle()==>", "预览");
+                    Intent intent = new Intent(mContext, PreviewDoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("achieveid", achieveId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     return true;
                 }
                 return false;

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
@@ -17,6 +18,7 @@ public class PreviewDoActivity extends Activity implements View.OnClickListener 
     private Context context;
     private View addview;
     private TextView tv_changebanshi, tv_changebg;
+    private LinearLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class PreviewDoActivity extends Activity implements View.OnClickListener 
         int screenHeight = 0;
         int screenWidth = 0;
         context = this;
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
         addview = findViewById(R.id.addview);
         //判断手机是否有底部导航栏
         if (Utils.checkDeviceHasNavigationBar(context)) {
@@ -55,6 +59,9 @@ public class PreviewDoActivity extends Activity implements View.OnClickListener 
     public void onClick(View view) {
 
         switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
             case R.id.tv_changebanshi:
                 Intent intent = new Intent(context, ChangeBanShiActivity.class);
                 startActivity(intent);

@@ -338,7 +338,8 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".Student.Activity.MyBookActivity" />
-        <activity android:name=".Student.Activity.CloudPhotosActivity"></activity>
+        <activity android:name=".Student.Activity.CloudPhotosActivity" />
+        <activity android:name=".Student.Activity.TuWenTakePhotoComActivity"></activity>
     </application>
 
 </manifest>

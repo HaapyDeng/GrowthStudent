@@ -1,19 +1,21 @@
 package com.mpl.GrowthStud.Student.Activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ public class ChangeBanShiActivity extends Activity {
     private List<Map<String, Object>> dataList;
     private SimpleAdapter adapter;
     private Context context;
+    private LoadingDialog loadingDialog;
 
 
     @Override
@@ -37,12 +40,12 @@ public class ChangeBanShiActivity extends Activity {
         int[] to = {R.id.img};
 
         adapter = new SimpleAdapter(this, dataList, R.layout.banshi_gridview_item, from, to);
-
         gridView.setAdapter(adapter);
         gridView.setSelection(0);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
 
         });
@@ -50,14 +53,17 @@ public class ChangeBanShiActivity extends Activity {
     }
 
     void initData() {
-        //图标
-        int icno[] = {R.mipmap.one_img_1, R.mipmap.one_img_2, R.mipmap.two_img_1,R.mipmap.two_img_2,
-                R.mipmap.three_img_1, R.mipmap.three_img_2, R.mipmap.four_img_1, R.mipmap.four_img_2};
-        dataList = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < icno.length; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("img", icno[i]);
-            dataList.add(map);
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
+        if (!NetworkUtils.checkNetWork(context)) {
+            Toast.makeText(context, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
         }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/style/{type}/{num}";
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
     }
 }
