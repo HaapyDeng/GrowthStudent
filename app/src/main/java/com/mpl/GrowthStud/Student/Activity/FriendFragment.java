@@ -48,7 +48,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ib_message:
-                Intent intent = new Intent(getActivity(), PreviewDoActivity.class);
+                Intent intent = new Intent(getActivity(), TuWenPreviewDoActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -14,16 +14,30 @@ import android.widget.TextView;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.Utils;
 
-public class PreviewDoActivity extends Activity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class TuWenPreviewDoActivity extends Activity implements View.OnClickListener {
     private Context context;
     private View addview;
     private TextView tv_changebanshi, tv_changebg;
     private LinearLayout back;
+    private ArrayList<String> mPicList; //上传的图片凭证的数据源
+    private String achieveid, type;
+    private int piccount;
+    private final static int REQUESTCODE = 1; // 返回的结果码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_do);
+        mPicList = (ArrayList<String>) getIntent().getSerializableExtra("mPicList");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        achieveid = extras.getString("achieveid");
+        type = extras.getString("type");
+        piccount = extras.getInt("piccount");
+
+
         int screenHeight = 0;
         int screenWidth = 0;
         context = this;
@@ -64,10 +78,48 @@ public class PreviewDoActivity extends Activity implements View.OnClickListener 
                 break;
             case R.id.tv_changebanshi:
                 Intent intent = new Intent(context, ChangeBanShiActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putString("type", type);
+                bundle.putString("piccount", "" + piccount);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, REQUESTCODE); //REQUESTCODE--->1
                 break;
             case R.id.tv_changebg:
+                Intent intent1 = new Intent(context, ChangeDiTuActivity.class);
+                startActivityForResult(intent1, REQUESTCODE);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 2) {
+            if (requestCode == REQUESTCODE) {
+                String banshiId = data.getStringExtra("banshiId");
+                String banshiImge = data.getStringExtra("banshiImgeUrl");
+                Log.d("result==>>>", banshiId + "/" + banshiImge);
+                if (banshiId.equals("20001")) {        // 单图   图片在下，文字在上
+
+                } else if (banshiId.equals("20002")) {// 单图  图片在上，文字在下
+
+                } else if (banshiId.equals("20003")) { // 2张图  图在上，文字在下
+
+                } else if (banshiId.equals("20004")) {// 2张图  图在下，文字在上
+
+                } else if (banshiId.equals("20005")) {// 3张图  图在左边 ，文字右边
+
+                } else if (banshiId.equals("20006")) {// 3张图  图在右边，文字左边
+
+                } else if (banshiId.equals("20007")) {// 4张图  2图上，文字中，2图下
+
+                } else if (banshiId.equals("20008")) {// 4张图  文字上，4图下
+
+                } else if (banshiId.equals("20009")) {// 4张图  4图上，文字下
+
+                }
+
+            }
         }
     }
 }

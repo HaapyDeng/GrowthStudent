@@ -235,7 +235,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
                 break;
             //预览
             case R.id.tv_preview:
-                Intent intent = new Intent(mContext, PreviewDoActivity.class);
+                Intent intent = new Intent(mContext, TuWenPreviewDoActivity.class);
                 startActivity(intent);
                 break;
 

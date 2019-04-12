@@ -17,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Adapter.GridViewBanShiAdapter;
+import com.mpl.GrowthStud.Student.Adapter.GridViewDiTuAdapter;
 import com.mpl.GrowthStud.Student.Bean.BanShiItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
@@ -30,13 +31,13 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ChangeBanShiActivity extends Activity {
+public class ChangeDiTuActivity extends Activity {
     private GridView gridView;
-    private List<BanShiItem> dataList = new ArrayList<>();
-    private GridViewBanShiAdapter adapter;
+    private List<String> dataList = new ArrayList<>();
+    private GridViewDiTuAdapter adapter;
     private Context context;
     private LoadingDialog loadingDialog;
-    private String type, num, banshiId = "", banshiImgeUrl = "";
+    private String achieveId, banshi, banshiId = "", banshiImgeUrl = "";
     private TextView tv_baocun;
     private LinearLayout back;
 
@@ -44,11 +45,11 @@ public class ChangeBanShiActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_ban_shi);
+        setContentView(R.layout.activity_change_di_tu);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        type = extras.getString("type");
-        num = extras.getString("piccount");
+        achieveId = extras.getString("achieveId");
+        banshi = extras.getString("banshiId");
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,15 +63,14 @@ public class ChangeBanShiActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (banshiId.equals("")) {
-                    Toast.makeText(context, "请选择版式", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "请选择背景", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent intent = new Intent();
                 intent.putExtra("banshiImgeUrl", banshiImgeUrl); //将计算的值回传回去
-                intent.putExtra("beijingId", banshiId); //将计算的值回传回去
+                intent.putExtra("banshiId", banshiId); //将计算的值回传回去
                 //setResult(resultCode, data);第一个参数表示结果返回码
-                setResult(3, intent);
-
+                setResult(2, intent);
                 finish();
             }
         });
@@ -78,9 +78,7 @@ public class ChangeBanShiActivity extends Activity {
         gridView = (GridView) findViewById(R.id.gridview);
         //初始化数据
         initData();
-
     }
-
 
     void initData() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
@@ -91,7 +89,7 @@ public class ChangeBanShiActivity extends Activity {
         }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/style/" + type + "/" + num;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/default/background";
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -108,22 +106,20 @@ public class ChangeBanShiActivity extends Activity {
                         String img;
                         String id;
                         for (int i = 0; i < data.length(); i++) {
-                            img = data.getJSONObject(i).getString("image");
-                            id = data.getJSONObject(i).getString("id");
-                            BanShiItem banShiItem = new BanShiItem(img, id);
-                            dataList.add(banShiItem);
+                            img = data.get(i).toString();
+                            dataList.add(img);
                         }
                         Log.d("dataList", "" + dataList.size());
-                        adapter = new GridViewBanShiAdapter(context, dataList);
+                        adapter = new GridViewDiTuAdapter(context, dataList);
                         gridView.setAdapter(adapter);
                         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                                 //把点击的position传递到adapter里面去
                                 adapter.changeState(position);
-                                Log.d("点击id==》》》", dataList.get(position).getId());
-                                banshiId = dataList.get(position).getId();
-                                banshiImgeUrl = dataList.get(position).getImge();
+                                Log.d("点击id==》》》", dataList.get(position));
+                                banshiId = dataList.get(position);
+                                banshiImgeUrl = dataList.get(position);
                             }
 
                         });
@@ -163,5 +159,4 @@ public class ChangeBanShiActivity extends Activity {
             }
         });
     }
-
 }

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/take_photo"
         android:title="拍照上传" />
     <item
-        android:id="@+id/review"
-        android:title="预览" />
+        android:id="@+id/choose_moban"
+        android:title="选择版式" />
+    <item
+        android:id="@+id/choose_bg"
+        android:title="选择背景" />
 </menu>

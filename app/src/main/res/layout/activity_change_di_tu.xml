@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".Student.Activity.ChangeBanShiActivity">
+    tools:context=".Student.Activity.ChangeDiTuActivity">
 
     <RelativeLayout
         android:id="@+id/head"
@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="更换板式"
+            android:text="更换背景图"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
@@ -68,5 +68,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:numColumns="3"></GridView>
+        android:numColumns="3"
+        android:verticalSpacing="20dp"></GridView>
 </LinearLayout>

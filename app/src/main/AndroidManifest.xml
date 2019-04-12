@@ -328,7 +328,7 @@
             android:name=".Student.Activity.ParentRegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Student.Activity.PreviewDoActivity"
+            android:name=".Student.Activity.TuWenPreviewDoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.ChangeBanShiActivity"
@@ -339,7 +339,8 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".Student.Activity.MyBookActivity" />
         <activity android:name=".Student.Activity.CloudPhotosActivity" />
-        <activity android:name=".Student.Activity.TuWenTakePhotoComActivity"></activity>
+        <activity android:name=".Student.Activity.TuWenTakePhotoComActivity" />
+        <activity android:name=".Student.Activity.ChangeDiTuActivity"></activity>
     </application>
 
 </manifest>

@@ -21,32 +21,24 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.BaseJsonHttpResponseHandler;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.ResponseHandlerInterface;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.mpl.GrowthStud.Student.Adapter.GridViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
-import com.mpl.GrowthStud.Student.Tools.ImageToBase64;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
-import com.mpl.GrowthStud.Student.Tools.UploadFile;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
@@ -55,12 +47,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpResponse;
 
 public class TuWenActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
@@ -82,6 +73,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     public static int screenWidth;//屏幕宽度
 
     private SelectPicPopupWindow menuWindow;
+
+    private String banshiId = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,6 +317,15 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             mPicList.addAll(toDeletePicList);
             mGridViewAddImgAdapter.notifyDataSetChanged();
         }
+        if (resultCode == 2) {  //选择版式返回
+            banshiId = data.getStringExtra("banshiId");
+            Log.d("banshiid==>>>", banshiId);
+        }
+        if (resultCode == 3) {  //选择版式返回
+            String beijingId = data.getStringExtra("beijingId");
+            Log.d("banshiid==>>>", beijingId);
+        }
+
     }
 
     @Override
@@ -346,6 +349,22 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 if (mPicList.size() == 0) {
                     Toast.makeText(this, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
                     break;
+                }
+                if (banshiId.equals("")) {
+                    switch (mPicList.size()) {
+                        case 1:
+                            banshiId = "20001";
+                            break;
+                        case 2:
+                            banshiId = "20003";
+                            break;
+                        case 3:
+                            banshiId = "20005";
+                            break;
+                        case 4:
+                            banshiId = "20007";
+                            break;
+                    }
                 }
 
                 doUploadImge(mPicList);
@@ -399,7 +418,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                             Log.d("backUrl[][][]==>>>", backUrl.toString());
                             if (tag == mPicList.size()) {
                                 Log.d("backUrlend==>>>", backUrl.toString());
-                                doUploadTuWen(wenzi, backUrl);
+                                doUploadTuWen(wenzi, backUrl, banshiId);
                             }
                         } else {
                             Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
@@ -438,7 +457,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void doUploadTuWen(String wenzi, String imge) {
+    private void doUploadTuWen(String s, String wenzi, String imge) {
 
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
             Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
@@ -453,6 +472,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         RequestParams params = new RequestParams();
         params.put("content", wenzi);
         params.put("image", imge);
+        params.put("style", s);
         client.addHeader("X-Api-Token", token);
         client.put(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -519,7 +539,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     intent.putExtras(bundle);
                     startActivity(intent);
                     return true;
-                } else if (item.getTitle().equals("预览")) {
+                } else if (item.getTitle().equals("选择版式")) {
                     et_wenzi = findViewById(R.id.et_wenzi);
                     wenzi = et_wenzi.getText().toString().trim();
                     if (wenzi.length() <= 0) {
@@ -530,12 +550,55 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
                         return true;
                     }
-                    Log.d("item.getTitle()==>", "预览");
-                    Intent intent = new Intent(mContext, PreviewDoActivity.class);
+                    Intent intent = new Intent(mContext, ChangeBanShiActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("achieveid", achieveId);
+                    bundle.putString("type", "2");
+                    bundle.putString("piccount", "" + mPicList.size());
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1); //REQUESTCODE--->1
+//                    Log.d("item.getTitle()==>", "预览");
+//                    Intent intent = new Intent(mContext, TuWenPreviewDoActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("achieveid", achieveId);
+//                    bundle.putString("type", "2");
+//                    intent.putExtra("mPicList", (Serializable) mPicList);
+//                    bundle.putInt("piccount", mPicList.size());
+//                    intent.putExtras(bundle);
+//                    startActivity(intent);
+                    return true;
+                } else if (item.getTitle().equals("选择背景")) {
+                    et_wenzi = findViewById(R.id.et_wenzi);
+                    wenzi = et_wenzi.getText().toString().trim();
+                    if (wenzi.length() <= 0) {
+                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    if (mPicList.size() == 0) {
+                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    if (banshiId.equals("")) {
+                        switch (mPicList.size()) {
+                            case 1:
+                                banshiId = "20001";
+                                break;
+                            case 2:
+                                banshiId = "20003";
+                                break;
+                            case 3:
+                                banshiId = "20005";
+                                break;
+                            case 4:
+                                banshiId = "20007";
+                                break;
+                        }
+                    }
+                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", achieveId);
+                    bundle.putString("banshiId", "" + banshiId);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, 1);
                     return true;
                 }
                 return false;
@@ -543,4 +606,5 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         });
         popupMenu.show();
     }
+
 }
