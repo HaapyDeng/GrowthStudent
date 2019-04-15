@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +38,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.mpl.GrowthStud.Student.Adapter.GridViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.MainConstant;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Tools.BitmapHelper;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
@@ -367,7 +370,11 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
-                doUploadImge(mPicList);
+                try {
+                    doUploadImge(mPicList);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 //                doUploadTuWen(wenzi, mPicList);
 
 //                Log.d("backUrl==>>>", backUrl);
@@ -377,7 +384,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //上传图片到图片服务器
-    private void doUploadImge(final ArrayList<String> mPicList) {
+    private void doUploadImge(final ArrayList<String> mPicList) throws FileNotFoundException {
         loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
@@ -386,16 +393,14 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         }
         Log.d("imge==>>>", mPicList.toString());
         for (int i = 0; i < mPicList.size(); i++) {
-
             File file = new File(mPicList.get(i));
             String imgUrl = getResources().getString(R.string.uploadFile);
+            Bitmap bitmap = BitmapHelper.compressImage(BitmapFactory.decodeFile(file.getPath()));
+            File imgFile = BitmapHelper.saveBitmapFile(bitmap, mPicList.get(i).toString());
+            Log.d("imgFile-byte:", String.valueOf(imgFile.length()));
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            try {
-                params.put("image", file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            params.put("image", imgFile);
             client.post(imgUrl, params, new JsonHttpResponseHandler() {
 
                 @Override
@@ -421,6 +426,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                                 doUploadTuWen(wenzi, backUrl, banshiId);
                             }
                         } else {
+                            loadingDialog.dismiss();
                             Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -433,6 +439,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
+                    loadingDialog.dismiss();
                     Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -440,6 +447,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     super.onFailure(statusCode, headers, responseString, throwable);
+                    loadingDialog.dismiss();
                     Log.d("responseString==>>", responseString);
                     Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
@@ -448,6 +456,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
+                    loadingDialog.dismiss();
                     Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }

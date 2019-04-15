@@ -37,7 +37,7 @@ public class ChangeDiTuActivity extends Activity {
     private GridViewDiTuAdapter adapter;
     private Context context;
     private LoadingDialog loadingDialog;
-    private String achieveId, banshi, banshiId = "", banshiImgeUrl = "";
+    private String achieveId, banshi, bgUrl = "", banshiImgeUrl = "";
     private TextView tv_baocun;
     private LinearLayout back;
 
@@ -62,13 +62,12 @@ public class ChangeDiTuActivity extends Activity {
         tv_baocun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (banshiId.equals("")) {
+                if (bgUrl.equals("")) {
                     Toast.makeText(context, "请选择背景", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent intent = new Intent();
-                intent.putExtra("banshiImgeUrl", banshiImgeUrl); //将计算的值回传回去
-                intent.putExtra("banshiId", banshiId); //将计算的值回传回去
+                intent.putExtra("bgUrl", bgUrl); //将计算的值回传回去
                 //setResult(resultCode, data);第一个参数表示结果返回码
                 setResult(2, intent);
                 finish();
@@ -118,7 +117,7 @@ public class ChangeDiTuActivity extends Activity {
                                 //把点击的position传递到adapter里面去
                                 adapter.changeState(position);
                                 Log.d("点击id==》》》", dataList.get(position));
-                                banshiId = dataList.get(position);
+                                bgUrl = dataList.get(position);
                                 banshiImgeUrl = dataList.get(position);
                             }
 

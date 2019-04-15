@@ -94,6 +94,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
         loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(mContext)) {
+            loadingDialog.dismiss();
             Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
@@ -134,6 +135,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                                 doUploadTuWen(backUrl);
                             }
                         } else {
+                            loadingDialog.dismiss();
                             Toast.makeText(mContext, response.getString("message"), Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -146,6 +148,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
+                    loadingDialog.dismiss();
                     Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -154,6 +157,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     super.onFailure(statusCode, headers, responseString, throwable);
                     Log.d("responseString==>>", responseString);
+                    loadingDialog.dismiss();
                     Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -161,6 +165,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
+                    loadingDialog.dismiss();
                     Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -173,6 +178,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
     private void doUploadTuWen(String imge) {
 
         if (!NetworkUtils.checkNetWork(mContext)) {
+            loadingDialog.dismiss();
             Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
