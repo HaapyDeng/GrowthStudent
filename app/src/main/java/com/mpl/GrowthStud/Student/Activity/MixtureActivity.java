@@ -54,6 +54,7 @@ public class MixtureActivity extends FragmentActivity {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(this)) {
+            loadingDialog.dismiss();
             Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }

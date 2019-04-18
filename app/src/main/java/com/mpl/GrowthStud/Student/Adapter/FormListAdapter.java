@@ -63,6 +63,9 @@ public class FormListAdapter extends BaseAdapter {
 //        }
         FormListItem formListItem = mDatas.get(position);
 
+//        if (mDatas.get(position).getId().equals("0")) {
+//            return convertView;
+//        }
         holder.tv_lable_title.setText(formListItem.getLabel() + "：");
         String prompt = formListItem.getPrompt();
         holder.et_content.setHint(formListItem.getPrompt());
@@ -102,6 +105,7 @@ public class FormListAdapter extends BaseAdapter {
             }
 
         }
+
 
         @Override
         public void afterTextChanged(Editable editable) {

@@ -188,6 +188,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         message.what = 1;
                         handler.sendMessage(message);
                     } else {
+                        loadingDialog.dismiss();
                         Toast.makeText(TuWenActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -481,7 +482,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         RequestParams params = new RequestParams();
         params.put("content", wenzi);
         params.put("image", imge);
-        params.put("style", s);
+//        params.put("style", s);
         client.addHeader("X-Api-Token", token);
         client.put(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -548,68 +549,69 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     intent.putExtras(bundle);
                     startActivity(intent);
                     return true;
-                } else if (item.getTitle().equals("选择版式")) {
-                    et_wenzi = findViewById(R.id.et_wenzi);
-                    wenzi = et_wenzi.getText().toString().trim();
-                    if (wenzi.length() <= 0) {
-                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                    if (mPicList.size() == 0) {
-                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                    Intent intent = new Intent(mContext, ChangeBanShiActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("type", "2");
-                    bundle.putString("piccount", "" + mPicList.size());
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, 1); //REQUESTCODE--->1
-//                    Log.d("item.getTitle()==>", "预览");
-//                    Intent intent = new Intent(mContext, TuWenPreviewDoActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("achieveid", achieveId);
-//                    bundle.putString("type", "2");
-//                    intent.putExtra("mPicList", (Serializable) mPicList);
-//                    bundle.putInt("piccount", mPicList.size());
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-                    return true;
-                } else if (item.getTitle().equals("选择背景")) {
-                    et_wenzi = findViewById(R.id.et_wenzi);
-                    wenzi = et_wenzi.getText().toString().trim();
-                    if (wenzi.length() <= 0) {
-                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                    if (mPicList.size() == 0) {
-                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                    if (banshiId.equals("")) {
-                        switch (mPicList.size()) {
-                            case 1:
-                                banshiId = "20001";
-                                break;
-                            case 2:
-                                banshiId = "20003";
-                                break;
-                            case 3:
-                                banshiId = "20005";
-                                break;
-                            case 4:
-                                banshiId = "20007";
-                                break;
-                        }
-                    }
-                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", achieveId);
-                    bundle.putString("banshiId", "" + banshiId);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, 1);
-                    return true;
                 }
+//                } else if (item.getTitle().equals("选择版式")) {
+//                    et_wenzi = findViewById(R.id.et_wenzi);
+//                    wenzi = et_wenzi.getText().toString().trim();
+//                    if (wenzi.length() <= 0) {
+//                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (mPicList.size() == 0) {
+//                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    Intent intent = new Intent(mContext, ChangeBanShiActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("type", "2");
+//                    bundle.putString("piccount", "" + mPicList.size());
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, 1); //REQUESTCODE--->1
+////                    Log.d("item.getTitle()==>", "预览");
+////                    Intent intent = new Intent(mContext, TuWenPreviewDoActivity.class);
+////                    Bundle bundle = new Bundle();
+////                    bundle.putString("achieveid", achieveId);
+////                    bundle.putString("type", "2");
+////                    intent.putExtra("mPicList", (Serializable) mPicList);
+////                    bundle.putInt("piccount", mPicList.size());
+////                    intent.putExtras(bundle);
+////                    startActivity(intent);
+//                    return true;
+//                } else if (item.getTitle().equals("选择背景")) {
+//                    et_wenzi = findViewById(R.id.et_wenzi);
+//                    wenzi = et_wenzi.getText().toString().trim();
+//                    if (wenzi.length() <= 0) {
+//                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (mPicList.size() == 0) {
+//                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (banshiId.equals("")) {
+//                        switch (mPicList.size()) {
+//                            case 1:
+//                                banshiId = "20001";
+//                                break;
+//                            case 2:
+//                                banshiId = "20003";
+//                                break;
+//                            case 3:
+//                                banshiId = "20005";
+//                                break;
+//                            case 4:
+//                                banshiId = "20007";
+//                                break;
+//                        }
+//                    }
+//                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("id", achieveId);
+//                    bundle.putString("banshiId", "" + banshiId);
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, 1);
+//                    return true;
+//                }
                 return false;
             }
         });

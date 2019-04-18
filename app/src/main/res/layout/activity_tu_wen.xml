@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_tuwen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:id="@+id/ll_tuwen"
     android:orientation="vertical"
     tools:context=".Student.Activity.TuWenActivity">
 
@@ -57,35 +57,50 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="···"
-            android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="···"
             android:textColor="#ffffff"
             android:textSize="40dp" />
 
     </RelativeLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="10dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="标签："
         android:layout_marginLeft="10dp"
+        android:text="标签："
         android:textColor="#999999"
-        android:textSize="18dp"/>
+        android:textSize="18dp" />
+
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
+
     <TextView
         android:id="@+id/tv_lable"
         android:layout_width="wrap_content"
-        android:textSize="12dp"
-        android:gravity="center_vertical"
+        android:layout_height="20dp"
         android:layout_marginLeft="10dp"
-        android:textColor="#3699ED"
         android:background="#E3F1FD"
-        android:layout_height="20dp" />
+        android:gravity="center_vertical"
+        android:textColor="#3699ED"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/grey" />
 
     <EditText
         android:id="@+id/et_wenzi"
@@ -137,14 +152,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
         android:numColumns="3"
+        android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
 
     <RelativeLayout
-        android:layout_height="0dp"
         android:id="@+id/rl_commit"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -152,9 +167,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:orientation="vertical"
-            android:layout_alignParentLeft="true">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="match_parent"

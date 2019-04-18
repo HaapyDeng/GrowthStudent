@@ -317,7 +317,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Student.Activity.FormActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Student.Activity.FormInfoActivity"
             android:screenOrientation="portrait" />

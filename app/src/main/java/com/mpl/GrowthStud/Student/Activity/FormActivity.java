@@ -5,13 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +42,15 @@ import cz.msebera.android.httpclient.Header;
 
 public class FormActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
-    private TextView tv_title, tv_commit;
+    private TextView tv_title, tv_commit, tv_menu, tv_lable;
     private EditText et_username, et_male, et_like, et_birthy;
     private String achieveId;
-    private String headTitle;
+    private String headTitle, labelTitle;
     private Context mContext;
     private List<FormListItem> mdatas;
     private FormListAdapter formListAdapter;
+
+    private LinearLayout rl_commit;
 
     private LoadingDialog loadingDialog;
     private ListView listview;
@@ -65,16 +72,58 @@ public class FormActivity extends Activity implements View.OnClickListener {
 
         listview = findViewById(R.id.listview);
 
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setOnClickListener(this);
+        tv_lable = findViewById(R.id.tv_lable);
+
+        tv_menu = findViewById(R.id.tv_menu);
+        tv_menu.setOnClickListener(this);
+
+        rl_commit = findViewById(R.id.rl_commit);
+        rl_commit.setOnClickListener(this);
         initFormLabel(achieveId);
 
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    Log.d("label==>>>", labelTitle);
+                    tv_lable.setText(labelTitle);
+                    break;
+            }
+
+        }
+    };
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        //获得adapter
+        FormListAdapter adapter = (FormListAdapter) listView.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            //计算总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        //计算分割线高度
+        params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        //给listview设置高度
+        listView.setLayoutParams(params);
     }
 
     private void initFormLabel(String id) {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(this)) {
+            loadingDialog.show();
             Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
@@ -94,6 +143,7 @@ public class FormActivity extends Activity implements View.OnClickListener {
                     if (code == 0) {
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
+                        labelTitle = data.getJSONArray("label").get(0).toString();
                         JSONArray item = data.getJSONArray("item");
                         mdatas = new ArrayList<>();
                         for (int i = 0; i < item.length(); i++) {
@@ -107,9 +157,14 @@ public class FormActivity extends Activity implements View.OnClickListener {
                             FormListItem formListItem = new FormListItem(id, label, prompt, type, options, order);
                             mdatas.add(formListItem);
                         }
+//                        FormListItem formListItem2 = new FormListItem("0", "", "", 1, "", 1);
+//                        mdatas.add(formListItem2);
                         formListAdapter = new FormListAdapter(FormActivity.this, mdatas);
                         listview.setAdapter(formListAdapter);
-
+                        setListViewHeightBasedOnChildren(listview);
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
 
                     } else {
                         loadingDialog.dismiss();
@@ -152,7 +207,10 @@ public class FormActivity extends Activity implements View.OnClickListener {
             case R.id.back:
                 finish();
                 break;
-            case R.id.tv_commit:
+            case R.id.tv_menu:
+                showOrderMenu(view);
+                break;
+            case R.id.rl_commit:
                 int answerLength = 0;
                 answerLength = formListAdapter.getData().size();
                 Log.d("answerLength==>>>", "" + answerLength);
@@ -179,6 +237,90 @@ public class FormActivity extends Activity implements View.OnClickListener {
         }
 
     }
+
+    private void showOrderMenu(View v) {
+        final PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_order, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle().equals("拍照上传")) {
+                    Log.d("item.getTitle()==>", "拍照上传");
+                    Intent intent = new Intent(FormActivity.this, TuWenTakePhotoComActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("achieveid", achieveId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    return true;
+                }
+//                } else if (item.getTitle().equals("选择版式")) {
+//                    et_wenzi = findViewById(R.id.et_wenzi);
+//                    wenzi = et_wenzi.getText().toString().trim();
+//                    if (wenzi.length() <= 0) {
+//                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (mPicList.size() == 0) {
+//                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    Intent intent = new Intent(mContext, ChangeBanShiActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("type", "2");
+//                    bundle.putString("piccount", "" + mPicList.size());
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, 1); //REQUESTCODE--->1
+//                    Log.d("item.getTitle()==>", "预览");
+//                    Intent intent = new Intent(mContext, TuWenPreviewDoActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("achieveid", achieveId);
+//                    bundle.putString("type", "2");
+//                    intent.putExtra("mPicList", (Serializable) mPicList);
+//                    bundle.putInt("piccount", mPicList.size());
+//                    intent.putExtras(bundle);
+//                    startActivity(intent);
+//                return true;
+//            }
+//                } else if (item.getTitle().equals("选择背景")) {
+//                    et_wenzi = findViewById(R.id.et_wenzi);
+//                    wenzi = et_wenzi.getText().toString().trim();
+//                    if (wenzi.length() <= 0) {
+//                        Toast.makeText(mContext, R.string.wenzi_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (mPicList.size() == 0) {
+//                        Toast.makeText(mContext, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                    if (banshiId.equals("")) {
+//                        switch (mPicList.size()) {
+//                            case 1:
+//                                banshiId = "20001";
+//                                break;
+//                            case 2:
+//                                banshiId = "20003";
+//                                break;
+//                            case 3:
+//                                banshiId = "20005";
+//                                break;
+//                            case 4:
+//                                banshiId = "20007";
+//                                break;
+//                        }
+//                    }
+//                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("id", achieveId);
+//                    bundle.putString("banshiId", "" + banshiId);
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, 1);
+//                    return true;
+//                }
+                return false;
+        }
+    });
+        popupMenu.show();
+}
 
     private void doputInfo(JSONObject object) {
         loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
