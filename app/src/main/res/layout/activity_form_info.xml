@@ -72,18 +72,6 @@
                 android:textColor="#ff333333"
                 android:textSize="19dp" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="34dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center_vertical"
-                android:textColor="#999999"
-                android:textSize="12dp" />
         </RelativeLayout>
 
         <LinearLayout

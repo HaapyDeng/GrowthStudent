@@ -42,6 +42,7 @@ public class SyatemAchieveYouActivity extends AppCompatActivity implements View.
     private EditText et_username, et_position;
     private String username, male, birthday, animal, postion;
     private PickView catePickView;
+    private LinearLayout rl_commit;
 
     int mYear, mMonth, mDay;
     Calendar c;
@@ -63,8 +64,8 @@ public class SyatemAchieveYouActivity extends AppCompatActivity implements View.
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
 
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setOnClickListener(this);
+        rl_commit = findViewById(R.id.rl_commit);
+        rl_commit.setOnClickListener(this);
 
         et_username = findViewById(R.id.et_username);
         tv_male = findViewById(R.id.tv_male);
@@ -141,7 +142,7 @@ public class SyatemAchieveYouActivity extends AppCompatActivity implements View.
                     }
                 });
                 break;
-            case R.id.tv_commit:
+            case R.id.rl_commit:
                 username = et_username.getText().toString().trim();
                 postion = et_position.getText().toString().trim();
                 if (username.equals("") || male.equals("") || birthday.equals("") || animal.equals("") || postion.equals("")) {

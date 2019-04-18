@@ -51,7 +51,7 @@ import cz.msebera.android.httpclient.Header;
 public class SyatemAchieveChuActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private Context mContext;
-    private TextView tv_title, tv_commit, tv_male, tv_birthy, tv_political_status, tv_gostudytime, tv_text_count1, tv_text_count2;
+    private TextView tv_title, tv_male, tv_birthy, tv_political_status, tv_gostudytime, tv_text_count1, tv_text_count2;
     private String achieveId;
     private String headTitle;
     private EditText et_username, et_nation, et_content1, et_content2, et_schoolnum;
@@ -66,6 +66,7 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
     private String backUrl = "";
     private int tag = 0;
     private LoadingDialog loadingDialog;
+    private LinearLayout rl_commit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,8 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
 
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setOnClickListener(this);
+        rl_commit = findViewById(R.id.rl_commit);
+        rl_commit.setOnClickListener(this);
 
         delete_iv = findViewById(R.id.delete_iv);
         delete_iv.setOnClickListener(this);
@@ -206,7 +207,7 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
             case R.id.back:
                 finish();
                 break;
-            case R.id.tv_commit:
+            case R.id.rl_commit:
                 et_username = findViewById(R.id.et_username);
                 et_nation = findViewById(R.id.et_nation);
                 et_content1 = findViewById(R.id.et_content1);

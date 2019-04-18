@@ -53,6 +53,8 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
     private LinearLayout ll_open;
     private GridView gridview;
     private List<String> listImage = new ArrayList<>();
+    private TextView tv_lable, tv_lable2, tv_lable3, tv_lable4, tv_lable5;
+    private JSONArray label;
 
     // 声明PopupWindow
     PopupWindow popupWindow;
@@ -73,13 +75,18 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
         achieveId = extras.getString("achieveid");
         headTitle = extras.getString("headtitle");
 
+        tv_lable = findViewById(R.id.tv_lable);
+        tv_lable2 = findViewById(R.id.tv_lable2);
+        tv_lable3 = findViewById(R.id.tv_lable3);
+        tv_lable4 = findViewById(R.id.tv_lable4);
+        tv_lable5 = findViewById(R.id.tv_lable5);
+
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
 
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
         tv_prompt = findViewById(R.id.tv_prompt);
-        tv_start_time = findViewById(R.id.tv_start_time);
         tv_answer = findViewById(R.id.tv_answer);
 
         ll_open = findViewById(R.id.ll_open);
@@ -124,6 +131,7 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                         answer = data.getString("answer");
                         write_time = data.getString("write_time");
                         image = new String[data.getJSONArray("image").length()];
+                        label = data.getJSONArray("label");
                         for (int i = 0; i < data.getJSONArray("image").length(); i++) {
                             image[i] = data.getJSONArray("image").getString(i);
                             Log.d(" image[i] ==>>>", image[i]);
@@ -339,9 +347,37 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                 case 1:
                     ll_open.setVisibility(View.INVISIBLE);
                     tv_prompt.setText(headTitle);
-                    tv_start_time.setText(start_time);
                     tv_answer.setText(answer);
+                    for (int i = 0; i < label.length(); i++) {
+                        try {
+                            String s = label.getString(i);
 
+                            switch (i) {
+                                case 0:
+                                    tv_lable.setText(s);
+                                    tv_lable.setBackgroundColor(getResources().getColor(R.color.label_bak));
+                                    break;
+                                case 1:
+                                    tv_lable2.setText(s);
+                                    tv_lable2.setBackgroundColor(getResources().getColor(R.color.label_bak));
+                                    break;
+                                case 2:
+                                    tv_lable3.setText(s);
+                                    tv_lable3.setBackgroundColor(getResources().getColor(R.color.label_bak));
+                                    break;
+                                case 3:
+                                    tv_lable4.setText(s);
+                                    tv_lable4.setBackgroundColor(getResources().getColor(R.color.label_bak));
+                                    break;
+                                case 4:
+                                    tv_lable5.setText(s);
+                                    tv_lable5.setBackgroundColor(getResources().getColor(R.color.label_bak));
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     for (int i = 0; i < image.length; i++) {
                         Log.d("length==>>>", "" + image[i]);
                         listImage.add(image[i]);

@@ -51,7 +51,7 @@ import cz.msebera.android.httpclient.Header;
 public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private Context mContext;
-    private TextView tv_title, tv_commit, tv_male, tv_birthy, tv_animal;
+    private TextView tv_title, tv_male, tv_birthy, tv_animal;
     private String achieveId;
     private String headTitle;
     private EditText et_username, et_carid, et_nation;
@@ -65,7 +65,7 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
     private GridView gridView;
     private String backUrl = "";
     private int tag = 0;
-
+    private LinearLayout rl_commit;
 
     private LoadingDialog loadingDialog;
 
@@ -84,8 +84,8 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(headTitle);
 
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setOnClickListener(this);
+        rl_commit = findViewById(R.id.rl_commit);
+        rl_commit.setOnClickListener(this);
 
         delete_iv = findViewById(R.id.delete_iv);
         delete_iv.setOnClickListener(this);
@@ -114,7 +114,7 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
             case R.id.back:
                 finish();
                 break;
-            case R.id.tv_commit:
+            case R.id.rl_commit:
                 username = et_username.getText().toString().trim();
                 carId = et_carid.getText().toString().trim();
                 nation = et_nation.getText().toString().trim();
