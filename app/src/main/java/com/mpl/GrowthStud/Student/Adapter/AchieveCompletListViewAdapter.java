@@ -75,7 +75,7 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
             Drawable drawable4 = context1.getResources().getDrawable(R.mipmap.little_pingjia_img);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable4);
             ((TextView) holder.getView(R.id.tv_1)).setText("问卷");
-        }else if (bean.getType().equals("5")) {
+        } else if (bean.getType().equals("5")) {
             Drawable drawable5 = context1.getResources().getDrawable(R.mipmap.little_form);
             ((ImageView) holder.getView(R.id.iv_1)).setBackground(drawable5);
             ((TextView) holder.getView(R.id.tv_1)).setText("系统");
@@ -109,7 +109,7 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
             ((ImageView) holder.getView(R.id.iv_star3)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star4)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
-            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
         } else if (bean.getStar().equals("3")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star1)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
@@ -117,29 +117,61 @@ public class AchieveCompletListViewAdapter extends ListViewAdapter<AchieveComple
             ((ImageView) holder.getView(R.id.iv_star2)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star3)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
-            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
         } else if (bean.getStar().equals("2")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star1)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
             ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star2)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
-            ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
         } else if (bean.getStar().equals("1")) {
             ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
             ((ImageView) holder.getView(R.id.iv_star1)).setBackground(context1.getResources().getDrawable(R.mipmap.star_big));
-            ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
         } else if (bean.getStar().equals("0")) {
-            ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
-            ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            if (bean.getTask_star().equals("0")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
+            } else if (bean.getTask_star().equals("1")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
+            } else if (bean.getTask_star().equals("2")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
+            } else if (bean.getTask_star().equals("3")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.INVISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
+            } else if (bean.getTask_star().equals("4")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.INVISIBLE);
+            } else if (bean.getTask_star().equals("5")) {
+                ((ImageView) holder.getView(R.id.iv_star1)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star2)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star3)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star4)).setVisibility(View.VISIBLE);
+                ((ImageView) holder.getView(R.id.iv_star5)).setVisibility(View.VISIBLE);
+            }
         }
 //        ((TextView) holder.getView(R.id.titleTv)).setText(bean.getTitle());
 //        ((TextView) holder.getView(R.id.descTv)).setText(bean.getDesc());

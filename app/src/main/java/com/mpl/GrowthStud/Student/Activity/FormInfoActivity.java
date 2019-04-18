@@ -325,7 +325,6 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
                 case 1:
                     ll_open.setVisibility(View.INVISIBLE);
                     tv_title.setText(name);
-                    tv_time.setText(updated_at);
                     for (int i = 0; i < label.length(); i++) {
                         try {
                             String s = label.getString(i);

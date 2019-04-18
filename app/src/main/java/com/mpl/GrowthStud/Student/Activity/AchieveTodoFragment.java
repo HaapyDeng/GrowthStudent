@@ -139,9 +139,31 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
         //设置下拉刷新的监听
         mSwipeLayout.setOnRefreshListener(this);
 
-        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+//        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+//            @Override
+//            public void onloadMore() {
+//                int i = Integer.parseInt(currentPage);
+//                Log.d("i==>>", "" + i);
+//                if (i < totalPage) {
+//                    getTodoAchieve("" + (i + 1));
+//                } else {
+//                    listView.setLoadCompleted();
+//                }
+//            }
+//        });
+        return root;
+    }
+
+    private void loadMore() {
+        new Thread() {
             @Override
-            public void onloadMore() {
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 int i = Integer.parseInt(currentPage);
                 Log.d("i==>>", "" + i);
                 if (i < totalPage) {
@@ -149,9 +171,15 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                 } else {
                     listView.setLoadCompleted();
                 }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        achieveToDoListViewAdapter.notifyDataSetChanged();
+                        listView.setLoadCompleted();
+                    }
+                });
             }
-        });
-        return root;
+        }.start();
     }
 
     @Override
@@ -232,7 +260,12 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                             achieveToDoListViewAdapter = new AchieveToDoListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(achieveToDoListViewAdapter);
                         }
-                        listView.setLoadCompleted();
+                        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+                            @Override
+                            public void onloadMore() {
+                                loadMore();
+                            }
+                        });
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
