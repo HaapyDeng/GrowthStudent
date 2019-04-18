@@ -177,6 +177,33 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
         }
 
     }
+    private void loadMore() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getTodoAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pachieveToDoListViewAdapter.notifyDataSetChanged();
+                        listView.setLoadCompleted();
+                    }
+                });
+            }
+        }.start();
+    }
 
     private void getTodoAchieve(String page) {
         if (page.equals("1")) {
@@ -239,7 +266,12 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                             pachieveToDoListViewAdapter = new PAchieveToDoListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(pachieveToDoListViewAdapter);
                         }
-                        listView.setLoadCompleted();
+                        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+                            @Override
+                            public void onloadMore() {
+                                loadMore();
+                            }
+                        });
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();

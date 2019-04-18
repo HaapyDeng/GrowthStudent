@@ -104,6 +104,34 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
         return root;
     }
 
+    private void loadMore() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getCpmpletAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        achieveCompletListViewAdapter.notifyDataSetChanged();
+                        listView.setLoadCompleted();
+                    }
+                });
+            }
+        }.start();
+    }
+
     @Override
     public void onRefresh() {
 //检查是否处于刷新状态
@@ -179,7 +207,12 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
                             achieveCompletListViewAdapter = new AchieveCompletListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(achieveCompletListViewAdapter);
                         }
-                        listView.setLoadCompleted();
+                        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+                            @Override
+                            public void onloadMore() {
+                                loadMore();
+                            }
+                        });
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();

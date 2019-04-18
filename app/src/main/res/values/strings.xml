@@ -6,6 +6,7 @@
     <string name="schoolid_not_null">学籍号不能为空</string>
     <string name="phone_not_null">手机号不能为空</string>
     <string name="local_url">http://192.168.0.119:112</string>
+
     <!--<string name="local_url">http://101.201.197.224:112</string>-->
     <!--<string name="uploadFile">http://192.168.1.131:83/index.php/upload/index</string>-->
     <string name="uploadFile">http://222.74.65.87:82/upload.php</string>

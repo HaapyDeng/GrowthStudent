@@ -136,6 +136,33 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
         }
 
     }
+    private void loadMore() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    getCpmpletAchieve("" + (i + 1));
+                } else {
+                    listView.setLoadCompleted();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pachieveCompletListViewAdapter.notifyDataSetChanged();
+                        listView.setLoadCompleted();
+                    }
+                });
+            }
+        }.start();
+    }
 
     private void getCpmpletAchieve(String page) {
         loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
@@ -194,8 +221,13 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                         if (getActivity() != null) {
                             pachieveCompletListViewAdapter = new PAchieveCompletListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(pachieveCompletListViewAdapter);
-                            listView.setLoadCompleted();
                         }
+                        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+                            @Override
+                            public void onloadMore() {
+                                loadMore();
+                            }
+                        });
 
                     } else {
                         loadingDialog.dismiss();
