@@ -159,17 +159,17 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void run() {
                 super.run();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 int i = Integer.parseInt(currentPage);
                 Log.d("i==>>", "" + i);
                 if (i < totalPage) {
                     getTodoAchieve("" + (i + 1));
                 } else {
                     listView.setLoadCompleted();
+                }
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -257,6 +257,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                             mDatas.add(achieveToDoItem);
                         }
                         if (getActivity() != null) {
+                            Log.d("mdata:", String.valueOf(mDatas.size()));
                             achieveToDoListViewAdapter = new AchieveToDoListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(achieveToDoListViewAdapter);
                         }

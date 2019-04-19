@@ -282,7 +282,7 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             try {
-                params.put("image", file);
+                params.put("file", file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -296,10 +296,10 @@ public class SyatemAchieveChuActivity extends Activity implements View.OnClickLi
                         int code = response.getInt("code");
                         if (code == 0) {
                             tag = tag + 1;
-                            JSONArray array = response.getJSONArray("data");
-                            JSONObject object = array.getJSONObject(0);
+//                            JSONArray array = response.getJSONArray("data");
+                            JSONObject object = response.getJSONObject("data");
                             String singUrl;
-                            singUrl = object.getString("resource");
+                            singUrl = object.getString("path");
                             if (singUrl.equals("")) {
                                 loadingDialog.dismiss();
                                 Toast.makeText(mContext, response.getString("message"), Toast.LENGTH_LONG).show();

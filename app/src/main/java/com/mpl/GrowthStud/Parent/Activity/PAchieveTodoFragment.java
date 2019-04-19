@@ -269,6 +269,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                             mDatas.add(pachieveToDoItem);
                         }
                         if (getActivity() != null) {
+
                             pachieveToDoListViewAdapter = new PAchieveToDoListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(pachieveToDoListViewAdapter);
                         }

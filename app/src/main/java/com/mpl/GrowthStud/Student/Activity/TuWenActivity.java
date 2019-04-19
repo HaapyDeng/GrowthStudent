@@ -396,12 +396,12 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         for (int i = 0; i < mPicList.size(); i++) {
             File file = new File(mPicList.get(i));
             String imgUrl = getResources().getString(R.string.uploadFile);
-            Bitmap bitmap = BitmapHelper.compressImage(BitmapFactory.decodeFile(file.getPath()));
-            File imgFile = BitmapHelper.saveBitmapFile(bitmap, mPicList.get(i).toString());
-            Log.d("imgFile-byte:", String.valueOf(imgFile.length()));
+//            Bitmap bitmap = BitmapHelper.compressImage(BitmapFactory.decodeFile(file.getPath()));
+//            File imgFile = BitmapHelper.saveBitmapFile(bitmap, mPicList.get(i).toString());
+            Log.d("imgFile-byte:", String.valueOf(file.length()));
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            params.put("image", imgFile);
+            params.put("file", file);
             client.post(imgUrl, params, new JsonHttpResponseHandler() {
 
                 @Override
@@ -412,10 +412,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                         int code = response.getInt("code");
                         if (code == 0) {
                             tag = tag + 1;
-                            JSONArray array = response.getJSONArray("data");
-                            JSONObject object = array.getJSONObject(0);
+                            JSONObject object = response.getJSONObject("data");
                             String singUrl;
-                            singUrl = object.getString("resource");
+                            singUrl = object.getString("path");
                             if (backUrl.equals("")) {
                                 backUrl = singUrl;
                             } else {
