@@ -136,6 +136,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
         }
 
     }
+
     private void loadMore() {
         new Thread() {
             @Override
@@ -151,7 +152,12 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
                 if (i < totalPage) {
                     getCpmpletAchieve("" + (i + 1));
                 } else {
-                    listView.setLoadCompleted();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listView.setLoadCompleted();
+                        }
+                    });
                 }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

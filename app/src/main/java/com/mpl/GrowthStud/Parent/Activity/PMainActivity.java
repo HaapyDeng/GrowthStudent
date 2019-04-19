@@ -165,7 +165,7 @@ public class PMainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         List<Fragment> list = new ArrayList<>();
         list.add(PAchievementFragment.newInstance("成就"));
-        list.add(PFriendFragment.newInstance("伙伴"));
+//        list.add(PFriendFragment.newInstance("伙伴"));
         list.add(PFoundFragment.newInstance("发现"));
         list.add(PMyFragment.newInstance("个人"));
         viewPagerAdapter.setList(list);
