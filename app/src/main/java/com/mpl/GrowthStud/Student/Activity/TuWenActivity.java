@@ -426,7 +426,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 //                            }
                             Log.d("backUrl[][][]==>>>", imgArray.toString());
                             if (tag == mPicList.size()) {
-                                Log.d("backUrlend==>>>", backUrl.toString());
+                                Log.d("backUrlend==>>>", imgArray.toString());
                                 doUploadTuWen(banshiId,wenzi, imgArray);
                             }
                         } else {

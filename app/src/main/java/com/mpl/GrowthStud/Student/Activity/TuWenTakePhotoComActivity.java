@@ -99,6 +99,8 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
             return;
         }
         Log.d("imge==>>>", mPicList.toString());
+        final JSONArray imgArray = new JSONArray();
+        final JSONObject imgObject = new JSONObject();
         for (int i = 0; i < mPicList.size(); i++) {
 
             File file = new File(mPicList.get(i));
@@ -106,7 +108,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             try {
-                params.put("image", file);
+                params.put("file", file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -123,16 +125,18 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                             JSONArray array = response.getJSONArray("data");
                             JSONObject object = array.getJSONObject(0);
                             String singUrl;
-                            singUrl = object.getString("resource");
-                            if (backUrl.equals("")) {
-                                backUrl = singUrl;
-                            } else {
-                                backUrl = backUrl + "|" + singUrl;
-                            }
-                            Log.d("backUrl[][][]==>>>", backUrl.toString());
+                            singUrl = getResources().getString(R.string.uploadUrl) + object.getString("path");
+                            imgObject.put("image", singUrl);
+                            imgArray.put(imgObject);
+//                            if (backUrl.equals("")) {
+//                                backUrl = singUrl;
+//                            } else {
+//                                backUrl = backUrl + "|" + singUrl;
+//                            }
+                            Log.d("backUrl[][][]==>>>", imgArray.toString());
                             if (tag == mPicList.size()) {
-                                Log.d("backUrlend==>>>", backUrl.toString());
-                                doUploadTuWen(backUrl);
+                                Log.d("backUrlend==>>>", imgArray.toString());
+                                doUploadTuWen(imgArray);
                             }
                         } else {
                             loadingDialog.dismiss();
@@ -175,14 +179,14 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
 
     }
 
-    private void doUploadTuWen(String imge) {
+    private void doUploadTuWen(JSONArray imge) {
 
         if (!NetworkUtils.checkNetWork(mContext)) {
             loadingDialog.dismiss();
             Toast.makeText(mContext, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
-        Log.d("imge==>>>", imge);
+        Log.d("imge==>>>", imge.toString());
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String url = getResources().getString(R.string.local_url) + "/v1/achievement/image/update/" + achieveId;
