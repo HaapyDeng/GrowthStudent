@@ -393,6 +393,8 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
         Log.d("imge==>>>", mPicList.toString());
+        final JSONArray imgArray = new JSONArray();
+        final JSONObject imgObject = new JSONObject();
         for (int i = 0; i < mPicList.size(); i++) {
             File file = new File(mPicList.get(i));
             String imgUrl = getResources().getString(R.string.uploadFile);
@@ -414,16 +416,18 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                             tag = tag + 1;
                             JSONObject object = response.getJSONObject("data");
                             String singUrl;
-                            singUrl = object.getString("path");
-                            if (backUrl.equals("")) {
-                                backUrl = singUrl;
-                            } else {
-                                backUrl = backUrl + "|" + singUrl;
-                            }
-                            Log.d("backUrl[][][]==>>>", backUrl.toString());
+                            singUrl = getResources().getString(R.string.uploadUrl) + object.getString("path");
+                            imgObject.put("image", singUrl);
+                            imgArray.put(imgObject);
+//                            if (backUrl.equals("")) {
+//                                backUrl = singUrl;
+//                            } else {
+//                                backUrl = backUrl + "|" + singUrl;
+//                            }
+                            Log.d("backUrl[][][]==>>>", imgArray.toString());
                             if (tag == mPicList.size()) {
                                 Log.d("backUrlend==>>>", backUrl.toString());
-                                doUploadTuWen(wenzi, backUrl, banshiId);
+                                doUploadTuWen(banshiId,wenzi, imgArray);
                             }
                         } else {
                             loadingDialog.dismiss();
@@ -466,13 +470,13 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void doUploadTuWen(String s, String wenzi, String imge) {
+    private void doUploadTuWen(String s, String wenzi, JSONArray imge) {
 
         if (!NetworkUtils.checkNetWork(TuWenActivity.this)) {
             Toast.makeText(TuWenActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
-        Log.d("imge==>>>", imge);
+        Log.d("imge==>>>", imge.toString());
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String url = getResources().getString(R.string.local_url) + "/v1/achievement/image/update/" + achieveId;
@@ -481,7 +485,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         RequestParams params = new RequestParams();
         params.put("content", wenzi);
         params.put("image", imge);
-//        params.put("style", s);
+        params.put("style", s);
         client.addHeader("X-Api-Token", token);
         client.put(url, params, new JsonHttpResponseHandler() {
             @Override
