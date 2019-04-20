@@ -83,6 +83,7 @@ public class PChangePasswordActivity extends AppCompatActivity implements View.O
                         bundle.putString("phonenum", num);
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        finish();
 
                     } else {
                         Toast.makeText(PChangePasswordActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();

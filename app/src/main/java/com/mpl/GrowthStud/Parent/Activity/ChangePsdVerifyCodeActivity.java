@@ -37,7 +37,7 @@ public class ChangePsdVerifyCodeActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_code);
+        setContentView(R.layout.activity_change_psd_verify_code);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         phoneNum = bundle.getString("phonenum");

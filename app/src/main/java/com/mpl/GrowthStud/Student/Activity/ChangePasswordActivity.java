@@ -95,6 +95,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                             bundle.putInt("scope", scope);
                             intent.putExtras(bundle);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(ChangePasswordActivity.this, "学籍号或者身份证错误，请重新输入", Toast.LENGTH_LONG).show();
                             return;
