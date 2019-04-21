@@ -146,8 +146,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         doGetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
 
                     } else {
-                        Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         loadingDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+
                         return;
                     }
                 } catch (JSONException e) {

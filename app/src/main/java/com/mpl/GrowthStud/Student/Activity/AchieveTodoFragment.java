@@ -390,7 +390,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("7")) {//混合
-            Intent intent = new Intent(getActivity(), MixtureActivity.class);
+            Intent intent = new Intent(getActivity(), MixtureOneActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());
