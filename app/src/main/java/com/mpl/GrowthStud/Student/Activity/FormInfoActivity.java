@@ -101,6 +101,7 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
                     // 声明PopupWindow
                     final PopupWindow popupWindow;
                     // 声明PopupWindow对应的视图
+
                     View popupView;
                     // 声明平移动画
                     popupView = View.inflate(mContext, R.layout.no_evaluate_item, null);
@@ -119,6 +120,7 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
                             ll_open.setVisibility(View.VISIBLE);
                         }
                     });
+
                 } else if (audit.length() == 1) {
                     // 声明PopupWindow
                     final PopupWindow popupWindow2;
@@ -130,6 +132,7 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
                     // 设置点击popupwindow外屏幕其它地方不消失
                     popupWindow2.setOutsideTouchable(false);
                     // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+
                     popupWindow2.showAtLocation(FormInfoActivity.this.findViewById(R.id.listview), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     try {
                         JSONObject object = audit.getJSONObject(0);

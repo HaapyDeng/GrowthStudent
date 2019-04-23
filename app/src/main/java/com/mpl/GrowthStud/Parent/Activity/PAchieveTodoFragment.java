@@ -366,6 +366,13 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }else if (mDatas.get(position).getType().equals("6")){  //表单
+                Intent intent = new Intent(getActivity(), PFormCheckActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         } else if (mDatas.get(position).getStatus().equals("1")) {
 

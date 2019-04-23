@@ -42,7 +42,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
-        <activity android:name=".Student.Activity.MixtureTwoActivity"></activity>
+        <activity android:name=".Parent.Activity.PFormCheckActivity"></activity>
+        <activity android:name=".Student.Activity.MixtureTwoActivity" />
         <activity android:name=".Student.Activity.MixtureOneActivity" />
         <activity
             android:name=".Student.Activity.MainActivity"
