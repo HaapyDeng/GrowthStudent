@@ -113,7 +113,8 @@ public class SyatemAchieveYouInfoActivity extends AppCompatActivity implements V
                         updated_at = data.getString("updated_at");
                         label = data.getJSONArray("label");
                         audit = data.getJSONArray("audit");
-                        JSONObject answers = data.getJSONObject("answers");
+                        JSONArray answersArray = data.getJSONArray("answers");
+                        JSONObject answers = answersArray.getJSONObject(0);
                         username = answers.getString("name");
                         male = answers.getString("gender");
                         birthday = answers.getString("birthday");

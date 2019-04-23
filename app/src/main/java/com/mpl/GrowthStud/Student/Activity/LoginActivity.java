@@ -53,7 +53,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void initView() {
         TextView app_version = findViewById(R.id.app_version);
         try {
-            app_version.setText( NetworkUtils.getVersionName(this)+"家庭端");
+            app_version.setText(NetworkUtils.getVersionName(this) + "家庭端");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,12 +137,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         String role = data.getString("role");
                         int isActive = data.getInt("is_active");
                         String userId = data.getString("user_id");
-                        int scope;
-                        if (role.equals("student")) {
-                            scope = data.getJSONArray("scope").getInt(0);
-                        } else {
-                            scope = 0;
-                        }
+                        String scope;
+//                        if (role.equals("student")) {
+                        scope = data.getJSONArray("scope").getString(0);
+                        Log.d("scope==>>>", scope);
+//                        } else {
+//                            scope = 0;
+//                        }
                         doGetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
 
                     } else {
@@ -183,7 +184,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
+    private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final String scope) {
         final String[] registrationID = new String[1];
 
         final String[] jpregistrationID = new String[1];
@@ -207,7 +208,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void doSetAlia(final String token, final String userName, final String password, final int schoolId,
-                           final String schoolName, final String role, final int isActive, final String userId, final int scope, String jpregistrationID) {
+                           final String schoolName, final String role, final int isActive, final String userId, final String scope, String jpregistrationID) {
         String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + jpregistrationID;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -220,10 +221,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
+
                         SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
+                        Log.d("scope==>>", scope);
                         editor.putString("token", token);
-                        editor.putInt("scope", scope);
+                        editor.putString("scope", scope);
                         editor.putString("username", userName);
                         editor.putString("password", password);
                         editor.putString("userid", userId);
@@ -238,7 +241,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             case 0:
                                 loadingDialog.dismiss();
                                 if (role.equals("student")) {
-                                    if (scope == 1) {
+                                    if (scope.equals("1")) {
                                         //跳转到身份证激活页面
                                         Intent intent = new Intent(LoginActivity.this, ActivateKinderStdActivity.class);
                                         startActivity(intent);

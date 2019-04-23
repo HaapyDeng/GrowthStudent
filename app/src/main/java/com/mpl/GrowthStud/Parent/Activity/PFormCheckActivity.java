@@ -437,6 +437,7 @@ public class PFormCheckActivity extends Activity implements View.OnClickListener
                     int code = response.getInt("code");
                     loadingDialog.dismiss();
                     if (code == 0) {
+                        loadingDialog.dismiss();
                         Toast.makeText(PFormCheckActivity.this, "提交评审完成", Toast.LENGTH_LONG).show();
                         popupWindow.dismiss();
                         Intent intent = new Intent("android.intent.action.CART_BROADCAST");

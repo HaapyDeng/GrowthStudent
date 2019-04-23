@@ -218,12 +218,12 @@ public class SplashActivity extends Activity {
                         String role = data.getString("role");
                         int isActive = data.getInt("is_active");
                         String userId = data.getString("user_id");
-                        int scope;
-                        if (role.equals("student")) {
-                            scope = data.getJSONArray("scope").getInt(0);
-                        } else {
-                            scope = 0;
-                        }
+                        String scope;
+//                        if (role.equals("student")) {
+                        scope = data.getJSONArray("scope").getString(0);
+//                        } else {
+//                            scope = 0;
+//                        }
                         doGetAlia(token, userName, password, schoolId, schoolName, role, isActive, userId, scope);
                     } else {
                         Toast.makeText(SplashActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
@@ -262,7 +262,7 @@ public class SplashActivity extends Activity {
         });
     }
 
-    private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final int scope) {
+    private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final String scope) {
         final String[] registrationID = new String[1];
 
         final String[] jpregistrationID = new String[1];
@@ -286,7 +286,7 @@ public class SplashActivity extends Activity {
     }
 
     private void doSetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName,
-                           final String role, final int isActive, final String userId, final int scope, String registrationID) {
+                           final String role, final int isActive, final String userId, final String scope, String registrationID) {
         String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + registrationID;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -303,7 +303,7 @@ public class SplashActivity extends Activity {
                         SharedPreferences sp = getSharedPreferences("myinfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("token", token);
-                        editor.putInt("scope", scope);
+                        editor.putString("scope", scope);
                         editor.putString("username", userName);
                         editor.putString("password", password);
                         editor.putString("userid", userId);

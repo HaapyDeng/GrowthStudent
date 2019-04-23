@@ -23,7 +23,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthStud.Parent.Adapter.PAchieveCompletListViewAdapter;
 import com.mpl.GrowthStud.Parent.Bean.PAchieveCompletItem;
 import com.mpl.GrowthStud.R;
+import com.mpl.GrowthStud.Student.Activity.FormInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.QuestionInfoActivity;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveChuInfoActivity;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveXiaoInfoActivity;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveYouActivity;
+import com.mpl.GrowthStud.Student.Activity.SyatemAchieveYouInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.VideoInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.WenZiInfoActivity;
@@ -286,6 +291,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Log.d("type===>>", mDatas.get(position).getType());
         if (mDatas.get(position).getType().equals("1")) {
             Intent intent = new Intent(getActivity(), WenZiInfoActivity.class);
             Bundle bundle = new Bundle();
@@ -314,13 +320,53 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             bundle.putString("headtitle", mDatas.get(position).getName());
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if (mDatas.get(position).getType().equals("5")) {
-//            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("achieveid", mDatas.get(position).getId());
-//            bundle.putString("headtitle", mDatas.get(position).getName());
-//            intent.putExtras(bundle);
-//            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("5")) {//系统
+            SharedPreferences sp = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
+            String scope = sp.getString("scope", "");
+            Log.d("scope==>>>", "" + scope);
+            if (scope.equals("1")) {//幼儿园
+                Intent intent = new Intent(getActivity(), SyatemAchieveYouInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope.equals("2")) {//小学
+                Intent intent = new Intent(getActivity(), SyatemAchieveXiaoInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope.equals("3")) {//初中
+                Intent intent = new Intent(getActivity(), SyatemAchieveChuInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("achieveid", mDatas.get(position).getId());
+                bundle.putString("headtitle", mDatas.get(position).getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (scope.equals("4")) {//高中
+//                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("achieveid", mDatas.get(position).getId());
+//                bundle.putString("headtitle", mDatas.get(position).getName());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+            }
+        } else if (mDatas.get(position).getType().equals("6")) {//表单
+            Intent intent = new Intent(getActivity(), FormInfoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (mDatas.get(position).getType().equals("7")) {//混合
+            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("achieveid", mDatas.get(position).getId());
+            bundle.putString("headtitle", mDatas.get(position).getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 }

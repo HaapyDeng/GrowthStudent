@@ -133,7 +133,7 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
                     popupWindow2.setOutsideTouchable(false);
                     // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
 
-                    popupWindow2.showAtLocation(FormInfoActivity.this.findViewById(R.id.listview), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    popupWindow2.showAtLocation(FormInfoActivity.this.findViewById(R.id.rl_1), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     try {
                         JSONObject object = audit.getJSONObject(0);
                         String role = object.getString("role");

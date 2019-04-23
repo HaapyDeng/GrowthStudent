@@ -42,7 +42,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
-        <activity android:name=".Parent.Activity.PFormCheckActivity"></activity>
+        <activity android:name=".Parent.Activity.PFormCheckActivity" />
         <activity android:name=".Student.Activity.MixtureTwoActivity" />
         <activity android:name=".Student.Activity.MixtureOneActivity" />
         <activity
@@ -326,6 +326,7 @@
         <activity android:name=".Student.Activity.CloudPhotosActivity" />
         <activity android:name=".Student.Activity.TuWenTakePhotoComActivity" />
         <activity android:name=".Student.Activity.ChangeDiTuActivity" />
+        <activity android:name=".Student.Activity.MixtureInfoActivity"></activity>
     </application>
 
 </manifest>

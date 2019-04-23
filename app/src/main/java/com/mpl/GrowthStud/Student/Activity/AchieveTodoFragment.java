@@ -350,8 +350,8 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("5")) {//系统
             SharedPreferences sp = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
-            int scope = sp.getInt("scope", 0);
-            if (scope == 1) {//幼儿园
+            String scope = sp.getString("scope", "");
+            if (scope.equals("1")) {//幼儿园
 //                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
                 Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
                 Bundle bundle = new Bundle();
@@ -359,21 +359,21 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            } else if (scope == 2) {//小学
+            } else if (scope.equals("2")) {//小学
                 Intent intent = new Intent(getActivity(), SyatemAchieveXiaoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            } else if (scope == 3) {//初中
+            } else if (scope.equals("3")) {//初中
                 Intent intent = new Intent(getActivity(), SyatemAchieveChuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            } else if (scope == 4) {//高中
+            } else if (scope.equals("4")) {//高中
 //                Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putString("achieveid", mDatas.get(position).getId());
