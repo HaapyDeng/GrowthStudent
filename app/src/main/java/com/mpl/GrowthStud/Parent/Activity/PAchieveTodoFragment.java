@@ -330,7 +330,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mDatas.get(position).getStatus().equals("2")) {
+        if (mDatas.get(position).getStatus().equals("3")) {
             if (mDatas.get(position).getType().equals("1")) {
                 Intent intent = new Intent(getActivity(), PWenZiCheckActivity.class);
                 Bundle bundle = new Bundle();
@@ -366,7 +366,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
                 bundle.putString("headtitle", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            }else if (mDatas.get(position).getType().equals("6")){  //表单
+            } else if (mDatas.get(position).getType().equals("6")) {  //表单
                 Intent intent = new Intent(getActivity(), PFormCheckActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("achieveid", mDatas.get(position).getId());

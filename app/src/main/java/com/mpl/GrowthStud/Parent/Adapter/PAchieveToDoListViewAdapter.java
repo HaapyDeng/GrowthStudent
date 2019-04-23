@@ -49,15 +49,17 @@ public class PAchieveToDoListViewAdapter extends ListViewAdapter<PAchieveToDoIte
         if (bean.getStatus().equals("0")) {
             ((TextView) holder.getView(R.id.tv_state)).setText("驳回");
         } else if (bean.getStatus().equals("1")) {
-            ((TextView) holder.getView(R.id.tv_state)).setText("待完成");
+            ((TextView) holder.getView(R.id.tv_state)).setText("未完成");
         } else if (bean.getStatus().equals("2")) {
-            ((TextView) holder.getView(R.id.tv_state)).setText("家长审核");
+            ((TextView) holder.getView(R.id.tv_state)).setText("拍照审核");
         } else if (bean.getStatus().equals("3")) {
-            ((TextView) holder.getView(R.id.tv_state)).setText("老师审核");
+            ((TextView) holder.getView(R.id.tv_state)).setText("家长待审核");
         } else if (bean.getStatus().equals("4")) {
-            ((TextView) holder.getView(R.id.tv_state)).setText("待评星");
+            ((TextView) holder.getView(R.id.tv_state)).setText("老师待审核");
         } else if (bean.getStatus().equals("5")) {
-            ((TextView) holder.getView(R.id.tv_state)).setText("完成");
+            ((TextView) holder.getView(R.id.tv_state)).setText("老师待审核");
+        } else if (bean.getStatus().equals("6")) {
+            ((TextView) holder.getView(R.id.tv_state)).setText("已完成");
         }
         if (bean.getType().equals("1")) {
             Drawable drawable = context1.getResources().getDrawable(R.mipmap.little_wenzi_img);

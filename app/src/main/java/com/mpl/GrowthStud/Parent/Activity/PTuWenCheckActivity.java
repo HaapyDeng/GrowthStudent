@@ -1,6 +1,7 @@
 package com.mpl.GrowthStud.Parent.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.Student.Adapter.ImageAdapter;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +55,9 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
     private GridView gridview;
     private List<String> listImage = new ArrayList<>();
 
+    private LoadingDialog loadingDialog;
+    private Context mContext;
+
     // 声明PopupWindow
     PopupWindow popupWindow;
     // 声明PopupWindow对应的视图
@@ -62,6 +67,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ptu_wen_check);
+        mContext = this;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         achieveId = extras.getString("achieveid");
@@ -84,6 +90,8 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initData() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(PTuWenCheckActivity.this)) {
             Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -101,6 +109,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
                 Log.d("response==>>>", response.toString());
                 try {
                     int code = response.getInt("code");
+                    loadingDialog.dismiss();
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
                         achieve_name = data.getString("name");
@@ -136,6 +145,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -143,6 +153,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -150,6 +161,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -367,6 +379,8 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void doCommit(int i, String achieveId, String content) {
+        loadingDialog = new LoadingDialog(mContext, "提交中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
         if (!NetworkUtils.checkNetWork(this)) {
             Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -387,6 +401,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
                 Log.d("response==>>", response.toString());
                 try {
                     int code = response.getInt("code");
+                    loadingDialog.dismiss();
                     if (code == 0) {
                         Toast.makeText(PTuWenCheckActivity.this, "提交评审完成", Toast.LENGTH_LONG).show();
                         popupWindow.dismiss();
@@ -407,6 +422,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -414,6 +430,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -421,6 +438,7 @@ public class PTuWenCheckActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
                 Toast.makeText(PTuWenCheckActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
