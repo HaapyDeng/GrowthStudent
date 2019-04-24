@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
@@ -24,8 +25,8 @@ public class ImageAdapter extends BaseAdapter {
     private List<String> data;
     private Context context;
 
-    public ImageAdapter(TuWenInfoActivity tuWenInfoActivity, List<String> image) {
-        this.context = tuWenInfoActivity;
+    public ImageAdapter(Context context, List<String> image) {
+        this.context = context;
         this.data = image;
 
     }
@@ -67,6 +68,7 @@ public class ImageAdapter extends BaseAdapter {
                     (holder.iv).setBackground(drawable);
                 }
             });
+
         }
         return convertView;
     }

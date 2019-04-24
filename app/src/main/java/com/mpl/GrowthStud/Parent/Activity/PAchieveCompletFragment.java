@@ -24,6 +24,7 @@ import com.mpl.GrowthStud.Parent.Adapter.PAchieveCompletListViewAdapter;
 import com.mpl.GrowthStud.Parent.Bean.PAchieveCompletItem;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.FormInfoActivity;
+import com.mpl.GrowthStud.Student.Activity.MixtureInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.QuestionInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.SyatemAchieveChuInfoActivity;
 import com.mpl.GrowthStud.Student.Activity.SyatemAchieveXiaoInfoActivity;
@@ -361,7 +362,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (mDatas.get(position).getType().equals("7")) {//混合
-            Intent intent = new Intent(getActivity(), SyatemAchieveYouActivity.class);
+            Intent intent = new Intent(getActivity(), MixtureInfoActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("achieveid", mDatas.get(position).getId());
             bundle.putString("headtitle", mDatas.get(position).getName());

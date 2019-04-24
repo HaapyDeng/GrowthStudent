@@ -326,7 +326,8 @@
         <activity android:name=".Student.Activity.CloudPhotosActivity" />
         <activity android:name=".Student.Activity.TuWenTakePhotoComActivity" />
         <activity android:name=".Student.Activity.ChangeDiTuActivity" />
-        <activity android:name=".Student.Activity.MixtureInfoActivity"></activity>
+        <activity android:name=".Student.Activity.MixtureInfoActivity" />
+        <activity android:name=".Parent.Activity.PMixtureCheckActivity"></activity>
     </application>
 
 </manifest>
