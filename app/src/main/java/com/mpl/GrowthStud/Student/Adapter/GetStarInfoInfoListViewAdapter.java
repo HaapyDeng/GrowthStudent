@@ -11,7 +11,11 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Bean.GetStarInfoInfoItem;
 import com.mpl.GrowthStud.Student.Bean.GetStarInfoItem;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class GetStarInfoInfoListViewAdapter extends ListViewAdapter<GetStarInfoInfoItem> {
@@ -37,7 +41,13 @@ public class GetStarInfoInfoListViewAdapter extends ListViewAdapter<GetStarInfoI
         } else if (bean.getType().equals("5")) {
             ((TextView) holder.getView(R.id.tv_tpye)).setText("系统");
         }
-        ((TextView) holder.getView(R.id.tv_time)).setText(bean.getUpdated_at());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+// time为转换格式后的字符串
+        long millisecond = Integer.parseInt(bean.getUpdated_at());
+        String time = dateFormat.format(new Date(millisecond));
+
+        ((TextView) holder.getView(R.id.tv_time)).setText(time);
 
         ((TextView) holder.getView(R.id.tv_title)).setText(bean.getName());
 

@@ -24,6 +24,8 @@ import com.mpl.GrowthStud.Student.Activity.GetStarInfoInfoActivity;
 import com.mpl.GrowthStud.Student.Adapter.GetStarInfoListViewAdapter;
 import com.mpl.GrowthStud.Student.Bean.GetStarInfoItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.View.XListView;
+import com.mpl.GrowthStud.Student.View.XListViewFooter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +39,7 @@ import cz.msebera.android.httpclient.Header;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,12 +48,19 @@ public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItem
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView listView;
-    private List<GetStarInfoItem> mDatas;
+    private XListView listView;
+    private List<GetStarInfoItem> mDatas = new ArrayList<GetStarInfoItem>();
+    ;
     private GetStarInfoListViewAdapter getStarInfoListViewAdapter;
     private TextView star_score;
     private LinearLayout ll_empty;
     private String cid;
+    //定义一个页数
+    private int totalPage = 0;
+    private Handler mHandler;
+    private int start = 0;
+    private static int refreshCnt = 0;
+    private String currentPage = "1";
 
     public PGetStarInfoFragment() {
         // Required empty public constructor
@@ -92,21 +101,59 @@ public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItem
         listView = root.findViewById(R.id.lv);
         listView.setOnItemClickListener(this);
         ll_empty = root.findViewById(R.id.ll_empty);
-        getStarInfoData();
+        getStarInfoData(currentPage);
         star_score = root.findViewById(R.id.star_score);
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String one_star_point = sharedPreferences.getString("one_star_point", "");
         star_score.setText("= " + one_star_point + " 分");
+        listView.setPullLoadEnable(true);
+        listView.setXListViewListener(this);
+
+        mHandler = new Handler();
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getStarInfoData();
+    private void onLoad() {
+        listView.stopRefresh();
+        listView.stopLoadMore();
+        listView.setRefreshTime("刚刚");
     }
 
-    private void getStarInfoData() {
+    @Override
+    public void onRefresh() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                start = ++refreshCnt;
+                mDatas.clear();
+                getStarInfoData("1");
+                onLoad();
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onLoadMore() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Integer.parseInt(currentPage) < totalPage) {
+                    int ye = 0;
+                    ye = Integer.parseInt(currentPage) + 1;
+                    getStarInfoData("" + ye);
+                    getStarInfoListViewAdapter.notifyDataSetChanged();
+                    onLoad();
+                } else {
+                    onLoad();
+                    XListViewFooter.setState(3);
+                    Toast.makeText(getActivity(), "加载完成", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 2000);
+    }
+
+
+    private void getStarInfoData(String s) {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -122,7 +169,7 @@ public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItem
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         String uid = sharedPreferences.getString("userid", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/category/" + "1/" + cid;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/statistical/category/" + "1/" + cid + "?page=" + s;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -135,13 +182,15 @@ public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItem
                     int code = response.getInt("code");
                     if (code == 0) {
                         JSONObject data = response.getJSONObject("data");
+                        totalPage = data.getInt("totalPage");
+                        currentPage = data.getString("currentPage");
                         JSONArray list = data.getJSONArray("list");
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
-                        mDatas = new ArrayList<GetStarInfoItem>();
+
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject object = list.getJSONObject(i);
                             String classroom_id = object.getString("classroom_id");

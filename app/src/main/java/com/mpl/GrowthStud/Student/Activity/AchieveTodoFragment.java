@@ -29,6 +29,8 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadMoreListView;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
+import com.mpl.GrowthStud.Student.View.XListView;
+import com.mpl.GrowthStud.Student.View.XListViewFooter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,13 +44,13 @@ import cz.msebera.android.httpclient.Header;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private LoadMoreListView listView;
+    private XListView listView;
     private List<AchieveToDoItem> mDatas = new ArrayList<AchieveToDoItem>();
     ;
     private AchieveToDoListViewAdapter achieveToDoListViewAdapter;
@@ -56,8 +58,13 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
     private String currentPage = "1";
-    private int totalPage;
     private LoadingDialog loadingDialog;
+
+    //定义一个页数
+    private int totalPage = 0;
+    private Handler mHandler;
+    private int start = 0;
+    private static int refreshCnt = 0;
 
 
     public AchieveTodoFragment() {
@@ -119,94 +126,52 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
             mDatas.clear();
         }
         getTodoAchieve(currentPage);
-        // Inflate the layout for this fragment
+        listView.setPullLoadEnable(true);
+        listView.setXListViewListener(this);
 
-        //设置SwipeRefreshLayout
-        mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
-        //设置进度条的颜色主题，最多能设置四种 加载颜色是循环播放的，只要没有完成刷新就会一直循环
-        mSwipeLayout.setColorSchemeColors(Color.RED,
-                Color.RED,
-                Color.RED,
-                Color.RED);
-        // 设置手指在屏幕下拉多少距离会触发下拉刷新
-        mSwipeLayout.setDistanceToTriggerSync(300);
-        // 设定下拉圆圈的背景
-        mSwipeLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        mSwipeLayout.setTag("下拉刷新");
-        // 设置圆圈的大小
-        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
-
-        //设置下拉刷新的监听
-        mSwipeLayout.setOnRefreshListener(this);
-
-//        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
-//            @Override
-//            public void onloadMore() {
-//                int i = Integer.parseInt(currentPage);
-//                Log.d("i==>>", "" + i);
-//                if (i < totalPage) {
-//                    getTodoAchieve("" + (i + 1));
-//                } else {
-//                    listView.setLoadCompleted();
-//                }
-//            }
-//        });
+        mHandler = new Handler();
         return root;
     }
 
-    private void loadMore() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                int i = Integer.parseInt(currentPage);
-                Log.d("i==>>", "" + i);
-                if (i < totalPage) {
-                    getTodoAchieve("" + (i + 1));
-                } else {
-                    listView.setLoadCompleted();
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        achieveToDoListViewAdapter.notifyDataSetChanged();
-                        listView.setLoadCompleted();
-                    }
-                });
-
-            }
-        }.start();
-
+    private void onLoad() {
+        listView.stopRefresh();
+        listView.stopLoadMore();
+        listView.setRefreshTime("刚刚");
     }
 
     @Override
     public void onRefresh() {
-//检查是否处于刷新状态
-        if (!isRefresh) {
-            isRefresh = true;
-            //模拟加载网络数据，这里设置4秒，正好能看到4色进度条
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-
-                    //显示或隐藏刷新进度条
-                    mSwipeLayout.setRefreshing(false);
-                    if (mDatas.size() > 0) {
-                        mDatas.clear();
-                    }
-                    //修改adapter的数据
-                    getTodoAchieve("1");
-                    achieveToDoListViewAdapter.notifyDataSetChanged();
-                    isRefresh = false;
-                }
-            }, 3000);
-        }
-
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                start = ++refreshCnt;
+                mDatas.clear();
+                getTodoAchieve("1");
+                onLoad();
+            }
+        }, 2000);
     }
+
+    @Override
+    public void onLoadMore() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Integer.parseInt(currentPage) < totalPage) {
+                    int ye = 0;
+                    ye = Integer.parseInt(currentPage) + 1;
+                    getTodoAchieve("" + ye);
+                    achieveToDoListViewAdapter.notifyDataSetChanged();
+                    onLoad();
+                } else {
+                    onLoad();
+                    XListViewFooter.setState(3);
+                    Toast.makeText(getActivity(), "加载完成", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 2000);
+    }
+
 
     private void getTodoAchieve(String page) {
         if (page.equals("1")) {
@@ -236,7 +201,9 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
                         totalPage = data.getInt("totalPage");
+                        currentPage = data.getString("currentPage");
                         JSONArray list = data.getJSONArray("list");
+
                         if (list.length() == 0) {
                             Message message = new Message();
                             message.what = 1;
@@ -263,12 +230,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
                             achieveToDoListViewAdapter = new AchieveToDoListViewAdapter(getActivity(), mDatas);
                             listView.setAdapter(achieveToDoListViewAdapter);
                         }
-                        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
-                            @Override
-                            public void onloadMore() {
-                                loadMore();
-                            }
-                        });
+
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
