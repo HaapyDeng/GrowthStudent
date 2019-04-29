@@ -253,9 +253,10 @@ public class PGetStarInfoFragment extends Fragment implements AdapterView.OnItem
     };
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String categoryid = mDatas.get(i).getCategory_id();
-        String categoryname = mDatas.get(i).getCategory_name();
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        position = position - 1;
+        String categoryid = mDatas.get(position).getCategory_id();
+        String categoryname = mDatas.get(position).getCategory_name();
         Intent intent = new Intent(getActivity(), PGetStarInfoInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("categoryid", categoryid);

@@ -282,6 +282,7 @@ public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        position = position - 1;
         if (mDatas.get(position).getType().equals("1")) {//文字
             Intent intent = new Intent(getActivity(), WenziActivity.class);
             Bundle bundle = new Bundle();

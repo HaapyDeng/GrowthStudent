@@ -290,6 +290,7 @@ public class PAchieveTodoFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        position = position - 1;
         if (mDatas.get(position).getStatus().equals("3")) {
             if (mDatas.get(position).getType().equals("1")) {
                 Intent intent = new Intent(getActivity(), PWenZiCheckActivity.class);

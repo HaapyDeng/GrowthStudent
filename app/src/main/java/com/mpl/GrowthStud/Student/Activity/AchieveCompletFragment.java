@@ -227,6 +227,8 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Log.d("postion==>>>", "" + position);
+        position = position - 1;
         if (mDatas.get(position).getType().equals("1")) {
             Intent intent = new Intent(getActivity(), WenZiInfoActivity.class);
             Bundle bundle = new Bundle();

@@ -252,6 +252,7 @@ public class PAchieveCompletFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Log.d("type===>>", mDatas.get(position).getType());
+        position = position - 1;
         if (mDatas.get(position).getType().equals("1")) {
             Intent intent = new Intent(getActivity(), WenZiInfoActivity.class);
             Bundle bundle = new Bundle();
