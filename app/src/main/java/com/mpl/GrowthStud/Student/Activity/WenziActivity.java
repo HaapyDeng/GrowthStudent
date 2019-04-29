@@ -25,6 +25,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 import com.mpl.GrowthStud.Student.View.TipsDialog;
 
@@ -186,6 +187,7 @@ public class WenziActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
+                Utils.hideInput(mContext, v);
                 finish();
                 break;
             case R.id.tv_commit:

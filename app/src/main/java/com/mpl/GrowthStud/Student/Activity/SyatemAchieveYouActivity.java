@@ -20,6 +20,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 import com.yangchangfu.pickview_lib.Item;
 import com.yangchangfu.pickview_lib.PickView;
@@ -82,6 +83,7 @@ public class SyatemAchieveYouActivity extends AppCompatActivity implements View.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                Utils.hideInput(SyatemAchieveYouActivity.this, view);
                 finish();
                 break;
             case R.id.tv_male:

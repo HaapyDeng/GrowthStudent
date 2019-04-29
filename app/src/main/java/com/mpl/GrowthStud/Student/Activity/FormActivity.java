@@ -28,6 +28,7 @@ import com.mpl.GrowthStud.Student.Adapter.FormListAdapter;
 import com.mpl.GrowthStud.Student.Bean.FormAnswerBean;
 import com.mpl.GrowthStud.Student.Bean.FormListItem;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
@@ -205,6 +206,7 @@ public class FormActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                Utils.hideInput(mContext, view);
                 finish();
                 break;
             case R.id.tv_menu:

@@ -31,6 +31,7 @@ import com.mpl.GrowthStud.Student.Bean.MainConstant;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
@@ -156,6 +157,7 @@ public class MixtureTwoActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
+                Utils.hideInput(mContext, v);
                 finish();
                 break;
             case R.id.tv_menu:

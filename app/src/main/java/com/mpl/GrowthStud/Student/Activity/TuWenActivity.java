@@ -42,6 +42,7 @@ import com.mpl.GrowthStud.Student.Tools.BitmapHelper;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
@@ -336,6 +337,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
+                Utils.hideInput(mContext, v);
                 finish();
                 break;
 

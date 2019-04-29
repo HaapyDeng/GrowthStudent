@@ -218,6 +218,7 @@ public class VideoActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                Utils.hideInput(mContext, view);
                 finish();
                 break;
             case R.id.tv_commit:

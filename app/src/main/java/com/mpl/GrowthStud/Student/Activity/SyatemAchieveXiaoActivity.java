@@ -32,6 +32,7 @@ import com.mpl.GrowthStud.Student.Bean.MainConstant;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorOneConfig;
+import com.mpl.GrowthStud.Student.Tools.Utils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 import com.yangchangfu.pickview_lib.Item;
 import com.yangchangfu.pickview_lib.PickView;
@@ -112,6 +113,7 @@ public class SyatemAchieveXiaoActivity extends Activity implements View.OnClickL
                 mGridViewAddImgAdapter.notifyDataSetChanged();
                 break;
             case R.id.back:
+                Utils.hideInput(mContext, view);
                 finish();
                 break;
             case R.id.rl_commit:
