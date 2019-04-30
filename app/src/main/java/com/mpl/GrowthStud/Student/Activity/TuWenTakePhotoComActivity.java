@@ -53,6 +53,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
     private int tag = 0;
     private LoadingDialog loadingDialog;
     private String achieveId;
+    private String banshiId = "";
 
 
     @Override
@@ -83,6 +84,22 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                 if (mPicList.size() == 0) {
                     Toast.makeText(this, R.string.pic_lenth_low, Toast.LENGTH_LONG).show();
                     break;
+                }
+                if (banshiId.equals("")) {
+                    switch (mPicList.size()) {
+                        case 1:
+                            banshiId = "20001";
+                            break;
+                        case 2:
+                            banshiId = "20003";
+                            break;
+                        case 3:
+                            banshiId = "20005";
+                            break;
+                        case 4:
+                            banshiId = "20007";
+                            break;
+                    }
                 }
                 doUploadImge(mPicList);
                 break;
@@ -122,8 +139,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                         int code = response.getInt("code");
                         if (code == 0) {
                             tag = tag + 1;
-                            JSONArray array = response.getJSONArray("data");
-                            JSONObject object = array.getJSONObject(0);
+                            JSONObject object = response.getJSONObject("data");
                             String singUrl;
                             singUrl = getResources().getString(R.string.uploadUrl) + object.getString("path");
                             imgObject.put("image", singUrl);
@@ -193,7 +209,9 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("image", imge);
+        params.put("upload", imge);
+//        params.put("style", banshiId);
+//        params.put("content", "");
         client.addHeader("X-Api-Token", token);
         client.put(url, params, new JsonHttpResponseHandler() {
             @Override

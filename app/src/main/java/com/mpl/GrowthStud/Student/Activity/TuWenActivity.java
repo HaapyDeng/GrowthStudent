@@ -330,6 +330,13 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
             String beijingId = data.getStringExtra("beijingId");
             Log.d("banshiid==>>>", beijingId);
         }
+        if (requestCode == 5) {
+            List<String> imglist = data.getStringArrayListExtra("imgList");
+            mPicList.clear();
+            mPicList.addAll(imglist);
+            Log.d("mPicList==>>>", mPicList.toString());
+            mGridViewAddImgAdapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -553,7 +560,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
                     Bundle bundle = new Bundle();
                     bundle.putString("achieveid", achieveId);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, 5);
                     return true;
                 }
 //                } else if (item.getTitle().equals("选择版式")) {

@@ -319,15 +319,16 @@ public class FormActivity extends Activity implements View.OnClickListener {
 //                    return true;
 //                }
                 return false;
-        }
-    });
+            }
+        });
         popupMenu.show();
-}
+    }
 
     private void doputInfo(JSONObject object) {
         loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (!NetworkUtils.checkNetWork(this)) {
+            loadingDialog.show();
             Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
