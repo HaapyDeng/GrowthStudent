@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
+import com.mpl.GrowthStud.Student.Tools.DownImgeJson;
 import com.mpl.GrowthStud.Student.View.SquareLayout;
 
 import java.util.List;
@@ -52,9 +54,9 @@ public class PImageAdapter extends BaseAdapter {
 //            convertView.setLayoutParams(param);
             convertView = LayoutInflater.from(context).inflate(R.layout.image_grid_view, null);
             holder.iv = (SquareLayout) convertView.findViewById(R.id.iv_image);
-            DownImage downImage = null;
-            downImage = new DownImage(data.get(position));
-            downImage.loadImage(new DownImage.ImageCallBack() {
+            DownImgeJson downImgeJson = null;
+            downImgeJson = new DownImgeJson(data.get(position));
+            downImgeJson.loadImage(new DownImgeJson.ImageCallBack() {
 
                 @SuppressLint("NewApi")
                 @Override

@@ -73,12 +73,7 @@ public class MixtureInfoListAdapter extends BaseAdapter {
                     JSONArray imageArray = object1.getJSONArray("image");
                     for (int i = 0; i < object1.getJSONArray("image").length(); i++) {
                         JSONObject objectoo = imageArray.getJSONObject(i);
-                        image[i] = objectoo.getString("image");
-                        Log.d(" image[i] ==>>>", image[i]);
-                    }
-                    for (int i = 0; i < image.length; i++) {
-                        Log.d("length==>>>", "" + image[i]);
-                        listImage.add(image[i]);
+                        listImage.add(objectoo.toString());
                     }
                     Log.d("listimage==>>>", listImage.toString());
                     holder.gridview.setAdapter(new ImageAdapter(mContext, listImage));

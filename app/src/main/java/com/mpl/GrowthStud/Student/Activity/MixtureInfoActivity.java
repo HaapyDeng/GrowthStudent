@@ -387,13 +387,16 @@ public class MixtureInfoActivity extends Activity implements View.OnClickListene
                             e.printStackTrace();
                         }
                     }
-//                    for (int i = 0; i < image.length; i++) {
-//                        Log.d("length==>>>", "" + image[i]);
-//                        listImage.add(image[i]);
-//                    }
-//                    Log.d("listimage==>>>", listImage.toString());
-//                    gridview = findViewById(R.id.gridview);
-//                    gridview.setAdapter(new ImageAdapter(MixtureInfoActivity.this, listImage));
+                    for (int i = 0; i < image.length; i++) {
+                        Log.d("length==>>>", "" + image[i]);
+                        listImage.add(image[i]);
+                    }
+                    Log.d("listimage==>>>", listImage.toString());
+                    if (listImage.size() > 0) {
+                        gridview = findViewById(R.id.gridview);
+                        gridview.setAdapter(new ImageAdapter(MixtureInfoActivity.this, listImage));
+                    }
+
                     //判断是谁评价了
                     if (audit.length() == 0) {
                         // 声明PopupWindow
