@@ -50,14 +50,14 @@
             android:textSize="15dp" />
     </LinearLayout>
     <!--展示上传的图片-->
-    <GridView
+    <com.mpl.GrowthStud.Student.View.ChildGridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:columnWidth="60dp"
         android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
 
 </LinearLayout>

@@ -52,17 +52,20 @@
 
 
     </RelativeLayout>
+
     <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:scrollbars="none">
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/addview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/addview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
     </ScrollView>
+
     <LinearLayout
         android:id="@+id/rl_commit"
         android:layout_width="match_parent"

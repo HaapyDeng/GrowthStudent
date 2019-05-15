@@ -28,6 +28,9 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.mpl.GrowthStud.Parent.Activity.PTuWenCheckActivity;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Adapter.FormListAdapter;
@@ -38,6 +41,7 @@ import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.Tools.PictureSelectorConfig;
 import com.mpl.GrowthStud.Student.Tools.SelectPicPopupWindow;
 import com.mpl.GrowthStud.Student.Tools.Utils;
+import com.mpl.GrowthStud.Student.View.ChildGridView;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
 
 import org.json.JSONArray;
@@ -64,7 +68,7 @@ public class MixtureOneActivity extends Activity implements View.OnClickListener
     private List<FormListItem> mdatas;
     private FormListAdapter formListAdapter;
     private EditText et_wenzi;
-    private GridView gridView;
+    private ChildGridView gridView;
     private LinearLayout rl_commit;
     private String prompt, label;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
@@ -227,6 +231,44 @@ public class MixtureOneActivity extends Activity implements View.OnClickListener
 
         }
     };
+
+    // 处理选择的照片的地址
+    private void refreshAdapter(List<LocalMedia> picList) {
+        for (LocalMedia localMedia : picList) {
+            //被压缩后的图片路径
+            if (localMedia.isCompressed()) {
+                String compressPath = localMedia.getCompressPath(); //压缩后的图片路径
+                mPicList.add(compressPath); //把图片添加到将要上传的图片数组中
+                mGridViewAddImgAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    refreshAdapter(PictureSelector.obtainMultipleResult(data));
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    break;
+            }
+        }
+        if (requestCode == MainConstant.REQUEST_CODE_MAIN && resultCode == MainConstant.RESULT_CODE_VIEW_IMG) {
+            //查看大图页面删除了图片
+            ArrayList<String> toDeletePicList = data.getStringArrayListExtra(MainConstant.IMG_LIST); //要删除的图片的集合
+            mPicList.clear();
+            mPicList.addAll(toDeletePicList);
+            mGridViewAddImgAdapter.notifyDataSetChanged();
+        }
+
+    }
 
     @Override
     public void onClick(View v) {

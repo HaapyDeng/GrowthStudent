@@ -302,7 +302,7 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
      * @param maxTotal 最多选择的图片的数量
      */
     private void selectPic(int maxTotal) {
-        PictureSelectorConfig.initMultiConfig(this, maxTotal);
+        PictureSelectorConfig.initSingleConfig(this);
     }
 
     // 处理选择的照片的地址
