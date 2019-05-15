@@ -7,15 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.Student.Bean.FormInfoListItem;
 import com.mpl.GrowthStud.Student.Bean.MixtureInfoListItem;
 import com.mpl.GrowthStud.Student.View.ChildGridView;
 import com.mpl.GrowthStud.Student.View.ChildListView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,60 +62,72 @@ public class MixtureInfoListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         holder = new ViewHolder();
-
-        switch (mDatas.get(position).getT()) {
-            case 1:
-                convertView = mInflater.inflate(R.layout.mix_tuwen_view, parent, false); //加载布局
-                holder.gridview = convertView.findViewById(R.id.gridview);
-                holder.tv_answer = convertView.findViewById(R.id.tv_answer);
-                JSONObject object1 = mDatas.get(position).getObject();
-                try {
-                    String answer = object1.getString("answer");
-                    holder.tv_answer.setText(answer);
-                    image = new String[object1.getJSONArray("image").length()];
-                    JSONArray imageArray = object1.getJSONArray("image");
-                    for (int i = 0; i < object1.getJSONArray("image").length(); i++) {
-                        JSONObject objectoo = imageArray.getJSONObject(i);
-                        listImage.add(objectoo.toString());
-                    }
-                    Log.d("listimage==>>>", listImage.toString());
-                    holder.gridview.setAdapter(new ImageAdapter(mContext, listImage));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-            case 2:
-                convertView = mInflater.inflate(R.layout.mix_form_listview, parent, false); //加载布局
-                holder.listView = convertView.findViewById(R.id.listview);
-                JSONObject object = mDatas.get(position).getObject();
-                try {
-                    JSONObject answers = object.getJSONObject("answers");
-                    JSONArray itemArray = object.getJSONArray("item");
-                    formInfoListItems = new ArrayList<>();
-                    for (int i = 0; i < itemArray.length(); i++) {
-                        JSONObject object2 = null;
-                        try {
-                            object2 = itemArray.getJSONObject(i);
-                            String id = object2.getString("id");
-                            String label = object2.getString("label");
-                            String prompt = object2.getString("prompt");
-                            int type = object2.getInt("type");
-                            String options = object2.getString("options");
-                            int order = object2.getInt("order");
-                            FormInfoListItem formInfoListItem = new FormInfoListItem(id, label, prompt, type, options, order, answers);
-                            formInfoListItems.add(formInfoListItem);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        if (convertView == null) {
+            switch (mDatas.get(position).getT()) {
+                case 1:
+                    convertView = mInflater.inflate(R.layout.mix_tuwen_view, parent, false); //加载布局
+                    holder.gridview = convertView.findViewById(R.id.gridview);
+                    holder.tv_answer = convertView.findViewById(R.id.tv_answer);
+//                holder.iv_1 = convertView.findViewById(R.id.iv_1);
+                    JSONObject object1 = mDatas.get(position).getObject();
+                    try {
+                        String answer = object1.getString("answer");
+                        holder.tv_answer.setText(answer);
+                        image = new String[object1.getJSONArray("image").length()];
+                        JSONArray imageArray = object1.getJSONArray("image");
+                        for (int i = 0; i < object1.getJSONArray("image").length(); i++) {
+                            JSONObject objectoo = imageArray.getJSONObject(i);
+                            listImage.add(objectoo.getString("image").toString());
                         }
+//                    switch (listImage.size()) {
+//                        case 0:
+//                            break;
+//                        case 1:
+//                            Picasso.with(mContext).load(listImage.get(0)).placeholder(R.mipmap.add_camera).into(holder.iv_1);
+//                            break;
+//                    }
+                        Log.d("listimage==>>>", listImage.toString());
+                        holder.gridview.setAdapter(new ImageDownAdapter(mContext, listImage));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    Log.d("mdata===>>>", "" + formInfoListItems.size());
-                    FormInfoListAdapter formInfoListAdapter = new FormInfoListAdapter(mContext, formInfoListItems);
-                    holder.listView.setAdapter(formInfoListAdapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+
+                    break;
+                case 2:
+                    convertView = mInflater.inflate(R.layout.mix_form_listview, parent, false); //加载布局
+                    holder.listView = convertView.findViewById(R.id.listview);
+                    JSONObject object = mDatas.get(position).getObject();
+                    try {
+                        JSONObject answers = object.getJSONObject("answers");
+                        JSONArray itemArray = object.getJSONArray("item");
+                        formInfoListItems = new ArrayList<>();
+                        for (int i = 0; i < itemArray.length(); i++) {
+                            JSONObject object2 = null;
+                            try {
+                                object2 = itemArray.getJSONObject(i);
+                                String id = object2.getString("id");
+                                String label = object2.getString("label");
+                                String prompt = object2.getString("prompt");
+                                int type = object2.getInt("type");
+                                String options = object2.getString("options");
+                                int order = object2.getInt("order");
+                                FormInfoListItem formInfoListItem = new FormInfoListItem(id, label, prompt, type, options, order, answers);
+                                formInfoListItems.add(formInfoListItem);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.d("mdata===>>>", "" + formInfoListItems.size());
+                        FormInfoListAdapter formInfoListAdapter = new FormInfoListAdapter(mContext, formInfoListItems);
+                        holder.listView.setAdapter(formInfoListAdapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
 
@@ -123,7 +138,9 @@ public class MixtureInfoListAdapter extends BaseAdapter {
         ChildListView listView;
         TextView tv_answer;
         ChildGridView gridview;
+        ImageView iv_1;
 
     }
+
 
 }

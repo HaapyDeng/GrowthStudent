@@ -14,6 +14,7 @@ import com.mpl.GrowthStud.Student.Activity.TuWenInfoActivity;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
 import com.mpl.GrowthStud.Student.Tools.DownImgeJson;
 import com.mpl.GrowthStud.Student.View.SquareLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -53,22 +54,13 @@ public class PImageAdapter extends BaseAdapter {
 //                    120);//传入自己需要的宽高
 //            convertView.setLayoutParams(param);
             convertView = LayoutInflater.from(context).inflate(R.layout.image_grid_view, null);
-            holder.iv = (SquareLayout) convertView.findViewById(R.id.iv_image);
-            DownImgeJson downImgeJson = null;
-            downImgeJson = new DownImgeJson(data.get(position));
-            downImgeJson.loadImage(new DownImgeJson.ImageCallBack() {
-
-                @SuppressLint("NewApi")
-                @Override
-                public void getDrawable(Drawable drawable) {
-                    (holder.iv).setBackground(drawable);
-                }
-            });
+            holder.iv = (ImageView) convertView.findViewById(R.id.iv_image);
+            Picasso.with(context).load(data.get(position).toString().trim()).into(holder.iv);
         }
         return convertView;
     }
 
     class Holder {
-        SquareLayout iv;
+        ImageView iv;
     }
 }

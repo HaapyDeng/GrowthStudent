@@ -130,13 +130,21 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                         prompt = data.getString("prompt");
                         answer = data.getString("answer");
                         write_time = data.getString("write_time");
-                        image = new String[data.getJSONArray("image").length()];
                         label = data.getJSONArray("label");
-                        for (int i = 0; i < data.getJSONArray("image").length(); i++) {
-                            image[i] = data.getJSONArray("image").getString(i);
-                            Log.d(" image[i] ==>>>", image[i]);
+                        if (data.getJSONArray("uploads").length() > 0) {
+                            image = new String[data.getJSONArray("uploads").length()];
+                            for (int i = 0; i < data.getJSONArray("uploads").length(); i++) {
+                                image[i] = data.getJSONArray("uploads").get(i).toString();
+                                Log.d(" image[uploads] ==>>>", image[i]);
+                            }
                         }
-                        data.getJSONArray("image");
+                        if (data.getJSONArray("image").length() > 0) {
+                            image = new String[data.getJSONArray("image").length()];
+                            for (int i = 0; i < data.getJSONArray("image").length(); i++) {
+                                image[i] = data.getJSONArray("image").get(i).toString();
+                                Log.d(" image[image] ==>>>", image[i]);
+                            }
+                        }
                         Message message = new Message();
                         message.what = 1;
                         message.obj = image;
@@ -378,13 +386,15 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
                             e.printStackTrace();
                         }
                     }
-                    for (int i = 0; i < image.length; i++) {
-                        Log.d("length==>>>", "" + image[i]);
-                        listImage.add(image[i]);
+                    if (image.length > 0) {
+                        for (int i = 0; i < image.length; i++) {
+                            Log.d("length==>>>", "" + image[i]);
+                            listImage.add(image[i]);
+                        }
+                        Log.d("listimage==>>>", listImage.toString());
+                        gridview = findViewById(R.id.gridview);
+                        gridview.setAdapter(new ImageAdapter(TuWenInfoActivity.this, listImage));
                     }
-                    Log.d("listimage==>>>", listImage.toString());
-                    gridview = findViewById(R.id.gridview);
-                    gridview.setAdapter(new ImageAdapter(TuWenInfoActivity.this, listImage));
                     //判断是谁评价了
                     if (audit.length() == 0) {
                         // 声明PopupWindow

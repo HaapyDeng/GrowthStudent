@@ -275,12 +275,12 @@ public class TuWenTakePhotoComActivity extends Activity implements View.OnClickL
                                     int position, long id) {
                 if (position == parent.getChildCount() - 1) {
                     //如果“增加按钮形状的”图片的位置是最后一张，且添加了的图片的数量不超过5张，才能点击
-                    if (mPicList.size() == MainConstant.MAX_SELECT_PIC_NUM) {
+                    if (mPicList.size() == 1) {
                         //最多添加5张图片
                         viewPluImg(position);
                     } else {
                         //添加凭证图片
-                        selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                        selectPic(1 - mPicList.size());
                     }
                 } else {
                     viewPluImg(position);
