@@ -2,7 +2,9 @@ package com.mpl.GrowthStud.Student.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,19 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Bean.CloudPhotoBean;
 import com.mpl.GrowthStud.Student.Bean.GetStarInfoItem;
 import com.mpl.GrowthStud.Student.Tools.DownImage;
+import com.mpl.GrowthStud.Student.Tools.FileUtil;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.zhy.base.imageloader.ImageLoader;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 
@@ -37,14 +45,9 @@ public class CloudPhotoListAdapter extends ListViewAdapter<CloudPhotoBean> {
     @Override
     public void convert(ViewHolder holder, CloudPhotoBean cloudPhotoBean) {
         final ImageView iv_img = holder.getView(R.id.iv_img);
+        Picasso.with(mContext).load(cloudPhotoBean.getName().toString().trim()).into(iv_img);
         CheckBox item_cb = holder.getView(R.id.item_cb);
-        DownImage downImage = new DownImage(cloudPhotoBean.getName());
-        downImage.loadImage(new DownImage.ImageCallBack() {
-            @Override
-            public void getDrawable(Drawable drawable) {
-                iv_img.setImageDrawable(drawable);
-            }
-        });
+
         if (cloudPhotoBean.isChcked()) {
             item_cb.setChecked(true);
         } else {

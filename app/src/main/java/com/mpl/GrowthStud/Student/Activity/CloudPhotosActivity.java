@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,15 +27,23 @@ import com.mpl.GrowthStud.Student.Adapter.CloudPhotoListAdapter;
 import com.mpl.GrowthStud.Student.Adapter.ViewHolder;
 import com.mpl.GrowthStud.Student.Bean.CloudPhotoBean;
 import com.mpl.GrowthStud.Student.Bean.StudentInfo;
+import com.mpl.GrowthStud.Student.Tools.BitmapHelper;
+import com.mpl.GrowthStud.Student.Tools.FileUtil;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 import com.mpl.GrowthStud.Student.View.LoadingDialog;
+import com.squareup.picasso.Cache;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -70,8 +79,8 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
 
         listveiw = findViewById(R.id.listveiw);
         listveiw.setOnItemClickListener(this);
-
         getUserInfo();
+
 
     }
 
@@ -211,37 +220,18 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
                     Toast.makeText(context, "请选择图片", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                loadingDialog = new LoadingDialog(context, "提交中...", R.drawable.ic_dialog_loading);
-                loadingDialog.show();
-                //下载图片到本地获取本地路径保存
-                for (int i = 0; i < imgList.size(); i++) {
-                    new MyAsyncTask().execute(imgList.get(i));
-                    if (imgListlocal.size() == imgList.size()) {
-                        loadingDialog.dismiss();
-                        Log.d("imgListlocal==>>>", imgListlocal.toString());
-                        Intent intentTemp = new Intent();
-                        intentTemp.putStringArrayListExtra("imgList", (ArrayList<String>) imgListlocal);
-                        setResult(5, intentTemp);
-                        finish();
-                    }
-                }
+
+                Log.d("imgListlocal==>>>", imgListlocal.toString());
+                Intent intentTemp = new Intent();
+                intentTemp.putStringArrayListExtra("imgList", (ArrayList<String>) imgList);
+                setResult(5, intentTemp);
+                finish();
                 break;
         }
     }
 
-    Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            if (msg.what == 0x123) {
-                String path = SavaImage(bitmap, Environment.getExternalStorageDirectory().getPath() + "/cloud_photo");
-                imgListlocal.add(path);
-            }
-        }
-
-        ;
-    };
-
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
         if (cloudPhotoBeanList.get(i).isChcked()) {
             cloudPhotoBeanList.get(i).setChcked(false);
@@ -253,6 +243,20 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
             } else {
                 cloudPhotoBeanList.get(i).setChcked(true);
                 imgList.add(cloudPhotoBeanList.get(i).getName());
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            Bitmap bitmap = Picasso.with(CloudPhotosActivity.this).load(cloudPhotoBeanList.get(i).getName()).get();
+                            File path = BitmapHelper.saveBitmapFile(bitmap, CloudPhotosActivity.this.getExternalCacheDir()
+                                    + "/" + cloudPhotoBeanList.get(i).getName());
+                            Log.d("path==>>>", path.getPath());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
             }
         }
         cloudPhotoListAdapter.notifyDataSetChanged();
@@ -262,74 +266,4 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
     }
 
 
-    /**
-     * 获取网络图片
-     *
-     * @param imageurl 图片网络地址
-     * @return Bitmap 返回位图
-     */
-    public Bitmap GetImageInputStream(String imageurl) {
-        URL url;
-        HttpURLConnection connection = null;
-        Bitmap bitmap = null;
-        try {
-            url = new URL(imageurl);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(6000); //超时设置
-            connection.setDoInput(true);
-            connection.setUseCaches(false); //设置不使用缓存
-            InputStream inputStream = connection.getInputStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-
-    /**
-     * 保存位图到本地
-     *
-     * @param bitmap
-     * @param path   本地路径
-     * @return void
-     */
-    public String SavaImage(Bitmap bitmap, String path) {
-        File file = new File(path);
-        FileOutputStream fileOutputStream = null;
-        //文件夹不存在，则创建它
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        try {
-            fileOutputStream = new FileOutputStream(path + "/" + System.currentTimeMillis() + ".png");
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return path;
-    }
-
-    /**
-     * 异步线程下载图片
-     */
-    class MyAsyncTask extends AsyncTask<String, Integer, Void> {
-
-
-        protected Void doInBackground(String... params) {
-            bitmap = GetImageInputStream((String) params[0]);
-
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            Message message = new Message();
-            message.what = 0x123;
-            handler.sendMessage(message);
-
-        }
-
-    }
 }

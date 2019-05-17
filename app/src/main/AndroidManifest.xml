@@ -322,12 +322,24 @@
             android:name=".zxing.android.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name=".Student.Activity.MyBookActivity" />
-        <activity android:name=".Student.Activity.CloudPhotosActivity" />
-        <activity android:name=".Student.Activity.TuWenTakePhotoComActivity" />
-        <activity android:name=".Student.Activity.ChangeDiTuActivity" />
-        <activity android:name=".Student.Activity.MixtureInfoActivity" />
-        <activity android:name=".Parent.Activity.PMixtureCheckActivity"></activity>
+        <activity
+            android:name=".Student.Activity.MyBookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.CloudPhotosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.TuWenTakePhotoComActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.ChangeDiTuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Student.Activity.MixtureInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Parent.Activity.PMixtureCheckActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
