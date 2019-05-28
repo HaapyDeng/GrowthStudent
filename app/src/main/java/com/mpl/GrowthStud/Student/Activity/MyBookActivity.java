@@ -7,6 +7,9 @@ import android.widget.LinearLayout;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 我的手册
+ */
 public class MyBookActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
 
@@ -17,6 +20,7 @@ public class MyBookActivity extends Activity implements View.OnClickListener {
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

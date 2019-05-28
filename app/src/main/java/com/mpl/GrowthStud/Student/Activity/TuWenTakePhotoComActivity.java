@@ -41,6 +41,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 拍照上传
+ */
 public class TuWenTakePhotoComActivity extends Activity implements View.OnClickListener {
     private Context mContext;
     private GridView gridView;

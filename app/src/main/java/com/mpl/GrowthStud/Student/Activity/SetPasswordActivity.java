@@ -26,6 +26,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 设置密码
+ */
 public class SetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private EditText et_new_psd;
@@ -64,6 +67,11 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * 更新密码
+     *
+     * @param newPassword
+     */
     private void doUpdatePassword(final String newPassword) {
         if (NetworkUtils.checkNetWork(SetPasswordActivity.this) == false) {
             Toast.makeText(SetPasswordActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();

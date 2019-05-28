@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 消息详情
+ */
 public class MessageInfoActivity extends AppCompatActivity {
     private String title, time, content;
     private LinearLayout back;

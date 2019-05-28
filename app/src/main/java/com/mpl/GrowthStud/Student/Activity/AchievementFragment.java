@@ -49,12 +49,12 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 成就模块
  */
 public class AchievementFragment extends Fragment implements View.OnClickListener {
 
-    private AchieveTodoFragment fragment1;
-    private AchieveCompletFragment fragment2;
+    private AchieveTodoFragment fragment1;//待完成页
+    private AchieveCompletFragment fragment2;//已完成页
     private TextView completed, todo;
     private ImageButton ib_message;
     private LoadingDialog loadingDialog;
@@ -62,6 +62,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     private static final String DECODED_CONTENT_KEY = "codedContent";
     private static final String DECODED_BITMAP_KEY = "codedBitmap";
     private static final int REQUEST_CODE_SCAN = 0x0000;
+
     public AchievementFragment() {
         // Required empty public constructor
     }
@@ -86,8 +87,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     public void onResume() {
         super.onResume();
     }
-
-
 
 
     public static Fragment newInstance(String name) {
@@ -122,7 +121,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     /**
      * 跳转到扫码界面扫码
      */
-    private void goScan(){
+    private void goScan() {
         Intent intent = new Intent(getActivity(), CaptureActivity.class);
         startActivityForResult(intent, REQUEST_CODE_SCAN);
     }
@@ -151,7 +150,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 String content = data.getStringExtra(DECODED_CONTENT_KEY);
                 //返回的BitMap图像
                 Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
-                Log.d("扫描到的内容是：",content);
+                Log.d("扫描到的内容是：", content);
                 doSendContent(content);
             }
         }
@@ -181,7 +180,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                     if (code == 0) {
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
-                        Log.d("data==>>>",data.toString());
+                        Log.d("data==>>>", data.toString());
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
@@ -217,7 +216,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             }
         });
     }
-
 
 
     // 切换Fragment

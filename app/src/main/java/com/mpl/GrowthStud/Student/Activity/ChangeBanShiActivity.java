@@ -30,6 +30,10 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 更改版式
+ *
+ */
 public class ChangeBanShiActivity extends Activity {
     private GridView gridView;
     private List<BanShiItem> dataList = new ArrayList<>();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F7F9FA"
     android:orientation="vertical"
-    tools:context=".Student.Activity.BundleParentActivity">
+    tools:context=".Student.Activity.BoundParentActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

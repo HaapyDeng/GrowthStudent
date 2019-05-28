@@ -49,6 +49,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 系统成就-初中   填写
+ */
 public class SyatemAchieveChuActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private Context mContext;

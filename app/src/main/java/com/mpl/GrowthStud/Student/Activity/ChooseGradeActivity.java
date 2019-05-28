@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 选择学龄段
+ */
 public class ChooseGradeActivity extends Activity implements View.OnClickListener {
     private LinearLayout ll_youeryuan, ll_xiaoxue, ll_chuzhong, ll_gaozhong;
     private ImageButton btn_back;

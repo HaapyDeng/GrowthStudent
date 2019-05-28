@@ -35,7 +35,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+/**
+ * 综合评价》问卷得分列表
+ */
 public class GetScoreInfoFragment extends Fragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

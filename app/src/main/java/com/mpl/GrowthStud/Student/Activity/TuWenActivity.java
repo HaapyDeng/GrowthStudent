@@ -57,6 +57,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 图文成就  填写
+ */
 public class TuWenActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
     private GridView gridView;
@@ -158,6 +161,9 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 
+    /**
+     * 获取图文标签等详细
+     */
     private void doGetInfo() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
@@ -617,7 +623,7 @@ public class TuWenActivity extends AppCompatActivity implements View.OnClickList
 //                                break;
 //                        }
 //                    }
-//                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
+//                    Intent intent = new Intent(mContext, ChangeBasePicActivity.class);
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString("id", achieveId);
 //                    bundle.putString("banshiId", "" + banshiId);

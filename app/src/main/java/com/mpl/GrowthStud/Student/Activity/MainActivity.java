@@ -16,6 +16,9 @@ import com.mpl.GrowthStud.Student.Tools.BottomNavigationViewHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 主底部菜单容器
+ */
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPagerAdapter viewPagerAdapter;

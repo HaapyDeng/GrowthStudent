@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.View.MovieRecorderView;
 
+/**
+ * 视频录制
+ */
 public class VideoRecorderActivity extends Activity {
     private MovieRecorderView mRecorderView;
     private Button mShootBtn;
@@ -91,9 +94,9 @@ public class VideoRecorderActivity extends Activity {
             mRecorderView.stop();
             // 返回到播放页面
             Intent intent = new Intent();
-            Log.d("TAG",mRecorderView.getmRecordFile().getAbsolutePath());
+            Log.d("TAG", mRecorderView.getmRecordFile().getAbsolutePath());
             intent.putExtra("path", mRecorderView.getmRecordFile().getAbsolutePath());
-            setResult(RESULT_OK,intent);
+            setResult(RESULT_OK, intent);
         }
         // isFinish = false;
         finish();
@@ -103,11 +106,11 @@ public class VideoRecorderActivity extends Activity {
      * 录制完成回调
      *
      * @author liuyinjun
-     *
      * @date 2015-2-9
      */
     public interface OnShootCompletionListener {
         public void OnShootSuccess(String path, int second);
+
         public void OnShootFailure();
     }
 
@@ -176,7 +179,7 @@ public class VideoRecorderActivity extends Activity {
     *//**
      * 创建文件夹路径
      * @param folderName　文件夹名称
-     * @return  文件夹路径
+     * @return 文件夹路径
      *//*
     public static String createFilePath(String folderName) {
         File file = new File(android.os.Environment.getExternalStorageDirectory()+"/"+folderName);

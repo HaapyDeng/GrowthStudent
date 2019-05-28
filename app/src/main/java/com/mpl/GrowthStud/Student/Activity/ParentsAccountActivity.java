@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -147,7 +146,7 @@ public class ParentsAccountActivity extends AppCompatActivity implements View.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (listItems.get(i).getStatus() == 1) {
-            Intent intent = new Intent(ParentsAccountActivity.this, BundleParentActivity.class);
+            Intent intent = new Intent(ParentsAccountActivity.this, BoundParentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt("id", listItems.get(i).getId());
             bundle.putString("parent_name", listItems.get(i).getParent_username());

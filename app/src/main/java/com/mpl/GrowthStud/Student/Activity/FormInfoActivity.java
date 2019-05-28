@@ -39,6 +39,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 表单详情页
+ */
 public class FormInfoActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_time, tv_lable, tv_lable2, tv_lable3, tv_lable4, tv_lable5;
@@ -252,6 +255,11 @@ public class FormInfoActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    /**
+     * 获取表单列表
+     *
+     * @param achieveId
+     */
     private void initData(String achieveId) {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

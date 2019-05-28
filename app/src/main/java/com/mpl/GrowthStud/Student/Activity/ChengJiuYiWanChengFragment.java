@@ -32,7 +32,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+/**
+ * 已完成成就页
+ */
 public class ChengJiuYiWanChengFragment extends Fragment {
     private LinearLayout ll_empty;
     private ListView listView;
@@ -64,7 +66,14 @@ public class ChengJiuYiWanChengFragment extends Fragment {
         return root;
     }
 
-
+    /**
+     * 获取已完成成就列表
+     *
+     * @param choose_start_time
+     * @param choose_end_time
+     * @param categoryid
+     * @param lableid
+     */
     private void getCpmpletAchieve(CharSequence choose_start_time, CharSequence choose_end_time, String categoryid, String lableid) {
         if (!NetworkUtils.checkNetWork(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();

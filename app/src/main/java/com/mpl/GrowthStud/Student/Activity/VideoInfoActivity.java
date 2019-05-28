@@ -33,6 +33,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 视频成就详情
+ */
 public class VideoInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title;

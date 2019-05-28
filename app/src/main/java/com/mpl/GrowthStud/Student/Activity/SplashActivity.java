@@ -40,6 +40,9 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 启动页
+ */
 public class SplashActivity extends Activity {
     private static final int GO_HOME = 1000;
     private static final int GO_GUIDE = 1001;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +15,9 @@ import com.mpl.GrowthStud.Student.Tools.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * 图文加模板预览
+ */
 public class TuWenPreviewDoActivity extends Activity implements View.OnClickListener {
     private Context context;
     private View addview;
@@ -85,7 +87,7 @@ public class TuWenPreviewDoActivity extends Activity implements View.OnClickList
                 startActivityForResult(intent, REQUESTCODE); //REQUESTCODE--->1
                 break;
             case R.id.tv_changebg:
-                Intent intent1 = new Intent(context, ChangeDiTuActivity.class);
+                Intent intent1 = new Intent(context, ChangeBasePicActivity.class);
                 startActivityForResult(intent1, REQUESTCODE);
                 break;
         }

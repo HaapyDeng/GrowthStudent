@@ -35,6 +35,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 文字成就
+ */
 public class WenziActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_commit;

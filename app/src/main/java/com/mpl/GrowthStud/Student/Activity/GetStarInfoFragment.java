@@ -39,6 +39,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * 综合评价》任务获星列表
+ */
 
 public class GetStarInfoFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener {
     // TODO: Rename parameter arguments, choose names that match

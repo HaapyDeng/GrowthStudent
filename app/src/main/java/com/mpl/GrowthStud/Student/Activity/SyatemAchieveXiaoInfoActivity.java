@@ -32,6 +32,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 系统成就-小学详情 反显
+ */
 public class SyatemAchieveXiaoInfoActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_male, tv_birthy, tv_animal, tv_lable, tv_time, tv_idcard, tv_nation;

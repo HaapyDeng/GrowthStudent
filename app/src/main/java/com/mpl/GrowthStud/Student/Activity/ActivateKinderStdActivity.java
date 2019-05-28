@@ -22,11 +22,14 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 幼儿园身份账号激活
+ */
 public class ActivateKinderStdActivity extends Activity implements View.OnClickListener {
     private ImageButton btn_back;
     private LineEditText et_card_num;
     private Button btn_active;
-    private String cardId;
+    private String cardId; //身份证号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

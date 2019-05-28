@@ -43,7 +43,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+/**
+ * 待完成成就fragment容器
+ */
 public class AchieveTodoFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

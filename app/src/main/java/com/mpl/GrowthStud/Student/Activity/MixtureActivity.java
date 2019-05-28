@@ -28,6 +28,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 混合模板
+ */
 public class MixtureActivity extends FragmentActivity {
     private String achieveId;
     private String headTitle;

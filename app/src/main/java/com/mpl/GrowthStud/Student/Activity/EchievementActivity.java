@@ -53,6 +53,9 @@ import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 成就页
+ */
 public class EchievementActivity extends FragmentActivity implements View.OnClickListener {
     private ChengJiuYiWanChengFragment fragment1;
     private ChengJiuJinXingZhongFragment fragment2;
@@ -75,6 +78,7 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     private List<CategoryListItem> listLableListItem;
     private String categoryid = "0";
     private String lableid = "0";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +186,14 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
 
     }
 
+    /**
+     * 获取成就相关详情数据
+     *
+     * @param choose_start_time
+     * @param choose_end_time
+     * @param categoryid
+     * @param lableid
+     */
     private void initData(CharSequence choose_start_time, CharSequence choose_end_time, String categoryid, String lableid) {
         if (!NetworkUtils.checkNetWork(EchievementActivity.this)) {
             Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
@@ -360,6 +372,9 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
         }
     }
 
+    /**
+     * 获取分类列表
+     */
     private void getCategoryList() {
         if (NetworkUtils.checkNetWork(EchievementActivity.this) == false) {
             Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
@@ -558,6 +573,11 @@ public class EchievementActivity extends FragmentActivity implements View.OnClic
     }
 
 
+    /**
+     * 获取标签列表
+     *
+     * @param id
+     */
     private void doGetLableList(String id) {
         if (NetworkUtils.checkNetWork(EchievementActivity.this) == false) {
             Toast.makeText(EchievementActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();

@@ -40,6 +40,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * 个人模块
+ */
 public class MyFragment extends Fragment implements View.OnClickListener {
     private TextView tv_student_name, tv_school, tv_grade, tv_brithday, tv_school_grade, tv_parent_id, tv_teacher, tv_in_school;
     private LinearLayout ll_set, ll_parent_id, ll_brithday;
@@ -79,7 +82,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
-
+    /*
+     *获取家长列表
+     */
     private void getParentList() {
         if (NetworkUtils.checkNetWork(getActivity()) == false) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
@@ -149,6 +154,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * 获取个人详细
+     */
     private void initData() {
         if (NetworkUtils.checkNetWork(getActivity()) == false) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
@@ -172,9 +180,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         classroomName = data.getString("classroom_name");
                         grade = data.getString("grade");
                         teacherName = data.getString("teacher_name");
-                        if (data.getString("birthday").equals("null")){
-                            birthday ="";
-                        }else {
+                        if (data.getString("birthday").equals("null")) {
+                            birthday = "";
+                        } else {
                             birthday = data.getString("birthday");
                         }
 
@@ -225,9 +233,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 1:
                     tv_student_name.setText(userName);
-                    if (birthday.equals("")){
+                    if (birthday.equals("")) {
 
-                    }else {
+                    } else {
                         tv_brithday.setText(birthday.substring(0, birthday.indexOf(" ")));
                     }
                     tv_school.setText(schoolName);
@@ -336,6 +344,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * 更新生日
+     *
+     * @param format
+     */
     private void doUpDateBirthday(CharSequence format) {
         if (NetworkUtils.checkNetWork(getActivity()) == false) {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();

@@ -40,6 +40,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 图文成就  详情 反显
+ */
 public class TuWenInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title;
@@ -96,6 +99,9 @@ public class TuWenInfoActivity extends AppCompatActivity implements View.OnClick
         initData();
     }
 
+    /**
+     * 获取图文填写的详细数据
+     */
     private void initData() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

@@ -10,6 +10,10 @@ import android.widget.TextView;
 import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
+/**
+ * 关于页面
+ */
+
 public class AboutActivity extends AppCompatActivity {
     private LinearLayout back;
     private TextView tv_version;

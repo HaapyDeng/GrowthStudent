@@ -24,6 +24,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 获取验证码
+ */
 public class VerifyCodeActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageButton btn_back;
     private LineEditText et_card_num;

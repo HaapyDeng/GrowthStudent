@@ -32,6 +32,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 系统成就-初中详情   反显
+ */
 public class SyatemAchieveChuInfoActivity extends Activity implements View.OnClickListener {
 
     private LinearLayout back;

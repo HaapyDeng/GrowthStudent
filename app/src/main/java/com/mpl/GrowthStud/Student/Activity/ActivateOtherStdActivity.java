@@ -22,11 +22,14 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 小、初、高身份账号激活
+ */
 public class ActivateOtherStdActivity extends Activity implements View.OnClickListener {
     private ImageButton btn_back;
     private LineEditText et_school_num;
     private Button btn_active;
-    private String schoolNum;
+    private String schoolNum;//学校id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,6 +25,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 综合评价数据详情
+ */
 public class EvaluateActivity extends FragmentActivity implements View.OnClickListener {
 
     private TextView get_star_info, get_score_info, pingjia_point, star_point, total_point, star_count;

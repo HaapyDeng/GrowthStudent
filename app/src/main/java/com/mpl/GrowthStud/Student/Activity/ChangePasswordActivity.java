@@ -25,6 +25,10 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 更改密码
+ */
+
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_text, tv_get_num;

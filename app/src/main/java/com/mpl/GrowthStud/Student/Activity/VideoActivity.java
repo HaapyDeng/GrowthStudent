@@ -57,6 +57,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.mpl.GrowthStud.Student.Tools.Utils.saveBitmap;
 
+/**
+ * 视频成就
+ */
 public class VideoActivity extends Activity implements View.OnClickListener {
     private Context mContext;
     private LinearLayout back;

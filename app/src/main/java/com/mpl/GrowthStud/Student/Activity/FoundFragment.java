@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 发现板块
+ */
 
 public class FoundFragment extends Fragment implements View.OnClickListener {
 

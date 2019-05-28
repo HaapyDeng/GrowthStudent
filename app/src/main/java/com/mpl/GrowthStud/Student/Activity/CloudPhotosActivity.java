@@ -52,6 +52,10 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 云相册页
+ */
+
 public class CloudPhotosActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private LinearLayout back;
     private LoadingDialog loadingDialog;
@@ -84,6 +88,9 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
 
     }
 
+    /**
+     * 获取班级Id
+     */
     private void getUserInfo() {
         if (NetworkUtils.checkNetWork(context) == false) {
             Toast.makeText(context, R.string.no_network, Toast.LENGTH_LONG).show();
@@ -137,6 +144,9 @@ public class CloudPhotosActivity extends Activity implements View.OnClickListene
         });
     }
 
+    /**
+     * 获取云相册列表
+     */
     private void getCloudPhotos() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

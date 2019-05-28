@@ -36,6 +36,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 文字成就  反显
+ */
 public class WenZiInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_start_time, tv_prompt, tv_answer;

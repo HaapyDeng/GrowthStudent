@@ -30,6 +30,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 任务获星详情
+ */
 public class GetStarInfoInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private String categoryid;
     private ListView listview;

@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 伙伴板块
+ */
 
 public class FriendFragment extends Fragment implements View.OnClickListener {
 

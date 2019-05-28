@@ -31,7 +31,10 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ChangeDiTuActivity extends Activity {
+/**
+ * 更改底图
+ */
+public class ChangeBasePicActivity extends Activity {
     private GridView gridView;
     private List<String> dataList = new ArrayList<>();
     private GridViewDiTuAdapter adapter;

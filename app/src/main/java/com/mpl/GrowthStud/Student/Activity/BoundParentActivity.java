@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +23,10 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class BundleParentActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * 绑定家长账号
+ */
+public class BoundParentActivity extends AppCompatActivity implements View.OnClickListener {
     private String parent_name, phone, content;
     private int id, gender, role;
     private LinearLayout back;
@@ -106,8 +108,8 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void doRefuse(int id) {
-        if (NetworkUtils.checkNetWork(BundleParentActivity.this) == false) {
-            Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+        if (NetworkUtils.checkNetWork(BoundParentActivity.this) == false) {
+            Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
@@ -123,12 +125,12 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
-                        Toast.makeText(BundleParentActivity.this, "绑定成功", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(BundleParentActivity.this, MyFragment.class);
+                        Toast.makeText(BoundParentActivity.this, "绑定成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(BoundParentActivity.this, MyFragment.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(BundleParentActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(BoundParentActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
                 } catch (JSONException e) {
@@ -139,29 +141,29 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
         });
     }
 
     private void doOk(int id) {
-        if (NetworkUtils.checkNetWork(BundleParentActivity.this) == false) {
-            Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+        if (NetworkUtils.checkNetWork(BoundParentActivity.this) == false) {
+            Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("myinfo", MODE_PRIVATE);
@@ -177,14 +179,14 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
                 try {
                     int code = response.getInt("code");
                     if (code == 0) {
-                        Toast.makeText(BundleParentActivity.this, "拒绝成功", Toast.LENGTH_LONG).show();
+                        Toast.makeText(BoundParentActivity.this, "拒绝成功", Toast.LENGTH_LONG).show();
 
-                        Intent intent = new Intent(BundleParentActivity.this, MainActivity.class);
+                        Intent intent = new Intent(BoundParentActivity.this, MainActivity.class);
                         intent.putExtra("flag", 2);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(BundleParentActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(BoundParentActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
                     }
                 } catch (JSONException e) {
@@ -195,21 +197,21 @@ public class BundleParentActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(BundleParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                Toast.makeText(BoundParentActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
                 return;
             }
         });

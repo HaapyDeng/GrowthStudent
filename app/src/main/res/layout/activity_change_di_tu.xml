@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".Student.Activity.ChangeDiTuActivity">
+    tools:context=".Student.Activity.ChangeBasePicActivity">
 
     <RelativeLayout
         android:id="@+id/head"

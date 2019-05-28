@@ -35,6 +35,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/***
+ * 消息列表页
+ */
 public class MessageActivity extends AppCompatActivity {
     private LinearLayout ll_empty;
     private ListView listView;

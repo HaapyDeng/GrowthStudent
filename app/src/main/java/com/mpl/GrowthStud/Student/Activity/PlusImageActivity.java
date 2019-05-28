@@ -15,6 +15,9 @@ import com.mpl.GrowthStud.Student.Tools.CancelOrOkDialog;
 
 import java.util.ArrayList;
 
+/**
+ * 查看大图
+ */
 public class PlusImageActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     private ViewPager viewPager; //展示图片的ViewPager

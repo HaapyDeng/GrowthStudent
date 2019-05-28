@@ -33,6 +33,9 @@ import java.sql.Array;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 系统成就-幼儿园详情   反显
+ */
 public class SyatemAchieveYouInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_male, tv_birthy, tv_animal, tv_lable, tv_time;

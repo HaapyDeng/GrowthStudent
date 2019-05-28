@@ -11,6 +11,9 @@ import android.widget.VideoView;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 视频播放
+ */
 public class VideoPlayActivity extends AppCompatActivity {
     private String path;
     private VideoView videoView;

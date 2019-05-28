@@ -41,6 +41,9 @@ import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 表单填写页
+ */
 public class FormActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
     private TextView tv_title, tv_commit, tv_menu, tv_lable;
@@ -120,6 +123,11 @@ public class FormActivity extends Activity implements View.OnClickListener {
         listView.setLayoutParams(params);
     }
 
+    /**
+     * 获取表单列表
+     *
+     * @param id
+     */
     private void initFormLabel(String id) {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
@@ -240,6 +248,11 @@ public class FormActivity extends Activity implements View.OnClickListener {
 
     }
 
+    /**
+     * 弹出菜单
+     *
+     * @param v
+     */
     private void showOrderMenu(View v) {
         final PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_order, popupMenu.getMenu());
@@ -324,6 +337,11 @@ public class FormActivity extends Activity implements View.OnClickListener {
         popupMenu.show();
     }
 
+    /**
+     * 提交数据
+     *
+     * @param object
+     */
     private void doputInfo(JSONObject object) {
         loadingDialog = new LoadingDialog(this, "提交中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

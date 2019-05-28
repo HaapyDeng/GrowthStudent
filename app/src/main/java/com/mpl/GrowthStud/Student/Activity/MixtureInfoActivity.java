@@ -39,6 +39,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 混合模板详情反显
+ */
 public class MixtureInfoActivity extends Activity implements View.OnClickListener {
 
     private LinearLayout back;

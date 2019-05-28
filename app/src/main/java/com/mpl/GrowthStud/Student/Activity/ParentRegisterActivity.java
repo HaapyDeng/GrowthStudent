@@ -28,6 +28,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 家长注册
+ */
 public class ParentRegisterActivity extends Activity implements View.OnClickListener {
     private CountDownButton countDownButton;
     private LinearLayout back;

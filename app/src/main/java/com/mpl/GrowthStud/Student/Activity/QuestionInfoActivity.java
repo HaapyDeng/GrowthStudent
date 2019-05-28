@@ -29,6 +29,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 问卷详情
+ */
 public class QuestionInfoActivity extends AppCompatActivity {
     private String achieveId;
     private String headTitle;

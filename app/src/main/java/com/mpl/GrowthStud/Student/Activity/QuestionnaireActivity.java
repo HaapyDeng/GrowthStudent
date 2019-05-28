@@ -36,6 +36,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 问卷编辑
+ */
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener {
     private String achieveId;
     private String headTitle;
@@ -99,6 +102,11 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    /**
+     * 获取题目
+     *
+     * @param achieveId
+     */
     private void getAnswers(final String achieveId) {
         if (!NetworkUtils.checkNetWork(QuestionnaireActivity.this)) {
             Toast.makeText(QuestionnaireActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();

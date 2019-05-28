@@ -42,6 +42,10 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * 已完成fragment容器
+ */
+
 public class AchieveCompletFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener {
 
     private XListView listView;
@@ -123,7 +127,11 @@ public class AchieveCompletFragment extends Fragment implements AdapterView.OnIt
         }, 2000);
     }
 
-
+    /**
+     * 获取已完成列表
+     *
+     * @param page
+     */
     private void getCpmpletAchieve(String page) {
         loadingDialog = new LoadingDialog(getActivity(), "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

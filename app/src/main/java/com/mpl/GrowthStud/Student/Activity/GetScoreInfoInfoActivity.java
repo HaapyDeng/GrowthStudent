@@ -29,6 +29,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 问卷得分详情
+ */
 public class GetScoreInfoInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private String categoryid;
     private ListView listview;

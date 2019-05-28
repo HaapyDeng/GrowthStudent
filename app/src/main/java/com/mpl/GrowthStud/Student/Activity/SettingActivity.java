@@ -16,6 +16,9 @@ import com.mpl.GrowthStud.R;
 import com.mpl.GrowthStud.Student.Tools.ConstomDialog;
 import com.mpl.GrowthStud.Student.Tools.NetworkUtils;
 
+/**
+ * 设置
+ */
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
     private int scope;
     private LinearLayout back;

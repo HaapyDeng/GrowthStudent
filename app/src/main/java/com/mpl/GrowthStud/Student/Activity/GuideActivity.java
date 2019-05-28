@@ -17,6 +17,9 @@ import com.mpl.GrowthStud.Student.View.PageNumberPoint;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 引导页
+ */
 public class GuideActivity extends AppCompatActivity {
     private ViewPager viewPager;//需要ViewPaeger
     private PagerAdapter mAdapter;//需要PagerAdapter适配器

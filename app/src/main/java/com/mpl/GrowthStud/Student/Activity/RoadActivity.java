@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 
 import com.mpl.GrowthStud.R;
 
+/**
+ * 成长轨迹
+ */
 public class RoadActivity extends Activity implements View.OnClickListener {
     private LinearLayout back;
 

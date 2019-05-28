@@ -33,6 +33,9 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 登录页
+ */
 public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText et_user, et_psd;
     private Button btn_login;
@@ -184,6 +187,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
+    /**
+     * 极光推送获取别名
+     *
+     * @param token
+     * @param userName
+     * @param password
+     * @param schoolId
+     * @param schoolName
+     * @param role
+     * @param isActive
+     * @param userId
+     * @param scope
+     */
     private void doGetAlia(final String token, final String userName, final String password, final int schoolId, final String schoolName, final String role, final int isActive, final String userId, final String scope) {
         final String[] registrationID = new String[1];
 
@@ -207,6 +223,20 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
     }
 
+    /**
+     * 设置极光推送别名
+     *
+     * @param token
+     * @param userName
+     * @param password
+     * @param schoolId
+     * @param schoolName
+     * @param role
+     * @param isActive
+     * @param userId
+     * @param scope
+     * @param jpregistrationID
+     */
     private void doSetAlia(final String token, final String userName, final String password, final int schoolId,
                            final String schoolName, final String role, final int isActive, final String userId, final String scope, String jpregistrationID) {
         String url = getResources().getString(R.string.local_url) + "/user/jpush/set/" + jpregistrationID;

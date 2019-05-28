@@ -629,7 +629,7 @@ public class MixtureOneActivity extends Activity implements View.OnClickListener
 //                                break;
 //                        }
 //                    }
-//                    Intent intent = new Intent(mContext, ChangeDiTuActivity.class);
+//                    Intent intent = new Intent(mContext, ChangeBasePicActivity.class);
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString("id", achieveId);
 //                    bundle.putString("banshiId", "" + banshiId);
